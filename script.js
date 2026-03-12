@@ -776,32 +776,50 @@
   var terminalCommands = {
     help: function () {
       return (
-        '<span class="t-cyan">╔══════════════════════════════════════════════════════╗</span>\n' +
-        '<span class="t-cyan">║</span>         <span class="t-green">EpicNoob22 Terminal — Available Commands</span>         <span class="t-cyan">║</span>\n' +
-        '<span class="t-cyan">╚══════════════════════════════════════════════════════╝</span>\n\n' +
-        '<span class="t-yellow">Navigation</span>\n' +
-        '  <span class="t-green">help</span>          <span class="t-dim">— Afficher cette aide</span>\n' +
-        '  <span class="t-green">ls</span>            <span class="t-dim">— Lister les sections du portfolio</span>\n' +
-        '  <span class="t-green">pwd</span>           <span class="t-dim">— Afficher le répertoire courant</span>\n' +
-        '  <span class="t-green">cd &lt;section&gt;</span>  <span class="t-dim">— Naviguer vers une section</span>\n\n' +
-        '<span class="t-yellow">Informations</span>\n' +
-        '  <span class="t-green">whoami</span>        <span class="t-dim">— Informations sur EpicNoob22</span>\n' +
-        '  <span class="t-green">skills</span>        <span class="t-dim">— Lister les compétences</span>\n' +
-        '  <span class="t-green">projects</span>      <span class="t-dim">— Lister les projets</span>\n' +
-        '  <span class="t-green">contact</span>       <span class="t-dim">— Informations de contact</span>\n' +
-        '  <span class="t-green">cat about.txt</span> <span class="t-dim">— Lire le fichier about</span>\n\n' +
-        '<span class="t-yellow">Fun</span>\n' +
-        '  <span class="t-green">neofetch</span>      <span class="t-dim">— Afficher les infos système</span>\n' +
-        '  <span class="t-green">sudo hire me</span>  <span class="t-dim">— Commande spéciale ;)</span>\n' +
-        '  <span class="t-green">ping google.com</span> <span class="t-dim">— Tester la connectivité</span>\n' +
-        '  <span class="t-green">nmap localhost</span>  <span class="t-dim">— Scanner les ports locaux</span>\n' +
-        '  <span class="t-green">date</span>          <span class="t-dim">— Afficher la date</span>\n' +
-        '  <span class="t-green">uname -a</span>      <span class="t-dim">— Informations système</span>\n' +
-        '  <span class="t-green">history</span>       <span class="t-dim">— Historique des commandes</span>\n' +
-        '  <span class="t-green">echo &lt;text&gt;</span>  <span class="t-dim">— Afficher du texte</span>\n\n' +
-        '<span class="t-yellow">Terminal</span>\n' +
-        '  <span class="t-green">clear</span>         <span class="t-dim">— Effacer le terminal</span>\n' +
-        '  <span class="t-green">exit</span>          <span class="t-dim">— Fermer le terminal</span>\n'
+        '<span class="t-cyan">╔══════════════════════════════════════════════════════════╗</span>\n' +
+        '<span class="t-cyan">║</span>       <span class="t-green">EpicNoob22 Terminal — Available Commands (35)</span>       <span class="t-cyan">║</span>\n' +
+        '<span class="t-cyan">╚══════════════════════════════════════════════════════════╝</span>\n\n' +
+        '<span class="t-yellow">── System Info ───────────────────────────────────────────</span>\n' +
+        '  <span class="t-green">whoami</span>             <span class="t-dim">Infos sur EpicNoob22</span>\n' +
+        '  <span class="t-green">id</span>                 <span class="t-dim">UID/GID et groupes</span>\n' +
+        '  <span class="t-green">hostname</span>           <span class="t-dim">Nom de la machine</span>\n' +
+        '  <span class="t-green">uname -a</span>           <span class="t-dim">Informations noyau</span>\n' +
+        '  <span class="t-green">uptime</span>             <span class="t-dim">Temps de fonctionnement</span>\n' +
+        '  <span class="t-green">date</span>               <span class="t-dim">Date et heure actuelles</span>\n' +
+        '  <span class="t-green">neofetch</span>           <span class="t-dim">Infos système avec ASCII art</span>\n\n' +
+        '<span class="t-yellow">── Fichiers ───────────────────────────────────────────────</span>\n' +
+        '  <span class="t-green">pwd</span>                <span class="t-dim">Répertoire courant</span>\n' +
+        '  <span class="t-green">ls</span>                 <span class="t-dim">Lister les fichiers</span>\n' +
+        '  <span class="t-green">ls -la</span>             <span class="t-dim">Liste détaillée avec permissions</span>\n' +
+        '  <span class="t-green">cat about.txt</span>      <span class="t-dim">Lire le fichier about</span>\n' +
+        '  <span class="t-green">cat skills.json</span>    <span class="t-dim">Compétences en JSON</span>\n' +
+        '  <span class="t-green">cat contact.txt</span>    <span class="t-dim">Informations de contact</span>\n' +
+        '  <span class="t-green">cat .secret</span>        <span class="t-dim">Fichier caché 👀</span>\n' +
+        '  <span class="t-green">cd &lt;section&gt;</span>       <span class="t-dim">Naviguer vers une section</span>\n' +
+        '  <span class="t-green">cd projects &amp;&amp; ls</span>   <span class="t-dim">Afficher les projets</span>\n\n' +
+        '<span class="t-yellow">── Portfolio ──────────────────────────────────────────────</span>\n' +
+        '  <span class="t-green">skills</span>             <span class="t-dim">Barres de compétences ASCII</span>\n' +
+        '  <span class="t-green">projects</span>           <span class="t-dim">Liste des 8 projets</span>\n' +
+        '  <span class="t-green">certs</span>              <span class="t-dim">Certifications obtenues</span>\n' +
+        '  <span class="t-green">ctf</span>                <span class="t-dim">Statistiques CTF</span>\n' +
+        '  <span class="t-green">contact</span>            <span class="t-dim">Informations de contact</span>\n\n' +
+        '<span class="t-yellow">── Réseau ─────────────────────────────────────────────────</span>\n' +
+        '  <span class="t-green">ping google.com</span>    <span class="t-dim">Simuler 4 pings</span>\n' +
+        '  <span class="t-green">nmap localhost</span>     <span class="t-dim">Scanner les ports locaux</span>\n' +
+        '  <span class="t-green">nmap -sV 192.168.1.1</span> <span class="t-dim">Scan avancé avec détection OS</span>\n\n' +
+        '<span class="t-yellow">── Fun & Easter Eggs ──────────────────────────────────────</span>\n' +
+        '  <span class="t-green">sudo hire me</span>       <span class="t-dim">Commande spéciale recruteur 😉</span>\n' +
+        '  <span class="t-green">sudo rm -rf /</span>      <span class="t-dim">Nice try... 😏</span>\n' +
+        '  <span class="t-green">hack &lt;target&gt;</span>      <span class="t-dim">Simulation de hacking animée</span>\n' +
+        '  <span class="t-green">cowsay &lt;text&gt;</span>     <span class="t-dim">Vache ASCII parlante</span>\n' +
+        '  <span class="t-green">fortune</span>            <span class="t-dim">Citation cybersécurité aléatoire</span>\n' +
+        '  <span class="t-green">banner</span>             <span class="t-dim">ASCII art EpicNoob22</span>\n' +
+        '  <span class="t-green">matrix</span>             <span class="t-dim">Toggle Matrix rain</span>\n\n' +
+        '<span class="t-yellow">── Terminal ───────────────────────────────────────────────</span>\n' +
+        '  <span class="t-green">echo &lt;text&gt;</span>        <span class="t-dim">Afficher du texte</span>\n' +
+        '  <span class="t-green">history</span>            <span class="t-dim">Historique des commandes</span>\n' +
+        '  <span class="t-green">clear</span>              <span class="t-dim">Effacer le terminal</span>\n' +
+        '  <span class="t-green">exit</span>               <span class="t-dim">Fermer le terminal</span>\n'
       );
     },
 
@@ -1001,13 +1019,240 @@
     },
 
     pwd: function () {
-      return '<span class="t-green">/home/epicnoob22</span>\n';
+      return '<span class="t-green">/home/epicnoob22/portfolio</span>\n';
     },
 
     echo: function (args) {
       return '<span class="t-white">' + escapeHtml(args.join(' ')) + '</span>\n';
+    },
+
+    id: function () {
+      return '<span class="t-green">uid=1337(epicnoob22) gid=1337(hackers) groups=1337(hackers),27(sudo),100(users),999(docker)</span>\n';
+    },
+
+    hostname: function () {
+      return '<span class="t-green">epicnoob22-kali</span>\n';
+    },
+
+    'ls -la': function () {
+      return (
+        '<span class="t-cyan">total 64</span>\n' +
+        '<span class="t-dim">drwxr-xr-x  2 epicnoob22 hackers 4096 Mar 12 2026 .</span>\n' +
+        '<span class="t-dim">drwxr-xr-x 10 epicnoob22 hackers 4096 Mar 12 2026 ..</span>\n' +
+        '<span class="t-yellow">-rw-r--r--  1 epicnoob22 hackers 1337 Mar 12 2026 about.txt</span>\n' +
+        '<span class="t-yellow">-rw-r--r--  1 epicnoob22 hackers 2048 Mar 12 2026 skills.json</span>\n' +
+        '<span class="t-green">drwxr-xr-x  1 epicnoob22 hackers 4096 Mar 12 2026 projects/</span>\n' +
+        '<span class="t-green">drwxr-xr-x  1 epicnoob22 hackers 4096 Mar 12 2026 certs/</span>\n' +
+        '<span class="t-green">drwxr-xr-x  1 epicnoob22 hackers 4096 Mar 12 2026 ctf/</span>\n' +
+        '<span class="t-green">drwxr-xr-x  1 epicnoob22 hackers 4096 Mar 12 2026 blog/</span>\n' +
+        '<span class="t-yellow">-rw-r--r--  1 epicnoob22 hackers  512 Mar 12 2026 contact.txt</span>\n' +
+        '<span class="t-pink">-r--------  1 epicnoob22 hackers   64 Mar 12 2026 .secret</span>\n'
+      );
+    },
+
+    'cat skills.json': function () {
+      return (
+        '<span class="t-cyan">{</span>\n' +
+        '  <span class="t-yellow">"identity"</span>: <span class="t-green">"EpicNoob22"</span>,\n' +
+        '  <span class="t-yellow">"level"</span>: <span class="t-pink">1337</span>,\n' +
+        '  <span class="t-yellow">"skills"</span>: <span class="t-cyan">{</span>\n' +
+        '    <span class="t-yellow">"offensive"</span>: <span class="t-cyan">[</span><span class="t-green">"Pentesting"</span>, <span class="t-green">"OWASP Top 10"</span>, <span class="t-green">"Exploitation"</span>, <span class="t-green">"Kerberoasting"</span><span class="t-cyan">]</span>,\n' +
+        '    <span class="t-yellow">"defensive"</span>: <span class="t-cyan">[</span><span class="t-green">"SIEM/SOC"</span>, <span class="t-green">"Incident Response"</span>, <span class="t-green">"Threat Hunting"</span>, <span class="t-green">"Forensics"</span><span class="t-cyan">]</span>,\n' +
+        '    <span class="t-yellow">"tools"</span>: <span class="t-cyan">[</span><span class="t-green">"Burp Suite"</span>, <span class="t-green">"Metasploit"</span>, <span class="t-green">"Wireshark"</span>, <span class="t-green">"Nmap"</span>, <span class="t-green">"BloodHound"</span><span class="t-cyan">]</span>,\n' +
+        '    <span class="t-yellow">"languages"</span>: <span class="t-cyan">[</span><span class="t-green">"Python"</span>, <span class="t-green">"Bash"</span>, <span class="t-green">"PowerShell"</span>, <span class="t-green">"C"</span>, <span class="t-green">"Go"</span><span class="t-cyan">]</span>\n' +
+        '  <span class="t-cyan">}</span>,\n' +
+        '  <span class="t-yellow">"certifications"</span>: <span class="t-cyan">[</span><span class="t-green">"CompTIA Security+"</span>, <span class="t-green">"eJPT"</span>, <span class="t-green">"Google Cybersecurity"</span><span class="t-cyan">]</span>,\n' +
+        '  <span class="t-yellow">"ctf_platforms"</span>: <span class="t-cyan">[</span><span class="t-green">"HackTheBox"</span>, <span class="t-green">"TryHackMe"</span>, <span class="t-green">"Root-Me"</span><span class="t-cyan">]</span>\n' +
+        '<span class="t-cyan">}</span>\n'
+      );
+    },
+
+    'cat contact.txt': function () {
+      return (
+        '<span class="t-cyan">━━━ Contact EpicNoob22 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>\n\n' +
+        '<span class="t-yellow">📧 Email:    </span><span class="t-white">epicnoob22@proton.me</span>\n' +
+        '<span class="t-yellow">🐙 GitHub:   </span><span class="t-white">https://github.com/EpicNoob22</span>\n' +
+        '<span class="t-yellow">💼 LinkedIn: </span><span class="t-white">linkedin.com/in/EpicNoob22</span>\n' +
+        '<span class="t-yellow">🚩 THM:      </span><span class="t-white">https://tryhackme.com/p/EpicNoob22</span>\n' +
+        '<span class="t-yellow">🌐 HTB:      </span><span class="t-white">https://app.hackthebox.com/profile/EpicNoob22</span>\n' +
+        '<span class="t-yellow">📍 Location: </span><span class="t-white">France 🇫🇷</span>\n\n' +
+        '<span class="t-green">🟢 Disponible pour alternance — Septembre 2026</span>\n'
+      );
+    },
+
+    'cat .secret': function () {
+      return (
+        '<span class="t-pink">🔐 You found the secret file!</span>\n\n' +
+        '<span class="t-green">Flag: </span><span class="t-yellow">CTF{y0u_4r3_4_r34l_h4ck3r}</span>\n\n' +
+        '<span class="t-dim">Well done. You deserve a cookie 🍪</span>\n'
+      );
+    },
+
+    certs: function () {
+      return (
+        '<span class="t-cyan">┌─ Certifications ───────────────────────────────────┐</span>\n\n' +
+        '<span class="t-yellow">[1]</span> <span class="t-green">CompTIA Security+ (SY0-701)</span>  ✅ 2025\n' +
+        '    <span class="t-dim">Score: 812/900 — Fondamentaux, risques, crypto</span>\n\n' +
+        '<span class="t-yellow">[2]</span> <span class="t-green">eJPT (Junior Penetration Tester)</span>  ✅ 2025\n' +
+        '    <span class="t-dim">INE Security — Pentesting web &amp; réseau</span>\n\n' +
+        '<span class="t-yellow">[3]</span> <span class="t-green">Google Cybersecurity Certificate</span>  ✅ 2024\n' +
+        '    <span class="t-dim">Google/Coursera — 8 cours: SIEM, IDS, Python</span>\n\n' +
+        '<span class="t-yellow">[4]</span> <span class="t-green">TryHackMe Advent of Cyber 2025</span>  ✅ 2025\n' +
+        '    <span class="t-dim">24 challenges: OSINT, forensics, web, crypto</span>\n\n' +
+        '<span class="t-cyan">└───────────────────────────────────────────────────┘</span>\n'
+      );
+    },
+
+    ctf: function () {
+      return (
+        '<span class="t-cyan">┌─ CTF Stats ─────────────────────────────────────────┐</span>\n\n' +
+        '<span class="t-yellow">🟢 HackTheBox</span>\n' +
+        '   Rank:     <span class="t-green">Hacker</span>  |  Top <span class="t-pink">10%</span>\n' +
+        '   Machines: <span class="t-white">25+</span>    |  Score: <span class="t-cyan">████████████████░░░░</span> 75%\n\n' +
+        '<span class="t-yellow">🚩 TryHackMe</span>\n' +
+        '   Rank:     <span class="t-green">0x8 [Hacker]</span>  |  Top <span class="t-pink">5%</span>\n' +
+        '   Rooms:    <span class="t-white">80+</span>    |  Score: <span class="t-cyan">█████████████████░░░</span> 85%\n\n' +
+        '<span class="t-yellow">🌐 Root-Me</span>\n' +
+        '   Level:    <span class="t-green">Avancé</span>\n' +
+        '   Challs:   <span class="t-white">150+</span>   |  Score: <span class="t-cyan">█████████████░░░░░░░</span> 65%\n\n' +
+        '<span class="t-cyan">└───────────────────────────────────────────────────┘</span>\n'
+      );
+    },
+
+    uptime: function () {
+      var now = new Date();
+      var h = now.getHours().toString().padStart(2, '0');
+      var m = now.getMinutes().toString().padStart(2, '0');
+      var s = now.getSeconds().toString().padStart(2, '0');
+      return (
+        '<span class="t-green"> ' + h + ':' + m + ':' + s + ' up 22 years, 7 months, 12 days,  1 user,  load average: 0.42, 0.37, 0.29</span>\n' +
+        '<span class="t-dim">(since birth, always learning)</span>\n'
+      );
+    },
+
+    'nmap -sV 192.168.1.1': function () {
+      return (
+        '<span class="t-white">Starting Nmap 7.94 ( https://nmap.org ) at 2026-03-12 14:58 CET</span>\n' +
+        '<span class="t-white">Nmap scan report for router.local (192.168.1.1)</span>\n' +
+        '<span class="t-white">Host is up (0.0012s latency).</span>\n' +
+        '<span class="t-dim">Not shown: 994 filtered tcp ports (no-response)</span>\n\n' +
+        '<span class="t-cyan">PORT      STATE  SERVICE   VERSION</span>\n' +
+        '<span class="t-green">22/tcp    open   ssh       Dropbear sshd 2020.81</span>\n' +
+        '<span class="t-green">53/tcp    open   domain    dnsmasq 2.89</span>\n' +
+        '<span class="t-green">80/tcp    open   http      Lighttpd 1.4.64</span>\n' +
+        '<span class="t-yellow">443/tcp   open   https     Lighttpd 1.4.64</span>\n' +
+        '<span class="t-yellow">8080/tcp  open   http      mini_httpd 1.30</span>\n\n' +
+        '<span class="t-white">OS detection:</span>  <span class="t-cyan">Linux 3.x|4.x (embedded, ARM)</span>\n' +
+        '<span class="t-white">Device type:</span>   <span class="t-green">router|broadband router</span>\n' +
+        '<span class="t-dim">Traceroute: 1 hop (192.168.1.1)</span>\n\n' +
+        '<span class="t-white">Nmap done: 1 IP address (1 host up) scanned in 8.43 seconds</span>\n'
+      );
+    },
+
+    'sudo rm -rf /': function () {
+      return (
+        '<span class="t-yellow">[sudo] password for epicnoob22: </span><span class="t-dim">**************</span>\n\n' +
+        '<span class="t-pink">Nice try. 😏</span>\n' +
+        '<span class="t-pink">Permission denied: This portfolio is protected by quantum encryption.</span>\n' +
+        '<span class="t-dim">rm: cannot remove \'/\': Permission denied (and common sense)</span>\n' +
+        '<span class="t-dim">This incident will be reported to the NSA, FBI, Interpol, and your mom.</span>\n'
+      );
+    },
+
+    matrix: function () {
+      var canvas = document.getElementById('matrixCanvas');
+      if (!canvas) { return '<span class="t-pink">Matrix canvas not found.</span>\n'; }
+      var current = parseFloat(canvas.style.opacity);
+      if (isNaN(current)) { current = 0.07; }
+      if (current > 0.01) {
+        canvas.style.opacity = '0';
+        return '<span class="t-yellow">Matrix rain disabled. Welcome to the desert of the real.</span>\n';
+      } else {
+        canvas.style.opacity = '0.07';
+        return '<span class="t-green">Matrix rain enabled. There is no spoon.</span>\n';
+      }
+    },
+
+    banner: function () {
+      return (
+        '<span class="t-green">  ███████╗██████╗ ██╗ ██████╗ </span>\n' +
+        '<span class="t-green">  ██╔════╝██╔══██╗██║██╔════╝ </span>\n' +
+        '<span class="t-green">  █████╗  ██████╔╝██║██║      </span>\n' +
+        '<span class="t-green">  ██╔══╝  ██╔═══╝ ██║██║      </span>\n' +
+        '<span class="t-green">  ███████╗██║     ██║╚██████╗ </span>\n' +
+        '<span class="t-green">  ╚══════╝╚═╝     ╚═╝ ╚═════╝ </span>\n\n' +
+        '<span class="t-cyan">  ███╗   ██╗ ██████╗  ██████╗ ██████╗ ██████╗ ██████╗ </span>\n' +
+        '<span class="t-cyan">  ████╗  ██║██╔═══██╗██╔═══██╗██╔══██╗╚════██╗╚════██╗</span>\n' +
+        '<span class="t-cyan">  ██╔██╗ ██║██║   ██║██║   ██║██████╔╝ █████╔╝ █████╔╝</span>\n' +
+        '<span class="t-cyan">  ██║╚██╗██║██║   ██║██║   ██║██╔══██╗██╔═══╝ ██╔═══╝ </span>\n' +
+        '<span class="t-cyan">  ██║ ╚████║╚██████╔╝╚██████╔╝██████╔╝███████╗███████╗</span>\n' +
+        '<span class="t-cyan">  ╚═╝  ╚═══╝ ╚═════╝  ╚═════╝ ╚═════╝ ╚══════╝╚══════╝</span>\n\n' +
+        '<span class="t-yellow">  Cybersecurity Portfolio | Hack the planet ethically 🌍🔐</span>\n' +
+        '<span class="t-dim">  Type \'help\' to see available commands</span>\n'
+      );
+    },
+
+    fortune: function () {
+      var quotes = [
+        '"The quieter you become, the more you are able to hear." — Kali Linux',
+        '"The only truly secure system is one that is powered off." — Gene Spafford',
+        '"Security is a process, not a product." — Bruce Schneier',
+        '"Amateurs hack systems, professionals hack people." — Bruce Schneier',
+        '"The best defense is a good offense." — Sun Tzu (adapted)',
+        '"Hackers are breaking the systems for profit. Before, it was about intellectual curiosity." — Kevin Mitnick',
+        '"With enough time, resources and motivation, a determined adversary will always get in." — NIST',
+        '"In cybersecurity, the only constant is change — and attackers know this better than defenders." — Unknown',
+        '"If you think technology can solve your security problems, you don\'t understand the problems." — Bruce Schneier',
+        '"Privacy is not something that I\'m merely entitled to, it\'s an absolute prerequisite." — Marlon Brando',
+        '"To hack is not to destroy — it is to understand." — Unknown',
+        '"Every system is hackable. The question is whether the reward justifies the effort." — Anonymous',
+        '"Know your enemy, know yourself, and you need not fear the result of a hundred battles." — Sun Tzu',
+        '"Offense informs defense." — Every pentester ever',
+        '"Root is not a destination, it\'s a journey." — EpicNoob22'
+      ];
+      var quote = quotes[Math.floor(Math.random() * quotes.length)];
+      return '<span class="t-yellow">💬 ' + escapeHtml(quote) + '</span>\n';
+    },
+
+    'cd projects && ls': function () {
+      return (
+        '<span class="t-dim">Changing to projects directory...</span>\n\n' +
+        '<span class="t-cyan">drwxr-xr-x  8 epicnoob22 hackers 4096 2026  ~/projects/</span>\n\n' +
+        '<span class="t-green">🏠 homelab-soc      </span><span class="t-dim">SOC maison avec ELK, Wazuh, Suricata</span>\n' +
+        '<span class="t-green">🔍 vulnscanner-pro  </span><span class="t-dim">Scanner de vulnérabilités web en Python</span>\n' +
+        '<span class="t-green">🔐 ad-lab           </span><span class="t-dim">Active Directory lab vulnérable</span>\n' +
+        '<span class="t-green">🦠 malware-sandbox  </span><span class="t-dim">Sandbox analyse dynamique/statique</span>\n' +
+        '<span class="t-green">🎣 phishguard       </span><span class="t-dim">Outil de sensibilisation au phishing</span>\n' +
+        '<span class="t-green">🤖 autorecon-bot    </span><span class="t-dim">Bot de reconnaissance automatisée</span>\n' +
+        '<span class="t-green">🌐 honeypot-network </span><span class="t-dim">Réseau de honeypots VPS</span>\n' +
+        '<span class="t-green">🔑 cryptovault      </span><span class="t-dim">Gestionnaire de mots de passe AES-256</span>\n\n' +
+        '<span class="t-yellow">→ Voir tous les projets: </span><span class="t-cyan">https://github.com/EpicNoob22</span>\n'
+      );
     }
   };
+
+  function runHackAnimation(target) {
+    var steps = [
+      { text: '<span class="t-cyan">[*] Initializing exploit framework...</span>', delay: 200 },
+      { text: '<span class="t-cyan">[*] Target: </span><span class="t-yellow">' + target + '</span>', delay: 400 },
+      { text: '<span class="t-white">[*] Scanning open ports...</span>', delay: 600 },
+      { text: '<span class="t-green">[+] Port 22 (SSH) — OPEN</span>', delay: 900 },
+      { text: '<span class="t-green">[+] Port 80 (HTTP) — OPEN</span>', delay: 1100 },
+      { text: '<span class="t-white">[*] Bypassing firewall...</span> <span class="t-green">OK</span>', delay: 1400 },
+      { text: '<span class="t-white">[*] Loading payloads...</span> <span class="t-green">OK</span>', delay: 1700 },
+      { text: '<span class="t-white">[*] Injecting payload... </span><span class="t-green">████████████████████</span> 100%', delay: 2100 },
+      { text: '<span class="t-white">[*] Escalating privileges...</span>', delay: 2400 },
+      { text: '<span class="t-yellow">[!] Root shell obtained:</span>', delay: 2700 },
+      { text: '<span class="t-green">root@' + target + ':~# </span><span class="t-pink">ACCESS GRANTED 🎉</span>', delay: 3000 },
+      { text: '<span class="t-dim">// Purely cosmetic — No actual systems were harmed. Stay ethical! 🔐</span>', delay: 3300 }
+    ];
+    steps.forEach(function (step) {
+      setTimeout(function () {
+        appendTerminalOutput(step.text + '\n');
+      }, step.delay);
+    });
+  }
+
 
   function escapeHtml(str) {
     return String(str)
@@ -1099,6 +1344,8 @@
     } else if (cmdLower.startsWith('echo ')) {
       var echoArgs = cmd.slice(5).split(' ');
       result = terminalCommands.echo(echoArgs);
+    } else if (cmdLower === 'cd projects && ls') {
+      result = terminalCommands['cd projects && ls']();
     } else if (cmdLower.startsWith('cd ')) {
       var target = cmd.slice(3).trim().toLowerCase();
       var validSections = ['home', 'about', 'skills', 'projects', 'certifications', 'ctf', 'blog', 'contact'];
@@ -1116,14 +1363,46 @@
       }
     } else if (cmdLower === 'cat about.txt') {
       result = terminalCommands['cat about.txt']();
+    } else if (cmdLower === 'cat skills.json') {
+      result = terminalCommands['cat skills.json']();
+    } else if (cmdLower === 'cat contact.txt') {
+      result = terminalCommands['cat contact.txt']();
+    } else if (cmdLower === 'cat .secret') {
+      result = terminalCommands['cat .secret']();
+    } else if (cmdLower === 'ls -la' || cmdLower === 'ls -al') {
+      result = terminalCommands['ls -la']();
     } else if (cmdLower === 'sudo hire me') {
       result = terminalCommands['sudo hire me']();
+    } else if (cmdLower === 'sudo rm -rf /' || cmdLower === 'sudo rm -rf /*') {
+      result = terminalCommands['sudo rm -rf /']();
     } else if (cmdLower === 'ping google.com') {
       result = terminalCommands['ping google.com']();
     } else if (cmdLower === 'nmap localhost') {
       result = terminalCommands['nmap localhost']();
+    } else if (cmdLower === 'nmap -sv 192.168.1.1') {
+      result = terminalCommands['nmap -sV 192.168.1.1']();
     } else if (cmdLower === 'uname -a') {
       result = terminalCommands['uname -a']();
+    } else if (cmdLower.startsWith('cowsay')) {
+      var cowText = cmd.slice(6).trim() || 'Moo!';
+      var textLine = escapeHtml(cowText);
+      var borderLen = textLine.length + 2;
+      var topBorder = '+' + '-'.repeat(borderLen) + '+';
+      var bottomBorder = '+' + '-'.repeat(borderLen) + '+';
+      result = (
+        '<span class="t-yellow">' + topBorder + '</span>\n' +
+        '<span class="t-yellow">| </span><span class="t-white">' + textLine + '</span><span class="t-yellow"> |</span>\n' +
+        '<span class="t-yellow">' + bottomBorder + '</span>\n' +
+        '<span class="t-yellow">        \\   ^__^</span>\n' +
+        '<span class="t-yellow">         \\  (oo)\\_______</span>\n' +
+        '<span class="t-yellow">            (__)\\       )\\/\\</span>\n' +
+        '<span class="t-yellow">                ||----w |</span>\n' +
+        '<span class="t-yellow">                ||     ||</span>\n'
+      );
+    } else if (cmdLower.startsWith('hack')) {
+      var hackTarget = cmd.slice(4).trim() || 'target';
+      runHackAnimation(escapeHtml(hackTarget));
+      return;
     } else {
       result =
         '<span class="t-pink">bash: ' + escapeHtml(cmd) + ': command not found</span>\n' +
@@ -1516,6 +1795,72 @@
   }
 
   /* ============================================================
+     16. PROJECT FILTER
+  ============================================================ */
+
+  function initProjectFilter() {
+    var filterBtns = document.querySelectorAll('.filter-btn');
+    var projectCards = document.querySelectorAll('.project-card[data-filter]');
+
+    if (!filterBtns.length || !projectCards.length) return;
+
+    filterBtns.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        /* Update active button */
+        filterBtns.forEach(function (b) {
+          b.classList.remove('active');
+          b.setAttribute('aria-pressed', 'false');
+        });
+        btn.classList.add('active');
+        btn.setAttribute('aria-pressed', 'true');
+
+        var filter = btn.getAttribute('data-filter');
+
+        projectCards.forEach(function (card) {
+          var categories = (card.getAttribute('data-filter') || '').split(' ');
+          if (filter === 'all' || categories.indexOf(filter) !== -1) {
+            card.style.display = '';
+            card.style.opacity = '0';
+            card.style.transform = 'scale(0.95)';
+            requestAnimationFrame(function () {
+              requestAnimationFrame(function () {
+                card.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+                card.style.opacity = '1';
+                card.style.transform = 'scale(1)';
+              });
+            });
+          } else {
+            card.style.transition = 'opacity 0.2s ease, transform 0.2s ease';
+            card.style.opacity = '0';
+            card.style.transform = 'scale(0.9)';
+            setTimeout(function () {
+              card.style.display = 'none';
+            }, 200);
+          }
+        });
+      });
+    });
+  }
+
+  /* ============================================================
+     17. SCROLL PROGRESS BAR
+  ============================================================ */
+
+  function initScrollProgress() {
+    var bar = document.getElementById('scrollProgressBar');
+    if (!bar) return;
+
+    var handleScroll = throttle(function () {
+      var scrollTop = window.scrollY || document.documentElement.scrollTop;
+      var docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      var pct = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+      bar.style.width = Math.min(pct, 100) + '%';
+    }, 16);
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+  }
+
+  /* ============================================================
      18. INIT ALL
   ============================================================ */
 
@@ -1534,6 +1879,8 @@
     initContactForm();
     initBackToTop();
     initSmoothScroll();
+    initProjectFilter();
+    initScrollProgress();
     initResizeHandler();
   }
 

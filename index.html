@@ -10,8 +10,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
-  <!-- Google Fonts: JetBrains Mono + Orbitron -->
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Orbitron:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <!-- Google Fonts: JetBrains Mono + Orbitron + Inter -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Orbitron:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
 
   <!-- Font Awesome 6.5.0 -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -20,6 +20,47 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+
+  <!-- ═══════════════════════════════════════════
+       SCROLL PROGRESS BAR
+  ═══════════════════════════════════════════ -->
+  <div class="scroll-progress-track" aria-hidden="true">
+    <div id="scrollProgressBar" class="scroll-progress-bar"></div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       SOCIAL SIDEBAR (desktop)
+  ═══════════════════════════════════════════ -->
+  <aside class="social-sidebar" aria-label="Réseaux sociaux">
+    <ul class="social-sidebar-list" role="list">
+      <li>
+        <a href="https://github.com/EpicNoob22" class="social-sidebar-link" target="_blank" rel="noopener noreferrer" aria-label="GitHub EpicNoob22">
+          <i class="fab fa-github" aria-hidden="true"></i>
+        </a>
+      </li>
+      <li>
+        <a href="https://linkedin.com/in/EpicNoob22" class="social-sidebar-link" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn EpicNoob22">
+          <i class="fab fa-linkedin-in" aria-hidden="true"></i>
+        </a>
+      </li>
+      <li>
+        <a href="mailto:epicnoob22@proton.me" class="social-sidebar-link" aria-label="Envoyer un email à EpicNoob22">
+          <i class="fas fa-envelope" aria-hidden="true"></i>
+        </a>
+      </li>
+      <li>
+        <a href="https://tryhackme.com/p/EpicNoob22" class="social-sidebar-link" target="_blank" rel="noopener noreferrer" aria-label="TryHackMe EpicNoob22">
+          <i class="fas fa-flag" aria-hidden="true"></i>
+        </a>
+      </li>
+      <li>
+        <a href="https://app.hackthebox.com/profile/EpicNoob22" class="social-sidebar-link" target="_blank" rel="noopener noreferrer" aria-label="HackTheBox EpicNoob22">
+          <i class="fas fa-cube" aria-hidden="true"></i>
+        </a>
+      </li>
+    </ul>
+    <div class="social-sidebar-line" aria-hidden="true"></div>
+  </aside>
 
   <!-- ═══════════════════════════════════════════
        CUSTOM CURSOR
@@ -484,10 +525,29 @@
           <span class="prompt" aria-hidden="true">$ </span>ls ~/projects
         </h2>
 
+        <!-- Project Filter Buttons -->
+        <div class="project-filters" role="group" aria-label="Filtrer les projets">
+          <button class="filter-btn active" data-filter="all" aria-pressed="true">
+            <i class="fas fa-th-large" aria-hidden="true"></i> All
+          </button>
+          <button class="filter-btn" data-filter="offensive" aria-pressed="false">
+            <i class="fas fa-crosshairs" aria-hidden="true"></i> Offensive
+          </button>
+          <button class="filter-btn" data-filter="defensive" aria-pressed="false">
+            <i class="fas fa-shield-halved" aria-hidden="true"></i> Defensive
+          </button>
+          <button class="filter-btn" data-filter="tools" aria-pressed="false">
+            <i class="fas fa-wrench" aria-hidden="true"></i> Tools
+          </button>
+          <button class="filter-btn" data-filter="labs" aria-pressed="false">
+            <i class="fas fa-flask" aria-hidden="true"></i> Labs
+          </button>
+        </div>
+
         <div class="projects-grid" role="list">
 
           <!-- Project 1: HomeLab SOC -->
-          <article class="project-card animate-on-scroll tilt-card" role="listitem">
+          <article class="project-card animate-on-scroll tilt-card" data-filter="defensive labs" role="listitem">
             <div class="project-card-links">
               <a href="https://github.com/EpicNoob22/homelab-soc" class="project-link" target="_blank" rel="noopener noreferrer" aria-label="Voir HomeLab SOC sur GitHub">
                 <i class="fab fa-github" aria-hidden="true"></i>
@@ -513,7 +573,7 @@
           </article>
 
           <!-- Project 2: VulnScanner Pro -->
-          <article class="project-card animate-on-scroll tilt-card" role="listitem">
+          <article class="project-card animate-on-scroll tilt-card" data-filter="offensive tools" role="listitem">
             <div class="project-card-links">
               <a href="https://github.com/EpicNoob22/vulnscanner-pro" class="project-link" target="_blank" rel="noopener noreferrer" aria-label="Voir VulnScanner Pro sur GitHub">
                 <i class="fab fa-github" aria-hidden="true"></i>
@@ -539,7 +599,7 @@
           </article>
 
           <!-- Project 3: Active Directory Lab -->
-          <article class="project-card animate-on-scroll tilt-card" role="listitem">
+          <article class="project-card animate-on-scroll tilt-card" data-filter="offensive labs" role="listitem">
             <div class="project-card-links">
               <a href="https://github.com/EpicNoob22/ad-lab" class="project-link" target="_blank" rel="noopener noreferrer" aria-label="Voir Active Directory Lab sur GitHub">
                 <i class="fab fa-github" aria-hidden="true"></i>
@@ -565,7 +625,7 @@
           </article>
 
           <!-- Project 4: Malware Analysis Sandbox -->
-          <article class="project-card animate-on-scroll tilt-card" role="listitem">
+          <article class="project-card animate-on-scroll tilt-card" data-filter="defensive labs" role="listitem">
             <div class="project-card-links">
               <a href="https://github.com/EpicNoob22/malware-sandbox" class="project-link" target="_blank" rel="noopener noreferrer" aria-label="Voir Malware Analysis Sandbox sur GitHub">
                 <i class="fab fa-github" aria-hidden="true"></i>
@@ -591,7 +651,7 @@
           </article>
 
           <!-- Project 5: PhishGuard -->
-          <article class="project-card animate-on-scroll tilt-card" role="listitem">
+          <article class="project-card animate-on-scroll tilt-card" data-filter="tools offensive" role="listitem">
             <div class="project-card-links">
               <a href="https://github.com/EpicNoob22/phishguard" class="project-link" target="_blank" rel="noopener noreferrer" aria-label="Voir PhishGuard sur GitHub">
                 <i class="fab fa-github" aria-hidden="true"></i>
@@ -617,7 +677,7 @@
           </article>
 
           <!-- Project 6: AutoRecon Bot -->
-          <article class="project-card animate-on-scroll tilt-card" role="listitem">
+          <article class="project-card animate-on-scroll tilt-card" data-filter="offensive tools" role="listitem">
             <div class="project-card-links">
               <a href="https://github.com/EpicNoob22/autorecon-bot" class="project-link" target="_blank" rel="noopener noreferrer" aria-label="Voir AutoRecon Bot sur GitHub">
                 <i class="fab fa-github" aria-hidden="true"></i>
@@ -643,7 +703,7 @@
           </article>
 
           <!-- Project 7: Honeypot Network -->
-          <article class="project-card animate-on-scroll tilt-card" role="listitem">
+          <article class="project-card animate-on-scroll tilt-card" data-filter="defensive labs" role="listitem">
             <div class="project-card-links">
               <a href="https://github.com/EpicNoob22/honeypot-network" class="project-link" target="_blank" rel="noopener noreferrer" aria-label="Voir Honeypot Network sur GitHub">
                 <i class="fab fa-github" aria-hidden="true"></i>
@@ -669,7 +729,7 @@
           </article>
 
           <!-- Project 8: CryptoVault -->
-          <article class="project-card animate-on-scroll tilt-card" role="listitem">
+          <article class="project-card animate-on-scroll tilt-card" data-filter="tools" role="listitem">
             <div class="project-card-links">
               <a href="https://github.com/EpicNoob22/cryptovault" class="project-link" target="_blank" rel="noopener noreferrer" aria-label="Voir CryptoVault sur GitHub">
                 <i class="fab fa-github" aria-hidden="true"></i>
