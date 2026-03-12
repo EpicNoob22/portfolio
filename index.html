@@ -3,1487 +3,987 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Portfolio cybersécurité d'EpicNoob22 — étudiant passionné en sécurité offensive & défensive, disponible pour alternance." />
+  <meta name="description" content="Portfolio cybersécurité d'EpicNoob22 — apprenti en sécurité offensive &amp; défensive, disponible pour alternance en septembre 2026." />
+  <meta name="theme-color" content="#06060e" />
+  <meta property="og:title" content="EpicNoob22 | Cybersecurity Portfolio" />
+  <meta property="og:description" content="Portfolio premium d'EpicNoob22 — Ethical Hacker, Red &amp; Blue Team, disponible pour alternance." />
+  <meta property="og:image" content="https://github.com/EpicNoob22.png" />
+  <meta property="og:type" content="website" />
   <title>EpicNoob22 | Cybersecurity Portfolio</title>
-
-  <!-- Preconnect to Google Fonts -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%9B%A1%EF%B8%8F%3C/text%3E%3C/svg%3E" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-
-  <!-- Google Fonts: JetBrains Mono + Orbitron + Inter -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Orbitron:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
-
-  <!-- Font Awesome 6.5.0 -->
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:ital,wght@0,400;0,500;0,700;1,400&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
-
-  <!-- Stylesheet -->
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-  <!-- ═══════════════════════════════════════════
-       SCROLL PROGRESS BAR
-  ═══════════════════════════════════════════ -->
-  <div class="scroll-progress-track" aria-hidden="true">
-    <div id="scrollProgressBar" class="scroll-progress-bar"></div>
-  </div>
+  <!-- SCROLL PROGRESS -->
+  <div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
 
-  <!-- ═══════════════════════════════════════════
-       SOCIAL SIDEBAR (desktop)
-  ═══════════════════════════════════════════ -->
-  <aside class="social-sidebar" aria-label="Réseaux sociaux">
-    <ul class="social-sidebar-list" role="list">
-      <li>
-        <a href="https://github.com/EpicNoob22" class="social-sidebar-link" target="_blank" rel="noopener noreferrer" aria-label="GitHub EpicNoob22">
-          <i class="fab fa-github" aria-hidden="true"></i>
-        </a>
-      </li>
-      <li>
-        <a href="https://linkedin.com/in/EpicNoob22" class="social-sidebar-link" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn EpicNoob22">
-          <i class="fab fa-linkedin-in" aria-hidden="true"></i>
-        </a>
-      </li>
-      <li>
-        <a href="mailto:epicnoob22@proton.me" class="social-sidebar-link" aria-label="Envoyer un email à EpicNoob22">
-          <i class="fas fa-envelope" aria-hidden="true"></i>
-        </a>
-      </li>
-      <li>
-        <a href="https://tryhackme.com/p/EpicNoob22" class="social-sidebar-link" target="_blank" rel="noopener noreferrer" aria-label="TryHackMe EpicNoob22">
-          <i class="fas fa-flag" aria-hidden="true"></i>
-        </a>
-      </li>
-      <li>
-        <a href="https://app.hackthebox.com/profile/EpicNoob22" class="social-sidebar-link" target="_blank" rel="noopener noreferrer" aria-label="HackTheBox EpicNoob22">
-          <i class="fas fa-cube" aria-hidden="true"></i>
-        </a>
-      </li>
-    </ul>
-    <div class="social-sidebar-line" aria-hidden="true"></div>
-  </aside>
+  <!-- CUSTOM CURSOR -->
+  <div class="cursor-dot" id="cursorDot" aria-hidden="true"></div>
+  <div class="cursor-ring" id="cursorRing" aria-hidden="true"></div>
 
-  <!-- ═══════════════════════════════════════════
-       CUSTOM CURSOR
-  ═══════════════════════════════════════════ -->
-  <div class="cursor-outer" id="cursorOuter"></div>
-  <div class="cursor-inner" id="cursorInner"></div>
-
-  <!-- ═══════════════════════════════════════════
-       PRELOADER
-  ═══════════════════════════════════════════ -->
+  <!-- PRELOADER -->
   <div id="preloader" class="preloader" aria-hidden="true">
-    <div class="preloader-content">
-      <div class="preloader-spinner">
-        <div class="spinner-ring"></div>
-        <div class="spinner-ring"></div>
-        <div class="spinner-ring"></div>
-        <i class="fas fa-shield-halved spinner-icon"></i>
+    <div class="preloader-inner">
+      <div class="preloader-name" id="preloaderName" aria-label="EpicNoob22">
+        <span>E</span><span>p</span><span>i</span><span>c</span><span>N</span><span>o</span><span>o</span><span>b</span><span>2</span><span>2</span>
       </div>
-      <p class="preloader-text">Initializing system...</p>
-      <div class="preloader-bar">
-        <div class="preloader-bar-fill"></div>
-      </div>
+      <p class="preloader-subtitle">Cybersecurity Portfolio</p>
     </div>
   </div>
 
-  <!-- ═══════════════════════════════════════════
-       BOOT SEQUENCE OVERLAY
-  ═══════════════════════════════════════════ -->
-  <div id="bootSequence" class="boot-sequence" aria-hidden="true">
-    <div class="boot-terminal">
-      <pre id="bootText" class="boot-text"></pre>
-    </div>
-  </div>
+  <!-- GRAIN OVERLAY -->
+  <div class="grain-overlay" aria-hidden="true"></div>
 
-  <!-- ═══════════════════════════════════════════
-       SCANLINES OVERLAY
-  ═══════════════════════════════════════════ -->
-  <div class="scanlines" aria-hidden="true"></div>
-
-  <!-- ═══════════════════════════════════════════
-       MATRIX CANVAS
-  ═══════════════════════════════════════════ -->
-  <canvas id="matrixCanvas" aria-hidden="true"></canvas>
-
-  <!-- ═══════════════════════════════════════════
-       PARTICLES CANVAS
-  ═══════════════════════════════════════════ -->
-  <canvas id="particlesCanvas" aria-hidden="true"></canvas>
-
-  <!-- ═══════════════════════════════════════════
-       NAVIGATION
-  ═══════════════════════════════════════════ -->
+  <!-- NAVIGATION -->
   <nav class="navbar" id="navbar" role="navigation" aria-label="Navigation principale">
-    <div class="navbar-container">
-      <a href="#home" class="nav-logo" aria-label="EpicNoob22 — retour à l'accueil">
-        <span class="logo-bracket">[</span>EpicNoob22<span class="logo-bracket">]</span>
+    <div class="nav-container">
+      <a href="#home" class="nav-logo" aria-label="EpicNoob22 - Accueil">
+        <span class="nav-logo-text">EpicNoob22</span>
+        <span class="nav-logo-dot"></span>
       </a>
-
-      <ul class="nav-links" id="navLinks" role="list">
-        <li><a href="#home" class="nav-link active" data-section="home" aria-label="Accueil"><i class="fas fa-house" aria-hidden="true"></i><span>Home</span></a></li>
-        <li><a href="#about" class="nav-link" data-section="about" aria-label="À propos"><i class="fas fa-user" aria-hidden="true"></i><span>Whoami</span></a></li>
-        <li><a href="#skills" class="nav-link" data-section="skills" aria-label="Compétences"><i class="fas fa-code" aria-hidden="true"></i><span>Skills</span></a></li>
-        <li><a href="#projects" class="nav-link" data-section="projects" aria-label="Projets"><i class="fas fa-folder-open" aria-hidden="true"></i><span>Projects</span></a></li>
-        <li><a href="#certifications" class="nav-link" data-section="certifications" aria-label="Certifications"><i class="fas fa-certificate" aria-hidden="true"></i><span>Certifications</span></a></li>
-        <li><a href="#ctf" class="nav-link" data-section="ctf" aria-label="CTF"><i class="fas fa-flag" aria-hidden="true"></i><span>CTF</span></a></li>
-        <li><a href="#blog" class="nav-link" data-section="blog" aria-label="Blog"><i class="fas fa-blog" aria-hidden="true"></i><span>Blog</span></a></li>
-        <li><a href="#contact" class="nav-link" data-section="contact" aria-label="Contact"><i class="fas fa-envelope" aria-hidden="true"></i><span>Contact</span></a></li>
+      <ul class="nav-links" role="list" id="navLinks">
+        <li><a href="#about" class="nav-link">À propos</a></li>
+        <li><a href="#journey" class="nav-link">Parcours</a></li>
+        <li><a href="#skills" class="nav-link">Compétences</a></li>
+        <li><a href="#projects" class="nav-link">Projets</a></li>
+        <li><a href="#certifications" class="nav-link">Certifications</a></li>
+        <li><a href="#ctf" class="nav-link">CTF</a></li>
+        <li><a href="#blog" class="nav-link">Blog</a></li>
+        <li><a href="#contact" class="nav-link nav-link-cta">Contact</a></li>
       </ul>
-
-      <button class="hamburger" id="hamburger" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="navLinks">
-        <span class="hamburger-line"></span>
-        <span class="hamburger-line"></span>
-        <span class="hamburger-line"></span>
+      <button class="nav-hamburger" id="navHamburger" aria-label="Menu navigation" aria-expanded="false" aria-controls="navLinks">
+        <span></span><span></span><span></span>
       </button>
     </div>
   </nav>
 
-  <!-- ═══════════════════════════════════════════
-       MAIN CONTENT
-  ═══════════════════════════════════════════ -->
-  <main id="main-content">
+  <!-- MAIN CONTENT -->
+  <main id="main">
 
-    <!-- ─────────────────────────────────────────
-         SECTION: HERO
-    ───────────────────────────────────────── -->
-    <section id="home" class="section hero-section" aria-label="Introduction">
-      <div class="hero-container">
-
-        <!-- Hero Left -->
-        <div class="hero-content">
-          <div class="status-badge-wrapper">
-            <span class="status-badge">
-              <i class="fas fa-circle status-dot" aria-hidden="true"></i>
-              Available for Alternance
-            </span>
-          </div>
-
-          <h1 class="hero-title glitch" data-text="EpicNoob22">EpicNoob22</h1>
-
-          <p class="hero-subtitle">
-            <i class="fas fa-shield-halved" aria-hidden="true"></i>
-            Apprenti Cybersécurité | Ethical Hacker | Passionné de sécurité offensive &amp; défensive
-          </p>
-
-          <!-- Terminal Box -->
-          <div class="terminal-box" role="region" aria-label="Terminal interactif">
-            <div class="terminal-header">
-              <span class="terminal-dot dot-red" aria-hidden="true"></span>
-              <span class="terminal-dot dot-yellow" aria-hidden="true"></span>
-              <span class="terminal-dot dot-green" aria-hidden="true"></span>
-              <span class="terminal-title">terminal — bash</span>
-            </div>
-            <div class="terminal-body">
-              <span class="terminal-prompt">epicnoob22@kali:~$ </span><span id="typewriter" class="typewriter" aria-live="polite"></span><span class="cursor-blink" aria-hidden="true">█</span>
-            </div>
-          </div>
-
-          <!-- CTA Buttons -->
-          <div class="hero-buttons">
-            <a href="#projects" class="btn btn-primary">
-              <i class="fas fa-folder-open" aria-hidden="true"></i>
-              Mes Projets
-            </a>
-            <a href="#contact" class="btn btn-secondary">
-              <i class="fas fa-envelope" aria-hidden="true"></i>
-              Me Contacter
-            </a>
-            <a href="cv_epicnoob22.pdf" class="btn btn-ghost" download aria-label="Télécharger le CV d'EpicNoob22">
-              <i class="fas fa-download" aria-hidden="true"></i>
-              Mon CV
-            </a>
-          </div>
+    <!-- ═══════════════════════════ HERO ═══════════════════════════ -->
+    <section id="home" class="hero" aria-label="Présentation">
+      <div class="hero-bg" aria-hidden="true">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+        <div class="blob blob-4"></div>
+        <div class="blob blob-5"></div>
+      </div>
+      <div class="hero-shapes" aria-hidden="true">
+        <div class="shape shape-ring shape-1"></div>
+        <div class="shape shape-ring shape-2"></div>
+        <div class="shape shape-cross shape-3"></div>
+        <div class="shape shape-dot shape-4"></div>
+      </div>
+      <div class="hero-content reveal-up" data-delay="0">
+        <p class="hero-eyebrow">Portfolio 2026 &nbsp;·&nbsp; Cybersecurity Specialist</p>
+        <h1 class="hero-name">EpicNoob22</h1>
+        <p class="hero-subtitle">Apprenti en Cybersécurité&nbsp;·&nbsp;Ethical Hacker&nbsp;·&nbsp;Red &amp; Blue Team</p>
+        <p class="hero-desc">Passionné par la sécurité offensive et défensive, je construis des outils, je casse des systèmes (éthiquement), et je protège les infrastructures. Actuellement en recherche d'alternance.</p>
+        <div class="hero-badge">
+          <span class="badge-dot"></span>
+          Disponible pour alternance &mdash; Sept. 2026
         </div>
-
-        <!-- Hero Right -->
-        <div class="hero-visual" aria-hidden="true">
-          <div class="hero-avatar-wrapper">
-            <div class="neon-ring-outer"></div>
-            <div class="neon-ring-inner"></div>
-            <img
-              src="https://github.com/EpicNoob22.png"
-              alt="Photo de profil d'EpicNoob22"
-              class="hero-avatar"
-              loading="lazy"
-              width="280"
-              height="280"
-            />
-          </div>
-
-          <!-- Floating Badges -->
-          <div class="float-badge badge-kali">
-            <i class="fas fa-dragon"></i>
-            <span>Kali Linux</span>
-          </div>
-          <div class="float-badge badge-ctf">
-            <i class="fas fa-flag"></i>
-            <span>CTF Player</span>
-          </div>
-          <div class="float-badge badge-hacker">
-            <i class="fas fa-user-secret"></i>
-            <span>Ethical Hacker</span>
-          </div>
+        <div class="hero-actions">
+          <a href="#projects" class="btn btn-primary magnetic-btn" data-magnetic>
+            <span>Découvrir mes projets</span>
+            <i class="fas fa-arrow-right" aria-hidden="true"></i>
+          </a>
+          <a href="#contact" class="btn btn-outline magnetic-btn" data-magnetic>
+            <span>Me contacter</span>
+          </a>
         </div>
       </div>
-
-      <!-- Scroll Indicator -->
-      <div class="scroll-indicator" aria-hidden="true">
-        <span class="scroll-text">Scroll</span>
-        <div class="scroll-chevron">
-          <i class="fas fa-chevron-down"></i>
-        </div>
+      <div class="hero-scroll-indicator" aria-hidden="true">
+        <span class="scroll-label">Scroll</span>
+        <span class="scroll-line"></span>
       </div>
     </section>
 
-    <!-- ─────────────────────────────────────────
-         SECTION: ABOUT / WHOAMI
-    ───────────────────────────────────────── -->
-    <section id="about" class="section about-section" aria-label="À propos">
-      <div class="section-container">
-
-        <h2 class="section-title">
-          <span class="prompt" aria-hidden="true"># </span>whoami
-        </h2>
-
+    <!-- ═══════════════════════════ ABOUT ═══════════════════════════ -->
+    <section id="about" class="section about" aria-label="À propos">
+      <div class="section-divider" aria-hidden="true"></div>
+      <div class="container">
         <div class="about-grid">
-          <!-- About Left: Photo -->
-          <div class="about-photo-wrapper">
-            <div class="about-photo-ring"></div>
-            <img
-              src="https://github.com/EpicNoob22.png"
-              alt="EpicNoob22"
-              class="about-photo"
-              loading="lazy"
-              width="300"
-              height="300"
-            />
-          </div>
-
-          <!-- About Right: Text -->
-          <div class="about-text">
-            <p>
-              Salut ! Je suis <strong>EpicNoob22</strong>, un étudiant passionné de cybersécurité actuellement en
-              alternance. Ma mission ? Apprendre chaque jour un peu plus sur l'art de sécuriser les systèmes
-              informatiques, comprendre l'adversaire pour mieux le contrer.
-            </p>
-            <p>
-              Je me spécialise aussi bien dans la <strong>sécurité offensive</strong> (pentesting, exploitation,
-              CTF) que dans la <strong>sécurité défensive</strong> (SOC, Blue Team, Incident Response). Cette
-              double vision me permet d'approcher les problématiques de sécurité de façon globale et réaliste.
-            </p>
-            <p>
-              Je suis à la recherche d'une <strong>alternance (apprentissage) à partir de septembre 2026</strong>
-              dans un environnement stimulant où je pourrai contribuer à de vrais projets de sécurité tout en
-              continuant à monter en compétences. Hack the planet, but ethically. 🌍🔐
-            </p>
-
-            <!-- Timeline -->
-            <div class="timeline" aria-label="Parcours">
-              <div class="timeline-item">
-                <div class="timeline-marker"></div>
-                <div class="timeline-content">
-                  <span class="timeline-date">2024 — Présent</span>
-                  <h3 class="timeline-title">Alternance Cybersécurité</h3>
-                  <p class="timeline-desc">BUT Informatique — option Cybersécurité</p>
-                </div>
+          <div class="about-visual reveal-left">
+            <div class="about-photo-wrap">
+              <img
+                src="https://github.com/EpicNoob22.png"
+                alt="Photo de profil EpicNoob22"
+                class="about-photo"
+                width="300"
+                height="300"
+                loading="lazy"
+              />
+              <div class="about-photo-border" aria-hidden="true"></div>
+            </div>
+            <div class="about-stats">
+              <div class="stat-card glass" data-count="50" data-suffix="+">
+                <span class="stat-number accent-primary">50+</span>
+                <span class="stat-label">CTF résolus</span>
               </div>
-              <div class="timeline-item">
-                <div class="timeline-marker"></div>
-                <div class="timeline-content">
-                  <span class="timeline-date">2023</span>
-                  <h3 class="timeline-title">Bac Pro SN</h3>
-                  <p class="timeline-desc">Systèmes Numériques — mention Bien</p>
-                </div>
+              <div class="stat-card glass" data-count="4" data-suffix="">
+                <span class="stat-number accent-cyan">4</span>
+                <span class="stat-label">Certifications</span>
               </div>
-              <div class="timeline-item">
-                <div class="timeline-marker"></div>
-                <div class="timeline-content">
-                  <span class="timeline-date">2022</span>
-                  <h3 class="timeline-title">Premiers pas en CTF</h3>
-                  <p class="timeline-desc">TryHackMe — découverte du hacking éthique</p>
-                </div>
+              <div class="stat-card glass" data-count="15" data-suffix="+">
+                <span class="stat-number accent-purple">15+</span>
+                <span class="stat-label">Projets</span>
               </div>
-              <div class="timeline-item">
-                <div class="timeline-marker"></div>
-                <div class="timeline-content">
-                  <span class="timeline-date">2020</span>
-                  <h3 class="timeline-title">Découverte de la cybersécurité</h3>
-                  <p class="timeline-desc">Premiers pas sous Linux et en programmation</p>
-                </div>
+              <div class="stat-card glass" data-count="1500" data-suffix="+">
+                <span class="stat-number accent-pink">1 500+</span>
+                <span class="stat-label">Heures de lab</span>
               </div>
             </div>
           </div>
-        </div>
-
-        <!-- Stats Counters -->
-        <div class="stats-row" aria-label="Statistiques">
-          <div class="stat-item animate-on-scroll">
-            <span class="stat-number" data-target="50" aria-live="polite">0</span><span class="stat-plus">+</span>
-            <p>CTF Résolus</p>
-          </div>
-          <div class="stat-item animate-on-scroll">
-            <span class="stat-number" data-target="3" aria-live="polite">0</span>
-            <p>Certifications</p>
-          </div>
-          <div class="stat-item animate-on-scroll">
-            <span class="stat-number" data-target="15" aria-live="polite">0</span><span class="stat-plus">+</span>
-            <p>Projets</p>
-          </div>
-          <div class="stat-item animate-on-scroll">
-            <span class="stat-number" data-target="1000" aria-live="polite">0</span><span class="stat-plus">+</span>
-            <p>Heures de lab</p>
+          <div class="about-text reveal-right">
+            <div class="section-eyebrow">Qui suis-je ?</div>
+            <h2 class="section-title">À propos</h2>
+            <p class="section-subtitle">Qui se cache derrière le pseudo&nbsp;?</p>
+            <div class="about-paragraphs">
+              <p>Passionné de cybersécurité depuis 2020, j'ai découvert le hacking éthique en résolvant mes premiers challenges sur Root-Me et TryHackMe. Depuis, cette passion dévorante ne m'a plus quitté. Je passe mes journées et mes nuits à explorer les failles, comprendre les attaques et renforcer les défenses.</p>
+              <p>Ma double compétence Red Team / Blue Team est ma plus grande force. Côté offensif, je pratique le pentesting web et réseau, l'exploitation de vulnérabilités et les attaques Active Directory. Côté défensif, j'ai construit mon propre SOC avec ELK Stack et Wazuh, et je m'entraîne quotidiennement à la réponse aux incidents.</p>
+              <p>En recherche d'alternance pour septembre 2026, je suis prêt à apporter ma passion, ma rigueur et mes compétences à une équipe ambitieuse. Mon objectif&nbsp;: contribuer à un cyberespace plus sûr, un système à la fois.</p>
+            </div>
           </div>
         </div>
-
-        <!-- Interests -->
-        <div class="interests" aria-label="Centres d'intérêt">
-          <h3 class="interests-title"><i class="fas fa-heart" aria-hidden="true"></i> Centres d'intérêt</h3>
-          <ul class="interests-list" role="list">
-            <li><i class="fas fa-crosshairs" aria-hidden="true"></i> Pentest &amp; Red Team</li>
-            <li><i class="fas fa-biohazard" aria-hidden="true"></i> Analyse de malware</li>
-            <li><i class="fas fa-flag" aria-hidden="true"></i> CTF Competitions</li>
-            <li><i class="fas fa-magnifying-glass" aria-hidden="true"></i> Threat Intelligence</li>
-            <li><i class="fas fa-lock" aria-hidden="true"></i> Cryptographie</li>
-            <li><i class="fas fa-fingerprint" aria-hidden="true"></i> Forensics Numérique</li>
-          </ul>
-        </div>
-
       </div>
     </section>
 
-    <!-- ─────────────────────────────────────────
-         SECTION: SKILLS
-    ───────────────────────────────────────── -->
-    <section id="skills" class="section skills-section" aria-label="Compétences">
-      <div class="section-container">
+    <!-- ═══════════════════════════ JOURNEY ═══════════════════════════ -->
+    <section id="journey" class="section journey" aria-label="Mon parcours">
+      <div class="section-divider" aria-hidden="true"></div>
+      <div class="container">
+        <div class="section-header reveal-up">
+          <div class="section-eyebrow">Mon histoire</div>
+          <h2 class="section-title">Mon Parcours</h2>
+        </div>
+        <div class="timeline">
+          <div class="timeline-line" aria-hidden="true"></div>
 
-        <h2 class="section-title">
-          <span class="prompt" aria-hidden="true">$ </span>skills --list
-        </h2>
+          <article class="timeline-item reveal-up" style="--delay: 0s">
+            <div class="timeline-dot" aria-hidden="true"></div>
+            <div class="timeline-year">2020</div>
+            <div class="timeline-card glass">
+              <div class="timeline-icon" aria-hidden="true">🔓</div>
+              <h3 class="timeline-title">Découverte du hacking éthique</h3>
+              <p class="timeline-desc">Premiers pas sur Root-Me et TryHackMe. Installation de Kali Linux sur une vieille machine. Fascination instantanée pour la cybersécurité.</p>
+            </div>
+          </article>
 
-        <div class="skills-grid" role="list">
+          <article class="timeline-item reveal-up" style="--delay: 0.1s">
+            <div class="timeline-dot" aria-hidden="true"></div>
+            <div class="timeline-year">2021</div>
+            <div class="timeline-card glass">
+              <div class="timeline-icon" aria-hidden="true">📚</div>
+              <h3 class="timeline-title">Apprentissage intensif</h3>
+              <p class="timeline-desc">Plongée dans les CTF et les labs. Apprentissage de Python et Bash. Création du premier homelab sur un Raspberry Pi.</p>
+            </div>
+          </article>
 
-          <!-- Card 1: Sécurité Offensive -->
-          <div class="skill-card animate-on-scroll" role="listitem">
-            <div class="skill-card-header">
-              <div class="skill-icon offensive">
-                <i class="fas fa-skull" aria-hidden="true"></i>
-              </div>
-              <h3 class="skill-name">Sécurité Offensive</h3>
+          <article class="timeline-item reveal-up" style="--delay: 0.2s">
+            <div class="timeline-dot" aria-hidden="true"></div>
+            <div class="timeline-year">2022</div>
+            <div class="timeline-card glass">
+              <div class="timeline-icon" aria-hidden="true">🎓</div>
+              <h3 class="timeline-title">Baccalauréat obtenu</h3>
+              <p class="timeline-desc">Bac obtenu avec mention. Choix d'orientation vers l'informatique avec spécialisation en sécurité.</p>
             </div>
-            <ul class="skill-tags" role="list">
-              <li class="skill-tag">Pentesting</li>
-              <li class="skill-tag">Red Team</li>
-              <li class="skill-tag">OWASP Top 10</li>
-              <li class="skill-tag">Exploitation</li>
-              <li class="skill-tag">Social Engineering</li>
-              <li class="skill-tag">Web App Security</li>
-            </ul>
-            <div class="skill-bar-container">
-              <div class="skill-bar" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" aria-label="Sécurité Offensive 75%">
-                <div class="skill-progress" data-width="75" style="width:0%"></div>
-              </div>
-              <span class="skill-percent">75%</span>
-            </div>
-          </div>
+          </article>
 
-          <!-- Card 2: Sécurité Défensive -->
-          <div class="skill-card animate-on-scroll" role="listitem">
-            <div class="skill-card-header">
-              <div class="skill-icon defensive">
-                <i class="fas fa-shield-halved" aria-hidden="true"></i>
-              </div>
-              <h3 class="skill-name">Sécurité Défensive</h3>
+          <article class="timeline-item reveal-up" style="--delay: 0.3s">
+            <div class="timeline-dot" aria-hidden="true"></div>
+            <div class="timeline-year">2023</div>
+            <div class="timeline-card glass">
+              <div class="timeline-icon" aria-hidden="true">🏗️</div>
+              <h3 class="timeline-title">Formation supérieure</h3>
+              <p class="timeline-desc">Début du cursus en informatique. Premiers projets sérieux&nbsp;: scanner de vulnérabilités, lab Active Directory complet.</p>
             </div>
-            <ul class="skill-tags" role="list">
-              <li class="skill-tag">SIEM/SOC</li>
-              <li class="skill-tag">Incident Response</li>
-              <li class="skill-tag">Blue Team</li>
-              <li class="skill-tag">Threat Hunting</li>
-              <li class="skill-tag">Forensics</li>
-              <li class="skill-tag">Log Analysis</li>
-            </ul>
-            <div class="skill-bar-container">
-              <div class="skill-bar" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" aria-label="Sécurité Défensive 70%">
-                <div class="skill-progress" data-width="70" style="width:0%"></div>
-              </div>
-              <span class="skill-percent">70%</span>
-            </div>
-          </div>
+          </article>
 
-          <!-- Card 3: Réseau & Infra -->
-          <div class="skill-card animate-on-scroll" role="listitem">
-            <div class="skill-card-header">
-              <div class="skill-icon network">
-                <i class="fas fa-network-wired" aria-hidden="true"></i>
-              </div>
-              <h3 class="skill-name">Réseau &amp; Infra</h3>
+          <article class="timeline-item reveal-up" style="--delay: 0.4s">
+            <div class="timeline-dot" aria-hidden="true"></div>
+            <div class="timeline-year">2025</div>
+            <div class="timeline-card glass">
+              <div class="timeline-icon" aria-hidden="true">🏆</div>
+              <h3 class="timeline-title">Certifications &amp; reconnaissance</h3>
+              <p class="timeline-desc">CompTIA Security+ (812/900) et eJPT obtenus. Top 5% TryHackMe. Plus de 50 CTF résolus sur 3 plateformes.</p>
             </div>
-            <ul class="skill-tags" role="list">
-              <li class="skill-tag">TCP/IP</li>
-              <li class="skill-tag">Firewall</li>
-              <li class="skill-tag">VPN</li>
-              <li class="skill-tag">Active Directory</li>
-              <li class="skill-tag">DNS/DHCP</li>
-              <li class="skill-tag">IDS/IPS</li>
-            </ul>
-            <div class="skill-bar-container">
-              <div class="skill-bar" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" aria-label="Réseau et Infra 80%">
-                <div class="skill-progress" data-width="80" style="width:0%"></div>
-              </div>
-              <span class="skill-percent">80%</span>
-            </div>
-          </div>
+          </article>
 
-          <!-- Card 4: Outils & Technologies -->
-          <div class="skill-card animate-on-scroll" role="listitem">
-            <div class="skill-card-header">
-              <div class="skill-icon tools">
-                <i class="fas fa-wrench" aria-hidden="true"></i>
-              </div>
-              <h3 class="skill-name">Outils &amp; Technologies</h3>
+          <article class="timeline-item reveal-up" style="--delay: 0.5s">
+            <div class="timeline-dot timeline-dot-active" aria-hidden="true"></div>
+            <div class="timeline-year accent-primary">2026</div>
+            <div class="timeline-card glass timeline-card-active">
+              <div class="timeline-icon" aria-hidden="true">🚀</div>
+              <h3 class="timeline-title">L'aventure continue</h3>
+              <p class="timeline-desc">Développement de ce portfolio. Recherche active d'alternance en cybersécurité. Contributions open-source et veille permanente.</p>
             </div>
-            <ul class="skill-tags" role="list">
-              <li class="skill-tag">Kali Linux</li>
-              <li class="skill-tag">Burp Suite</li>
-              <li class="skill-tag">Wireshark</li>
-              <li class="skill-tag">Nmap</li>
-              <li class="skill-tag">Metasploit</li>
-              <li class="skill-tag">Nessus</li>
-              <li class="skill-tag">Splunk</li>
-              <li class="skill-tag">Hashcat</li>
-              <li class="skill-tag">Ghidra</li>
-              <li class="skill-tag">BloodHound</li>
-            </ul>
-            <div class="skill-bar-container">
-              <div class="skill-bar" role="progressbar" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100" aria-label="Outils et Technologies 85%">
-                <div class="skill-progress" data-width="85" style="width:0%"></div>
-              </div>
-              <span class="skill-percent">85%</span>
-            </div>
-          </div>
-
-          <!-- Card 5: Scripting & Dev -->
-          <div class="skill-card animate-on-scroll" role="listitem">
-            <div class="skill-card-header">
-              <div class="skill-icon scripting">
-                <i class="fas fa-terminal" aria-hidden="true"></i>
-              </div>
-              <h3 class="skill-name">Scripting &amp; Dev</h3>
-            </div>
-            <ul class="skill-tags" role="list">
-              <li class="skill-tag">Python</li>
-              <li class="skill-tag">Bash</li>
-              <li class="skill-tag">PowerShell</li>
-              <li class="skill-tag">SQL</li>
-              <li class="skill-tag">HTML/CSS/JS</li>
-              <li class="skill-tag">C</li>
-            </ul>
-            <div class="skill-bar-container">
-              <div class="skill-bar" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" aria-label="Scripting et Dev 70%">
-                <div class="skill-progress" data-width="70" style="width:0%"></div>
-              </div>
-              <span class="skill-percent">70%</span>
-            </div>
-          </div>
-
-          <!-- Card 6: Systèmes -->
-          <div class="skill-card animate-on-scroll" role="listitem">
-            <div class="skill-card-header">
-              <div class="skill-icon systems">
-                <i class="fas fa-server" aria-hidden="true"></i>
-              </div>
-              <h3 class="skill-name">Systèmes</h3>
-            </div>
-            <ul class="skill-tags" role="list">
-              <li class="skill-tag">Linux</li>
-              <li class="skill-tag">Windows Server</li>
-              <li class="skill-tag">Docker</li>
-              <li class="skill-tag">VirtualBox/VMware</li>
-              <li class="skill-tag">Proxmox</li>
-              <li class="skill-tag">AWS</li>
-            </ul>
-            <div class="skill-bar-container">
-              <div class="skill-bar" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" aria-label="Systèmes 75%">
-                <div class="skill-progress" data-width="75" style="width:0%"></div>
-              </div>
-              <span class="skill-percent">75%</span>
-            </div>
-          </div>
-
-        </div><!-- /.skills-grid -->
+          </article>
+        </div>
       </div>
     </section>
 
-    <!-- ─────────────────────────────────────────
-         SECTION: PROJECTS
-    ───────────────────────────────────────── -->
-    <section id="projects" class="section projects-section" aria-label="Projets">
-      <div class="section-container">
+    <!-- ═══════════════════════════ SKILLS ═══════════════════════════ -->
+    <section id="skills" class="section skills" aria-label="Compétences">
+      <div class="section-divider" aria-hidden="true"></div>
+      <div class="container">
+        <div class="section-header reveal-up">
+          <div class="section-eyebrow">Expertise</div>
+          <h2 class="section-title">Compétences</h2>
+        </div>
+        <div class="skills-bento" role="list">
 
-        <h2 class="section-title">
-          <span class="prompt" aria-hidden="true">$ </span>ls ~/projects
-        </h2>
+          <article class="bento-card bento-wide glass reveal-up skill-card" role="listitem" style="--delay: 0s; --accent: var(--accent-pink)">
+            <div class="skill-header">
+              <div class="skill-icon-wrap" style="--icon-color: var(--accent-pink)" aria-hidden="true">
+                <i class="fas fa-sword"></i>
+              </div>
+              <div>
+                <h3 class="skill-title">Sécurité Offensive</h3>
+                <div class="skill-progress-wrap">
+                  <div class="skill-progress" aria-label="78% maîtrise">
+                    <div class="skill-progress-bar" style="--target: 78%; --bar-color: var(--accent-pink)"></div>
+                  </div>
+                  <span class="skill-percent" style="color: var(--accent-pink)">78%</span>
+                </div>
+              </div>
+            </div>
+            <div class="skill-tags">
+              <span class="tag">Pentesting</span><span class="tag">Red Team</span><span class="tag">OWASP Top 10</span><span class="tag">Exploitation</span><span class="tag">Social Engineering</span><span class="tag">Web App Security</span><span class="tag">API Testing</span><span class="tag">Privilege Escalation</span>
+            </div>
+          </article>
 
-        <!-- Project Filter Buttons -->
-        <div class="project-filters" role="group" aria-label="Filtrer les projets">
-          <button class="filter-btn active" data-filter="all" aria-pressed="true">
-            <i class="fas fa-th-large" aria-hidden="true"></i> All
-          </button>
-          <button class="filter-btn" data-filter="offensive" aria-pressed="false">
-            <i class="fas fa-crosshairs" aria-hidden="true"></i> Offensive
-          </button>
-          <button class="filter-btn" data-filter="defensive" aria-pressed="false">
-            <i class="fas fa-shield-halved" aria-hidden="true"></i> Defensive
-          </button>
-          <button class="filter-btn" data-filter="tools" aria-pressed="false">
-            <i class="fas fa-wrench" aria-hidden="true"></i> Tools
-          </button>
-          <button class="filter-btn" data-filter="labs" aria-pressed="false">
-            <i class="fas fa-flask" aria-hidden="true"></i> Labs
-          </button>
+          <article class="bento-card bento-wide glass reveal-up skill-card" role="listitem" style="--delay: 0.05s; --accent: var(--accent-cyan)">
+            <div class="skill-header">
+              <div class="skill-icon-wrap" style="--icon-color: var(--accent-cyan)" aria-hidden="true">
+                <i class="fas fa-shield-halved"></i>
+              </div>
+              <div>
+                <h3 class="skill-title">Sécurité Défensive</h3>
+                <div class="skill-progress-wrap">
+                  <div class="skill-progress" aria-label="72% maîtrise">
+                    <div class="skill-progress-bar" style="--target: 72%; --bar-color: var(--accent-cyan)"></div>
+                  </div>
+                  <span class="skill-percent" style="color: var(--accent-cyan)">72%</span>
+                </div>
+              </div>
+            </div>
+            <div class="skill-tags">
+              <span class="tag">SIEM/SOC</span><span class="tag">Incident Response</span><span class="tag">Blue Team</span><span class="tag">Threat Hunting</span><span class="tag">Digital Forensics</span><span class="tag">Log Analysis</span><span class="tag">Malware Analysis</span><span class="tag">Threat Intelligence</span>
+            </div>
+          </article>
+
+          <article class="bento-card glass reveal-up skill-card" role="listitem" style="--delay: 0.1s; --accent: var(--accent-blue)">
+            <div class="skill-header">
+              <div class="skill-icon-wrap" style="--icon-color: var(--accent-blue)" aria-hidden="true">
+                <i class="fas fa-network-wired"></i>
+              </div>
+              <div>
+                <h3 class="skill-title">Réseau &amp; Infrastructure</h3>
+                <div class="skill-progress-wrap">
+                  <div class="skill-progress" aria-label="82% maîtrise">
+                    <div class="skill-progress-bar" style="--target: 82%; --bar-color: var(--accent-blue)"></div>
+                  </div>
+                  <span class="skill-percent" style="color: var(--accent-blue)">82%</span>
+                </div>
+              </div>
+            </div>
+            <div class="skill-tags">
+              <span class="tag">TCP/IP</span><span class="tag">Firewalls</span><span class="tag">VPN</span><span class="tag">Active Directory</span><span class="tag">DNS/DHCP</span><span class="tag">IDS/IPS</span><span class="tag">Proxy</span>
+            </div>
+          </article>
+
+          <article class="bento-card glass reveal-up skill-card" role="listitem" style="--delay: 0.15s; --accent: var(--accent-green)">
+            <div class="skill-header">
+              <div class="skill-icon-wrap" style="--icon-color: var(--accent-green)" aria-hidden="true">
+                <i class="fas fa-toolbox"></i>
+              </div>
+              <div>
+                <h3 class="skill-title">Outils &amp; Technologies</h3>
+                <div class="skill-progress-wrap">
+                  <div class="skill-progress" aria-label="85% maîtrise">
+                    <div class="skill-progress-bar" style="--target: 85%; --bar-color: var(--accent-green)"></div>
+                  </div>
+                  <span class="skill-percent" style="color: var(--accent-green)">85%</span>
+                </div>
+              </div>
+            </div>
+            <div class="skill-tags">
+              <span class="tag">Kali Linux</span><span class="tag">Burp Suite</span><span class="tag">Wireshark</span><span class="tag">Nmap</span><span class="tag">Metasploit</span><span class="tag">Nessus</span><span class="tag">Splunk</span><span class="tag">Hashcat</span><span class="tag">Ghidra</span><span class="tag">BloodHound</span>
+            </div>
+          </article>
+
+          <article class="bento-card glass reveal-up skill-card" role="listitem" style="--delay: 0.2s; --accent: var(--accent-purple)">
+            <div class="skill-header">
+              <div class="skill-icon-wrap" style="--icon-color: var(--accent-purple)" aria-hidden="true">
+                <i class="fas fa-code"></i>
+              </div>
+              <div>
+                <h3 class="skill-title">Scripting &amp; Dev</h3>
+                <div class="skill-progress-wrap">
+                  <div class="skill-progress" aria-label="73% maîtrise">
+                    <div class="skill-progress-bar" style="--target: 73%; --bar-color: var(--accent-purple)"></div>
+                  </div>
+                  <span class="skill-percent" style="color: var(--accent-purple)">73%</span>
+                </div>
+              </div>
+            </div>
+            <div class="skill-tags">
+              <span class="tag">Python</span><span class="tag">Bash</span><span class="tag">PowerShell</span><span class="tag">SQL</span><span class="tag">HTML/CSS/JS</span><span class="tag">C</span><span class="tag">Go</span><span class="tag">Git</span>
+            </div>
+          </article>
+
+          <article class="bento-card glass reveal-up skill-card" role="listitem" style="--delay: 0.25s; --accent: var(--accent-orange)">
+            <div class="skill-header">
+              <div class="skill-icon-wrap" style="--icon-color: var(--accent-orange)" aria-hidden="true">
+                <i class="fas fa-server"></i>
+              </div>
+              <div>
+                <h3 class="skill-title">Systèmes &amp; Cloud</h3>
+                <div class="skill-progress-wrap">
+                  <div class="skill-progress" aria-label="77% maîtrise">
+                    <div class="skill-progress-bar" style="--target: 77%; --bar-color: var(--accent-orange)"></div>
+                  </div>
+                  <span class="skill-percent" style="color: var(--accent-orange)">77%</span>
+                </div>
+              </div>
+            </div>
+            <div class="skill-tags">
+              <span class="tag">Linux</span><span class="tag">Windows Server</span><span class="tag">Docker</span><span class="tag">Kubernetes</span><span class="tag">VMware</span><span class="tag">Proxmox</span><span class="tag">AWS</span><span class="tag">Ansible</span>
+            </div>
+          </article>
         </div>
 
-        <div class="projects-grid" role="list">
-
-          <!-- Project 1: HomeLab SOC -->
-          <article class="project-card animate-on-scroll tilt-card" data-filter="defensive labs" role="listitem">
-            <div class="project-card-links">
-              <a href="https://github.com/EpicNoob22/homelab-soc" class="project-link" target="_blank" rel="noopener noreferrer" aria-label="Voir HomeLab SOC sur GitHub">
-                <i class="fab fa-github" aria-hidden="true"></i>
-              </a>
-              <a href="#" class="project-link" target="_blank" rel="noopener noreferrer" aria-label="Voir la démo de HomeLab SOC">
-                <i class="fas fa-external-link-alt" aria-hidden="true"></i>
-              </a>
+        <!-- MARQUEE -->
+        <div class="skills-marquee" aria-label="Outils et technologies" role="marquee">
+          <div class="marquee-row marquee-right">
+            <div class="marquee-track">
+              <div class="marquee-item"><i class="fas fa-terminal" aria-hidden="true"></i> Kali Linux</div>
+              <div class="marquee-item"><i class="fas fa-bug" aria-hidden="true"></i> Burp Suite</div>
+              <div class="marquee-item"><i class="fas fa-wifi" aria-hidden="true"></i> Wireshark</div>
+              <div class="marquee-item"><i class="fas fa-search" aria-hidden="true"></i> Nmap</div>
+              <div class="marquee-item"><i class="fas fa-bomb" aria-hidden="true"></i> Metasploit</div>
+              <div class="marquee-item"><i class="fab fa-python" aria-hidden="true"></i> Python</div>
+              <div class="marquee-item"><i class="fas fa-code" aria-hidden="true"></i> Bash</div>
+              <div class="marquee-item"><i class="fab fa-docker" aria-hidden="true"></i> Docker</div>
+              <div class="marquee-item"><i class="fas fa-chart-bar" aria-hidden="true"></i> Splunk</div>
+              <div class="marquee-item"><i class="fas fa-shield-virus" aria-hidden="true"></i> Nessus</div>
+              <div class="marquee-item"><i class="fas fa-microchip" aria-hidden="true"></i> Ghidra</div>
+              <div class="marquee-item"><i class="fas fa-project-diagram" aria-hidden="true"></i> BloodHound</div>
+              <div class="marquee-item"><i class="fas fa-terminal" aria-hidden="true"></i> Kali Linux</div>
+              <div class="marquee-item"><i class="fas fa-bug" aria-hidden="true"></i> Burp Suite</div>
+              <div class="marquee-item"><i class="fas fa-wifi" aria-hidden="true"></i> Wireshark</div>
+              <div class="marquee-item"><i class="fas fa-search" aria-hidden="true"></i> Nmap</div>
+              <div class="marquee-item"><i class="fas fa-bomb" aria-hidden="true"></i> Metasploit</div>
+              <div class="marquee-item"><i class="fab fa-python" aria-hidden="true"></i> Python</div>
+              <div class="marquee-item"><i class="fas fa-code" aria-hidden="true"></i> Bash</div>
+              <div class="marquee-item"><i class="fab fa-docker" aria-hidden="true"></i> Docker</div>
+              <div class="marquee-item"><i class="fas fa-chart-bar" aria-hidden="true"></i> Splunk</div>
+              <div class="marquee-item"><i class="fas fa-shield-virus" aria-hidden="true"></i> Nessus</div>
+              <div class="marquee-item"><i class="fas fa-microchip" aria-hidden="true"></i> Ghidra</div>
+              <div class="marquee-item"><i class="fas fa-project-diagram" aria-hidden="true"></i> BloodHound</div>
             </div>
-            <div class="project-icon">
-              <i class="fas fa-house-signal" aria-hidden="true"></i>
+          </div>
+          <div class="marquee-row marquee-left">
+            <div class="marquee-track">
+              <div class="marquee-item"><i class="fab fa-linux" aria-hidden="true"></i> Linux</div>
+              <div class="marquee-item"><i class="fab fa-windows" aria-hidden="true"></i> Windows</div>
+              <div class="marquee-item"><i class="fab fa-git-alt" aria-hidden="true"></i> Git</div>
+              <div class="marquee-item"><i class="fas fa-terminal" aria-hidden="true"></i> PowerShell</div>
+              <div class="marquee-item"><i class="fas fa-memory" aria-hidden="true"></i> Volatility</div>
+              <div class="marquee-item"><i class="fas fa-wrench" aria-hidden="true"></i> CyberChef</div>
+              <div class="marquee-item"><i class="fas fa-filter" aria-hidden="true"></i> YARA</div>
+              <div class="marquee-item"><i class="fas fa-lock" aria-hidden="true"></i> Hashcat</div>
+              <div class="marquee-item"><i class="fas fa-key" aria-hidden="true"></i> John the Ripper</div>
+              <div class="marquee-item"><i class="fas fa-server" aria-hidden="true"></i> Proxmox</div>
+              <div class="marquee-item"><i class="fab fa-aws" aria-hidden="true"></i> AWS</div>
+              <div class="marquee-item"><i class="fas fa-robot" aria-hidden="true"></i> Ansible</div>
+              <div class="marquee-item"><i class="fab fa-linux" aria-hidden="true"></i> Linux</div>
+              <div class="marquee-item"><i class="fab fa-windows" aria-hidden="true"></i> Windows</div>
+              <div class="marquee-item"><i class="fab fa-git-alt" aria-hidden="true"></i> Git</div>
+              <div class="marquee-item"><i class="fas fa-terminal" aria-hidden="true"></i> PowerShell</div>
+              <div class="marquee-item"><i class="fas fa-memory" aria-hidden="true"></i> Volatility</div>
+              <div class="marquee-item"><i class="fas fa-wrench" aria-hidden="true"></i> CyberChef</div>
+              <div class="marquee-item"><i class="fas fa-filter" aria-hidden="true"></i> YARA</div>
+              <div class="marquee-item"><i class="fas fa-lock" aria-hidden="true"></i> Hashcat</div>
+              <div class="marquee-item"><i class="fas fa-key" aria-hidden="true"></i> John the Ripper</div>
+              <div class="marquee-item"><i class="fas fa-server" aria-hidden="true"></i> Proxmox</div>
+              <div class="marquee-item"><i class="fab fa-aws" aria-hidden="true"></i> AWS</div>
+              <div class="marquee-item"><i class="fas fa-robot" aria-hidden="true"></i> Ansible</div>
             </div>
-            <h3 class="project-title">🏠 HomeLab SOC</h3>
-            <p class="project-desc">
-              SOC maison avec ELK Stack, Wazuh, Suricata. Monitoring temps réel, détection
-              d'intrusions et dashboards Kibana avancés pour analyser les événements de sécurité.
-            </p>
-            <ul class="project-tags" role="list">
-              <li class="project-tag">ELK Stack</li>
-              <li class="project-tag">Wazuh</li>
-              <li class="project-tag">Suricata</li>
-              <li class="project-tag">Docker</li>
-            </ul>
-          </article>
-
-          <!-- Project 2: VulnScanner Pro -->
-          <article class="project-card animate-on-scroll tilt-card" data-filter="offensive tools" role="listitem">
-            <div class="project-card-links">
-              <a href="https://github.com/EpicNoob22/vulnscanner-pro" class="project-link" target="_blank" rel="noopener noreferrer" aria-label="Voir VulnScanner Pro sur GitHub">
-                <i class="fab fa-github" aria-hidden="true"></i>
-              </a>
-              <a href="#" class="project-link" target="_blank" rel="noopener noreferrer" aria-label="Voir la démo de VulnScanner Pro">
-                <i class="fas fa-external-link-alt" aria-hidden="true"></i>
-              </a>
-            </div>
-            <div class="project-icon">
-              <i class="fas fa-magnifying-glass-chart" aria-hidden="true"></i>
-            </div>
-            <h3 class="project-title">🔍 VulnScanner Pro</h3>
-            <p class="project-desc">
-              Scanner de vulnérabilités web développé en Python. Détection SQLi, XSS, SSRF,
-              directory traversal avec rapports PDF auto-générés et classification par criticité.
-            </p>
-            <ul class="project-tags" role="list">
-              <li class="project-tag">Python</li>
-              <li class="project-tag">OWASP</li>
-              <li class="project-tag">Automation</li>
-              <li class="project-tag">ReportGen</li>
-            </ul>
-          </article>
-
-          <!-- Project 3: Active Directory Lab -->
-          <article class="project-card animate-on-scroll tilt-card" data-filter="offensive labs" role="listitem">
-            <div class="project-card-links">
-              <a href="https://github.com/EpicNoob22/ad-lab" class="project-link" target="_blank" rel="noopener noreferrer" aria-label="Voir Active Directory Lab sur GitHub">
-                <i class="fab fa-github" aria-hidden="true"></i>
-              </a>
-              <a href="#" class="project-link" target="_blank" rel="noopener noreferrer" aria-label="Voir la documentation du lab AD">
-                <i class="fas fa-external-link-alt" aria-hidden="true"></i>
-              </a>
-            </div>
-            <div class="project-icon">
-              <i class="fas fa-sitemap" aria-hidden="true"></i>
-            </div>
-            <h3 class="project-title">🔐 Active Directory Lab</h3>
-            <p class="project-desc">
-              Environnement Active Directory vulnérable pour pratiquer attaque et défense.
-              Kerberoasting, Pass-the-Hash, Golden Ticket, BloodHound mapping complet et remédiation.
-            </p>
-            <ul class="project-tags" role="list">
-              <li class="project-tag">Active Directory</li>
-              <li class="project-tag">Windows Server</li>
-              <li class="project-tag">BloodHound</li>
-              <li class="project-tag">Mimikatz</li>
-            </ul>
-          </article>
-
-          <!-- Project 4: Malware Analysis Sandbox -->
-          <article class="project-card animate-on-scroll tilt-card" data-filter="defensive labs" role="listitem">
-            <div class="project-card-links">
-              <a href="https://github.com/EpicNoob22/malware-sandbox" class="project-link" target="_blank" rel="noopener noreferrer" aria-label="Voir Malware Analysis Sandbox sur GitHub">
-                <i class="fab fa-github" aria-hidden="true"></i>
-              </a>
-              <a href="#" class="project-link" target="_blank" rel="noopener noreferrer" aria-label="Voir la démo de la sandbox">
-                <i class="fas fa-external-link-alt" aria-hidden="true"></i>
-              </a>
-            </div>
-            <div class="project-icon">
-              <i class="fas fa-biohazard" aria-hidden="true"></i>
-            </div>
-            <h3 class="project-title">🦠 Malware Analysis Sandbox</h3>
-            <p class="project-desc">
-              Sandbox isolée pour analyse dynamique et statique de malwares. Reverse engineering
-              avec Ghidra, monitoring réseau Wireshark, création de règles YARA custom adaptées à chaque échantillon.
-            </p>
-            <ul class="project-tags" role="list">
-              <li class="project-tag">Ghidra</li>
-              <li class="project-tag">REMnux</li>
-              <li class="project-tag">YARA Rules</li>
-              <li class="project-tag">Volatility</li>
-            </ul>
-          </article>
-
-          <!-- Project 5: PhishGuard -->
-          <article class="project-card animate-on-scroll tilt-card" data-filter="tools offensive" role="listitem">
-            <div class="project-card-links">
-              <a href="https://github.com/EpicNoob22/phishguard" class="project-link" target="_blank" rel="noopener noreferrer" aria-label="Voir PhishGuard sur GitHub">
-                <i class="fab fa-github" aria-hidden="true"></i>
-              </a>
-              <a href="#" class="project-link" target="_blank" rel="noopener noreferrer" aria-label="Voir la démo de PhishGuard">
-                <i class="fas fa-external-link-alt" aria-hidden="true"></i>
-              </a>
-            </div>
-            <div class="project-icon">
-              <i class="fas fa-fish-fins" aria-hidden="true"></i>
-            </div>
-            <h3 class="project-title">🎣 PhishGuard</h3>
-            <p class="project-desc">
-              Outil de sensibilisation au phishing pour les entreprises. Simulation de campagnes
-              avec GoPhish, analyse des clics et formation automatisée des employés ciblés.
-            </p>
-            <ul class="project-tags" role="list">
-              <li class="project-tag">GoPhish</li>
-              <li class="project-tag">Python</li>
-              <li class="project-tag">Awareness</li>
-              <li class="project-tag">Email Security</li>
-            </ul>
-          </article>
-
-          <!-- Project 6: AutoRecon Bot -->
-          <article class="project-card animate-on-scroll tilt-card" data-filter="offensive tools" role="listitem">
-            <div class="project-card-links">
-              <a href="https://github.com/EpicNoob22/autorecon-bot" class="project-link" target="_blank" rel="noopener noreferrer" aria-label="Voir AutoRecon Bot sur GitHub">
-                <i class="fab fa-github" aria-hidden="true"></i>
-              </a>
-              <a href="#" class="project-link" target="_blank" rel="noopener noreferrer" aria-label="Voir la démo d'AutoRecon Bot">
-                <i class="fas fa-external-link-alt" aria-hidden="true"></i>
-              </a>
-            </div>
-            <div class="project-icon">
-              <i class="fas fa-robot" aria-hidden="true"></i>
-            </div>
-            <h3 class="project-title">🤖 AutoRecon Bot</h3>
-            <p class="project-desc">
-              Bot de reconnaissance automatisée pour bug bounty et CTF. Enumération de
-              sous-domaines, scan de ports, fingerprinting, OSINT automatisé et reporting Markdown.
-            </p>
-            <ul class="project-tags" role="list">
-              <li class="project-tag">Bash</li>
-              <li class="project-tag">Nmap</li>
-              <li class="project-tag">Subfinder</li>
-              <li class="project-tag">OSINT</li>
-            </ul>
-          </article>
-
-          <!-- Project 7: Honeypot Network -->
-          <article class="project-card animate-on-scroll tilt-card" data-filter="defensive labs" role="listitem">
-            <div class="project-card-links">
-              <a href="https://github.com/EpicNoob22/honeypot-network" class="project-link" target="_blank" rel="noopener noreferrer" aria-label="Voir Honeypot Network sur GitHub">
-                <i class="fab fa-github" aria-hidden="true"></i>
-              </a>
-              <a href="#" class="project-link" target="_blank" rel="noopener noreferrer" aria-label="Voir la démo du réseau honeypot">
-                <i class="fas fa-external-link-alt" aria-hidden="true"></i>
-              </a>
-            </div>
-            <div class="project-icon">
-              <i class="fas fa-spider" aria-hidden="true"></i>
-            </div>
-            <h3 class="project-title">🌐 Honeypot Network</h3>
-            <p class="project-desc">
-              Réseau de honeypots déployés sur VPS pour analyser les attaques réelles en production.
-              Dashboard temps réel des attaquants avec géolocalisation IP et analyse comportementale.
-            </p>
-            <ul class="project-tags" role="list">
-              <li class="project-tag">Cowrie</li>
-              <li class="project-tag">Dionaea</li>
-              <li class="project-tag">ELK</li>
-              <li class="project-tag">Python</li>
-            </ul>
-          </article>
-
-          <!-- Project 8: CryptoVault -->
-          <article class="project-card animate-on-scroll tilt-card" data-filter="tools" role="listitem">
-            <div class="project-card-links">
-              <a href="https://github.com/EpicNoob22/cryptovault" class="project-link" target="_blank" rel="noopener noreferrer" aria-label="Voir CryptoVault sur GitHub">
-                <i class="fab fa-github" aria-hidden="true"></i>
-              </a>
-              <a href="#" class="project-link" target="_blank" rel="noopener noreferrer" aria-label="Voir la démo de CryptoVault">
-                <i class="fas fa-external-link-alt" aria-hidden="true"></i>
-              </a>
-            </div>
-            <div class="project-icon">
-              <i class="fas fa-key" aria-hidden="true"></i>
-            </div>
-            <h3 class="project-title">🔑 CryptoVault</h3>
-            <p class="project-desc">
-              Gestionnaire de mots de passe chiffré en Python avec AES-256. Interface CLI intuitive,
-              génération de mots de passe forts et export chiffré sécurisé vers fichier portable.
-            </p>
-            <ul class="project-tags" role="list">
-              <li class="project-tag">Python</li>
-              <li class="project-tag">Cryptography</li>
-              <li class="project-tag">AES-256</li>
-              <li class="project-tag">CLI</li>
-            </ul>
-          </article>
-
-        </div><!-- /.projects-grid -->
+          </div>
+        </div>
       </div>
     </section>
 
-    <!-- ─────────────────────────────────────────
-         SECTION: CERTIFICATIONS
-    ───────────────────────────────────────── -->
-    <section id="certifications" class="section certs-section" aria-label="Certifications">
-      <div class="section-container">
+    <!-- ═══════════════════════════ PROJECTS ═══════════════════════════ -->
+    <section id="projects" class="section projects" aria-label="Projets">
+      <div class="section-divider" aria-hidden="true"></div>
+      <div class="container">
+        <div class="section-header reveal-up">
+          <div class="section-eyebrow">Réalisations</div>
+          <h2 class="section-title">Projets</h2>
+          <p class="section-subtitle">Une sélection de mes réalisations en cybersécurité</p>
+        </div>
+        <div class="projects-filters reveal-up" role="group" aria-label="Filtres projets">
+          <button class="filter-btn active" data-filter="all">Tous</button>
+          <button class="filter-btn" data-filter="offensif">Offensif</button>
+          <button class="filter-btn" data-filter="defensif">Défensif</button>
+          <button class="filter-btn" data-filter="outils">Outils</button>
+          <button class="filter-btn" data-filter="labs">Labs</button>
+        </div>
+        <div class="projects-bento" id="projectsGrid" role="list">
 
-        <h2 class="section-title">
-          <span class="prompt" aria-hidden="true">$ </span>cat /etc/certs
-        </h2>
+          <article class="bento-card bento-wide glass project-card featured reveal-up" role="listitem" data-category="defensif" style="--delay: 0s">
+            <div class="project-badge" style="--badge-color: var(--accent-cyan)">Défensif</div>
+            <div class="project-featured-badge">Featured</div>
+            <div class="project-header">
+              <span class="project-emoji" aria-hidden="true">🏠</span>
+              <h3 class="project-title">HomeLab SOC</h3>
+            </div>
+            <p class="project-desc">Construction d'un Security Operations Center complet en environnement domestique. ELK Stack pour l'agrégation des logs, Wazuh comme EDR, Suricata pour la détection d'intrusions réseau. Dashboards Kibana personnalisés avec alerting automatisé via Discord et Telegram.</p>
+            <div class="project-tags">
+              <span class="tag">ELK Stack</span><span class="tag">Wazuh</span><span class="tag">Suricata</span><span class="tag">Docker</span><span class="tag">Grafana</span>
+            </div>
+            <div class="project-links">
+              <a href="https://github.com/EpicNoob22" class="project-link" target="_blank" rel="noopener noreferrer" aria-label="Voir le code sur GitHub">
+                <i class="fab fa-github" aria-hidden="true"></i> GitHub
+              </a>
+            </div>
+          </article>
 
+          <article class="bento-card bento-wide glass project-card featured reveal-up" role="listitem" data-category="offensif" style="--delay: 0.05s">
+            <div class="project-badge" style="--badge-color: var(--accent-pink)">Offensif</div>
+            <div class="project-featured-badge">Featured</div>
+            <div class="project-header">
+              <span class="project-emoji" aria-hidden="true">🔍</span>
+              <h3 class="project-title">VulnScanner Pro</h3>
+            </div>
+            <p class="project-desc">Scanner de vulnérabilités web automatisé développé en Python. Détection d'injections SQL, XSS, SSRF et directory traversal. Génération de rapports PDF professionnels avec scoring CVSS, PoC et recommandations de remédiation.</p>
+            <div class="project-tags">
+              <span class="tag">Python</span><span class="tag">OWASP</span><span class="tag">Automation</span><span class="tag">ReportLab</span>
+            </div>
+            <div class="project-links">
+              <a href="https://github.com/EpicNoob22" class="project-link" target="_blank" rel="noopener noreferrer" aria-label="Voir le code sur GitHub">
+                <i class="fab fa-github" aria-hidden="true"></i> GitHub
+              </a>
+            </div>
+          </article>
+
+          <article class="bento-card glass project-card reveal-up" role="listitem" data-category="labs" style="--delay: 0.1s">
+            <div class="project-badge" style="--badge-color: var(--accent-blue)">Labs</div>
+            <div class="project-header">
+              <span class="project-emoji" aria-hidden="true">🔐</span>
+              <h3 class="project-title">Active Directory Lab</h3>
+            </div>
+            <p class="project-desc">Environnement AD vulnérable sur Proxmox&nbsp;: DC Windows Server 2022, 3 clients Windows, 1 serveur Linux. Scénarios Kerberoasting, Pass-the-Hash, Golden Ticket, DCSync. Documentation offensive et défensive complète.</p>
+            <div class="project-tags">
+              <span class="tag">Active Directory</span><span class="tag">BloodHound</span><span class="tag">Mimikatz</span><span class="tag">Proxmox</span>
+            </div>
+            <div class="project-links">
+              <a href="https://github.com/EpicNoob22" class="project-link" target="_blank" rel="noopener noreferrer" aria-label="Voir le code sur GitHub">
+                <i class="fab fa-github" aria-hidden="true"></i> GitHub
+              </a>
+            </div>
+          </article>
+
+          <article class="bento-card glass project-card reveal-up" role="listitem" data-category="defensif" style="--delay: 0.15s">
+            <div class="project-badge" style="--badge-color: var(--accent-cyan)">Défensif</div>
+            <div class="project-header">
+              <span class="project-emoji" aria-hidden="true">🦠</span>
+              <h3 class="project-title">Malware Analysis Sandbox</h3>
+            </div>
+            <p class="project-desc">Sandbox isolée pour analyse dynamique et statique de malwares. Pipeline automatisé&nbsp;: soumission → analyse comportementale → extraction IOCs → rapport. Reverse engineering avec Ghidra, YARA rules custom.</p>
+            <div class="project-tags">
+              <span class="tag">Ghidra</span><span class="tag">REMnux</span><span class="tag">YARA</span><span class="tag">Volatility 3</span>
+            </div>
+            <div class="project-links">
+              <a href="https://github.com/EpicNoob22" class="project-link" target="_blank" rel="noopener noreferrer" aria-label="Voir le code sur GitHub">
+                <i class="fab fa-github" aria-hidden="true"></i> GitHub
+              </a>
+            </div>
+          </article>
+
+          <article class="bento-card glass project-card reveal-up" role="listitem" data-category="outils" style="--delay: 0.2s">
+            <div class="project-badge" style="--badge-color: var(--accent-purple)">Outils</div>
+            <div class="project-header">
+              <span class="project-emoji" aria-hidden="true">🎣</span>
+              <h3 class="project-title">PhishGuard</h3>
+            </div>
+            <p class="project-desc">Plateforme de sensibilisation au phishing avec GoPhish customisé. Templates réalistes, dashboard analytique, module de formation automatisé pour les utilisateurs piégés. Rapports mensuels auto-générés.</p>
+            <div class="project-tags">
+              <span class="tag">GoPhish</span><span class="tag">Python Flask</span><span class="tag">PostgreSQL</span><span class="tag">Docker</span>
+            </div>
+            <div class="project-links">
+              <a href="https://github.com/EpicNoob22" class="project-link" target="_blank" rel="noopener noreferrer" aria-label="Voir le code sur GitHub">
+                <i class="fab fa-github" aria-hidden="true"></i> GitHub
+              </a>
+            </div>
+          </article>
+
+          <article class="bento-card glass project-card reveal-up" role="listitem" data-category="offensif" style="--delay: 0.25s">
+            <div class="project-badge" style="--badge-color: var(--accent-pink)">Offensif</div>
+            <div class="project-header">
+              <span class="project-emoji" aria-hidden="true">🤖</span>
+              <h3 class="project-title">AutoRecon Bot</h3>
+            </div>
+            <p class="project-desc">Bot de reconnaissance automatisée pour pentesting. Orchestration de Subfinder, Nmap, WhatWeb et TheHarvester. Rapports Markdown structurés, mode silencieux, configuration YAML.</p>
+            <div class="project-tags">
+              <span class="tag">Bash</span><span class="tag">Python</span><span class="tag">Nmap</span><span class="tag">OSINT</span>
+            </div>
+            <div class="project-links">
+              <a href="https://github.com/EpicNoob22" class="project-link" target="_blank" rel="noopener noreferrer" aria-label="Voir le code sur GitHub">
+                <i class="fab fa-github" aria-hidden="true"></i> GitHub
+              </a>
+            </div>
+          </article>
+
+          <article class="bento-card glass project-card reveal-up" role="listitem" data-category="defensif" style="--delay: 0.3s">
+            <div class="project-badge" style="--badge-color: var(--accent-cyan)">Défensif</div>
+            <div class="project-header">
+              <span class="project-emoji" aria-hidden="true">🌐</span>
+              <h3 class="project-title">Honeypot Network</h3>
+            </div>
+            <p class="project-desc">Réseau de honeypots sur 3 VPS&nbsp;: Cowrie (SSH), Dionaea (SMB), Conpot (SCADA). Logs centralisés ELK Stack, dashboard Kibana avec géoloc attaquants et mapping MITRE ATT&amp;CK.</p>
+            <div class="project-tags">
+              <span class="tag">Cowrie</span><span class="tag">Dionaea</span><span class="tag">ELK Stack</span><span class="tag">MITRE ATT&amp;CK</span>
+            </div>
+            <div class="project-links">
+              <a href="https://github.com/EpicNoob22" class="project-link" target="_blank" rel="noopener noreferrer" aria-label="Voir le code sur GitHub">
+                <i class="fab fa-github" aria-hidden="true"></i> GitHub
+              </a>
+            </div>
+          </article>
+
+          <article class="bento-card glass project-card reveal-up" role="listitem" data-category="outils" style="--delay: 0.35s">
+            <div class="project-badge" style="--badge-color: var(--accent-purple)">Outils</div>
+            <div class="project-header">
+              <span class="project-emoji" aria-hidden="true">🔑</span>
+              <h3 class="project-title">CryptoVault</h3>
+            </div>
+            <p class="project-desc">Gestionnaire de mots de passe CLI chiffré AES-256-GCM avec PBKDF2. Vault SQLite chiffré, génération de mots de passe forts, audit de sécurité, intégration Have I Been Pwned.</p>
+            <div class="project-tags">
+              <span class="tag">Python</span><span class="tag">AES-256-GCM</span><span class="tag">SQLite</span><span class="tag">HIBP API</span>
+            </div>
+            <div class="project-links">
+              <a href="https://github.com/EpicNoob22" class="project-link" target="_blank" rel="noopener noreferrer" aria-label="Voir le code sur GitHub">
+                <i class="fab fa-github" aria-hidden="true"></i> GitHub
+              </a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════ CERTIFICATIONS ═══════════════════════════ -->
+    <section id="certifications" class="section certifications" aria-label="Certifications">
+      <div class="section-divider" aria-hidden="true"></div>
+      <div class="container">
+        <div class="section-header reveal-up">
+          <div class="section-eyebrow">Validations officielles</div>
+          <h2 class="section-title">Certifications</h2>
+        </div>
         <div class="certs-grid" role="list">
 
-          <!-- Cert 1: CompTIA Security+ -->
-          <div class="cert-card animate-on-scroll" role="listitem">
-            <div class="cert-badge comptia">
-              <i class="fas fa-shield" aria-hidden="true"></i>
+          <article class="cert-card glass reveal-up" role="listitem" style="--delay: 0s">
+            <div class="cert-icon" aria-hidden="true">
+              <i class="fas fa-certificate" style="color: var(--accent-yellow)"></i>
             </div>
-            <div class="cert-info">
-              <h3 class="cert-title">CompTIA Security+</h3>
-              <p class="cert-desc">
-                Fondamentaux cybersécurité, gestion des risques, cryptographie et conformité réglementaire.
-                Certification reconnue mondialement par les recruteurs en cybersécurité.
-              </p>
-              <div class="cert-meta">
-                <span class="cert-date"><i class="fas fa-calendar" aria-hidden="true"></i> 2025</span>
-                <a href="#" class="cert-verify" target="_blank" rel="noopener noreferrer" aria-label="Vérifier la certification CompTIA Security+">
-                  <i class="fas fa-external-link-alt" aria-hidden="true"></i> Vérifier
-                </a>
-              </div>
-            </div>
-          </div>
+            <div class="cert-obtained"><i class="fas fa-check-circle" aria-hidden="true"></i> Obtenu</div>
+            <h3 class="cert-title">CompTIA Security+</h3>
+            <p class="cert-code">SY0-701</p>
+            <p class="cert-org">CompTIA</p>
+            <p class="cert-year">2025</p>
+            <p class="cert-desc">Fondamentaux cybersécurité, gestion des risques, architecture sécurisée. Score&nbsp;: 812/900.</p>
+            <a href="https://www.comptia.org/certifications/security" class="cert-link" target="_blank" rel="noopener noreferrer" aria-label="Vérifier la certification CompTIA Security+">Vérifier <i class="fas fa-external-link-alt" aria-hidden="true"></i></a>
+          </article>
 
-          <!-- Cert 2: eJPT -->
-          <div class="cert-card animate-on-scroll" role="listitem">
-            <div class="cert-badge ejpt">
-              <i class="fas fa-crosshairs" aria-hidden="true"></i>
+          <article class="cert-card glass reveal-up" role="listitem" style="--delay: 0.1s">
+            <div class="cert-icon" aria-hidden="true">
+              <i class="fas fa-certificate" style="color: var(--accent-yellow)"></i>
             </div>
-            <div class="cert-info">
-              <h3 class="cert-title">eJPT — eLearnSecurity</h3>
-              <p class="cert-desc">
-                Junior Penetration Tester : pentesting web &amp; réseau, exploitation de vulnérabilités
-                et méthodologie professionnelle d'un test d'intrusion complet.
-              </p>
-              <div class="cert-meta">
-                <span class="cert-date"><i class="fas fa-calendar" aria-hidden="true"></i> 2025</span>
-                <a href="#" class="cert-verify" target="_blank" rel="noopener noreferrer" aria-label="Vérifier la certification eJPT">
-                  <i class="fas fa-external-link-alt" aria-hidden="true"></i> Vérifier
-                </a>
-              </div>
-            </div>
-          </div>
+            <div class="cert-obtained"><i class="fas fa-check-circle" aria-hidden="true"></i> Obtenu</div>
+            <h3 class="cert-title">eJPT</h3>
+            <p class="cert-code">Junior Penetration Tester</p>
+            <p class="cert-org">INE Security</p>
+            <p class="cert-year">2025</p>
+            <p class="cert-desc">Junior Penetration Tester. Pentesting web et réseau, exploitation, post-exploitation.</p>
+            <a href="https://ine.com/learning/certifications/internal/elearnsecurity-junior-penetration-tester-cert" class="cert-link" target="_blank" rel="noopener noreferrer" aria-label="Vérifier la certification eJPT">Vérifier <i class="fas fa-external-link-alt" aria-hidden="true"></i></a>
+          </article>
 
-          <!-- Cert 3: Google Cybersecurity -->
-          <div class="cert-card animate-on-scroll" role="listitem">
-            <div class="cert-badge google">
-              <i class="fab fa-google" aria-hidden="true"></i>
+          <article class="cert-card glass reveal-up" role="listitem" style="--delay: 0.2s">
+            <div class="cert-icon" aria-hidden="true">
+              <i class="fab fa-google" style="color: var(--accent-yellow)"></i>
             </div>
-            <div class="cert-info">
-              <h3 class="cert-title">Google Cybersecurity Certificate</h3>
-              <p class="cert-desc">
-                Programme professionnel Google sur les bases de la cybersécurité, utilisation
-                des outils SIEM, détection des menaces et réponse aux incidents.
-              </p>
-              <div class="cert-meta">
-                <span class="cert-date"><i class="fas fa-calendar" aria-hidden="true"></i> 2024</span>
-                <a href="#" class="cert-verify" target="_blank" rel="noopener noreferrer" aria-label="Vérifier le certificat Google Cybersecurity">
-                  <i class="fas fa-external-link-alt" aria-hidden="true"></i> Vérifier
-                </a>
-              </div>
-            </div>
-          </div>
+            <div class="cert-obtained"><i class="fas fa-check-circle" aria-hidden="true"></i> Obtenu</div>
+            <h3 class="cert-title">Google Cybersecurity</h3>
+            <p class="cert-code">Professional Certificate</p>
+            <p class="cert-org">Google / Coursera</p>
+            <p class="cert-year">2024</p>
+            <p class="cert-desc">Programme de 8 cours&nbsp;: sécurité réseau, Linux, SQL, Python, SIEM, incident response.</p>
+            <a href="https://grow.google/certificates/cybersecurity/" class="cert-link" target="_blank" rel="noopener noreferrer" aria-label="Vérifier la certification Google Cybersecurity">Vérifier <i class="fas fa-external-link-alt" aria-hidden="true"></i></a>
+          </article>
 
-          <!-- Cert 4: TryHackMe Advent of Cyber -->
-          <div class="cert-card animate-on-scroll" role="listitem">
-            <div class="cert-badge tryhackme">
-              <i class="fas fa-tree" aria-hidden="true"></i>
+          <article class="cert-card glass reveal-up" role="listitem" style="--delay: 0.3s">
+            <div class="cert-icon" aria-hidden="true">
+              <i class="fas fa-flag" style="color: var(--accent-yellow)"></i>
             </div>
-            <div class="cert-info">
-              <h3 class="cert-title">TryHackMe — Advent of Cyber</h3>
-              <p class="cert-desc">
-                Challenge annuel de 24 jours couvrant blue team &amp; red team, opérations SOC,
-                forensics, exploitation web et bien plus encore.
-              </p>
-              <div class="cert-meta">
-                <span class="cert-date"><i class="fas fa-calendar" aria-hidden="true"></i> 2024</span>
-                <a href="#" class="cert-verify" target="_blank" rel="noopener noreferrer" aria-label="Vérifier le certificat TryHackMe Advent of Cyber">
-                  <i class="fas fa-external-link-alt" aria-hidden="true"></i> Vérifier
-                </a>
-              </div>
-            </div>
-          </div>
-
-        </div><!-- /.certs-grid -->
+            <div class="cert-obtained"><i class="fas fa-check-circle" aria-hidden="true"></i> Obtenu</div>
+            <h3 class="cert-title">Advent of Cyber 2025</h3>
+            <p class="cert-code">Annual Challenge</p>
+            <p class="cert-org">TryHackMe</p>
+            <p class="cert-year">2025</p>
+            <p class="cert-desc">24 jours de défis&nbsp;: OSINT, forensics, web exploitation, crypto, malware analysis.</p>
+            <a href="https://tryhackme.com" class="cert-link" target="_blank" rel="noopener noreferrer" aria-label="Vérifier la certification TryHackMe Advent of Cyber">Vérifier <i class="fas fa-external-link-alt" aria-hidden="true"></i></a>
+          </article>
+        </div>
       </div>
     </section>
 
-    <!-- ─────────────────────────────────────────
-         SECTION: CTF
-    ───────────────────────────────────────── -->
-    <section id="ctf" class="section ctf-section" aria-label="CTF et writeups">
-      <div class="section-container">
-
-        <h2 class="section-title">
-          <span class="prompt" aria-hidden="true">$ </span>cat ~/ctf/writeups
-        </h2>
-
-        <!-- Platform Cards -->
-        <div class="platforms-grid" role="list">
-
-          <!-- HackTheBox -->
-          <div class="platform-card animate-on-scroll" role="listitem">
-            <div class="platform-header">
-              <div class="platform-logo htb">
-                <i class="fas fa-cube" aria-hidden="true"></i>
-              </div>
-              <div class="platform-name-rank">
-                <h3 class="platform-name">HackTheBox</h3>
-                <span class="rank-badge rank-htb">Hacker</span>
+    <!-- ═══════════════════════════ CTF ═══════════════════════════ -->
+    <section id="ctf" class="section ctf" aria-label="Capture The Flag">
+      <div class="section-divider" aria-hidden="true"></div>
+      <div class="container">
+        <div class="section-header reveal-up">
+          <div class="section-eyebrow">Compétitions</div>
+          <h2 class="section-title">Capture The Flag</h2>
+        </div>
+        <div class="ctf-platforms" role="list">
+          <article class="ctf-platform glass reveal-up" role="listitem" style="--delay: 0s">
+            <div class="ctf-platform-header">
+              <div class="ctf-platform-icon" aria-hidden="true"><i class="fas fa-cube" style="color: var(--accent-green)"></i></div>
+              <div>
+                <h3 class="ctf-platform-name">HackTheBox</h3>
+                <p class="ctf-platform-rank" style="color: var(--accent-green)">Hacker — Top 10%</p>
               </div>
             </div>
-            <div class="platform-stats">
-              <div class="platform-stat">
-                <span class="platform-stat-value">Top 10%</span>
-                <span class="platform-stat-label">Classement</span>
+            <p class="ctf-platform-stat">25+ machines pwned</p>
+            <div class="ctf-progress-wrap">
+              <div class="ctf-progress">
+                <div class="ctf-progress-bar" style="--target: 75%; --bar-color: var(--accent-green)"></div>
               </div>
-              <div class="platform-stat">
-                <span class="platform-stat-value">25+</span>
-                <span class="platform-stat-label">Machines pwned</span>
-              </div>
-            </div>
-            <div class="platform-bar-container">
-              <div class="platform-bar" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" aria-label="HackTheBox progression 75%">
-                <div class="platform-progress htb-progress" data-width="75" style="width:0%"></div>
-              </div>
-              <span class="platform-percent">75%</span>
-            </div>
-            <a href="https://app.hackthebox.com/profile/EpicNoob22" class="platform-link" target="_blank" rel="noopener noreferrer">
-              Voir le profil <i class="fas fa-arrow-right" aria-hidden="true"></i>
-            </a>
-          </div>
-
-          <!-- TryHackMe -->
-          <div class="platform-card animate-on-scroll" role="listitem">
-            <div class="platform-header">
-              <div class="platform-logo thm">
-                <i class="fas fa-flag" aria-hidden="true"></i>
-              </div>
-              <div class="platform-name-rank">
-                <h3 class="platform-name">TryHackMe</h3>
-                <span class="rank-badge rank-thm">0x8 [Hacker]</span>
-              </div>
-            </div>
-            <div class="platform-stats">
-              <div class="platform-stat">
-                <span class="platform-stat-value">Top 5%</span>
-                <span class="platform-stat-label">Classement</span>
-              </div>
-              <div class="platform-stat">
-                <span class="platform-stat-value">80+</span>
-                <span class="platform-stat-label">Rooms complétées</span>
-              </div>
-            </div>
-            <div class="platform-bar-container">
-              <div class="platform-bar" role="progressbar" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100" aria-label="TryHackMe progression 85%">
-                <div class="platform-progress thm-progress" data-width="85" style="width:0%"></div>
-              </div>
-              <span class="platform-percent">85%</span>
-            </div>
-            <a href="https://tryhackme.com/p/EpicNoob22" class="platform-link" target="_blank" rel="noopener noreferrer">
-              Voir le profil <i class="fas fa-arrow-right" aria-hidden="true"></i>
-            </a>
-          </div>
-
-          <!-- Root-Me -->
-          <div class="platform-card animate-on-scroll" role="listitem">
-            <div class="platform-header">
-              <div class="platform-logo rootme">
-                <i class="fas fa-terminal" aria-hidden="true"></i>
-              </div>
-              <div class="platform-name-rank">
-                <h3 class="platform-name">Root-Me</h3>
-                <span class="rank-badge rank-rootme">Avancé</span>
-              </div>
-            </div>
-            <div class="platform-stats">
-              <div class="platform-stat">
-                <span class="platform-stat-value">150+</span>
-                <span class="platform-stat-label">Challenges</span>
-              </div>
-              <div class="platform-stat">
-                <span class="platform-stat-value">65%</span>
-                <span class="platform-stat-label">Score global</span>
-              </div>
-            </div>
-            <div class="platform-bar-container">
-              <div class="platform-bar" role="progressbar" aria-valuenow="65" aria-valuemin="0" aria-valuemax="100" aria-label="Root-Me progression 65%">
-                <div class="platform-progress rootme-progress" data-width="65" style="width:0%"></div>
-              </div>
-              <span class="platform-percent">65%</span>
-            </div>
-            <a href="https://www.root-me.org/EpicNoob22" class="platform-link" target="_blank" rel="noopener noreferrer">
-              Voir le profil <i class="fas fa-arrow-right" aria-hidden="true"></i>
-            </a>
-          </div>
-
-        </div><!-- /.platforms-grid -->
-
-        <!-- Writeups -->
-        <h3 class="subsection-title"><i class="fas fa-pen-nib" aria-hidden="true"></i> Writeups récents</h3>
-        <div class="writeups-grid" role="list">
-
-          <!-- Writeup 1: HTB Lame -->
-          <article class="writeup-card animate-on-scroll" role="listitem">
-            <div class="writeup-header">
-              <span class="difficulty-badge diff-easy">Easy</span>
-              <span class="writeup-platform">HackTheBox</span>
-            </div>
-            <h4 class="writeup-title">Lame</h4>
-            <p class="writeup-desc">
-              Exploitation Samba CVE-2007-2447, escalade de privilèges via nmap SUID.
-              Un classique pour apprendre les bases de l'exploitation de services réseau.
-            </p>
-            <div class="writeup-footer">
-              <span class="writeup-date"><i class="fas fa-calendar" aria-hidden="true"></i> Mars 2026</span>
-              <a href="#" class="writeup-read" aria-label="Lire le writeup de Lame">Lire <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
+              <span style="color: var(--accent-green); font-size: 0.85rem; font-weight: 600">75%</span>
             </div>
           </article>
-
-          <!-- Writeup 2: HTB Optimum -->
-          <article class="writeup-card animate-on-scroll" role="listitem">
-            <div class="writeup-header">
-              <span class="difficulty-badge diff-medium">Medium</span>
-              <span class="writeup-platform">HackTheBox</span>
+          <article class="ctf-platform glass reveal-up" role="listitem" style="--delay: 0.1s">
+            <div class="ctf-platform-header">
+              <div class="ctf-platform-icon" aria-hidden="true"><i class="fas fa-flag" style="color: var(--accent-cyan)"></i></div>
+              <div>
+                <h3 class="ctf-platform-name">TryHackMe</h3>
+                <p class="ctf-platform-rank" style="color: var(--accent-cyan)">0x8 [Hacker] — Top 5%</p>
+              </div>
             </div>
-            <h4 class="writeup-title">Optimum</h4>
-            <p class="writeup-desc">
-              HttpFileServer RCE CVE-2014-6287, escalade de privilèges via MS16-098.
-              Exploitation Windows Server et comprendre le kernel exploit patching.
-            </p>
-            <div class="writeup-footer">
-              <span class="writeup-date"><i class="fas fa-calendar" aria-hidden="true"></i> Fév 2026</span>
-              <a href="#" class="writeup-read" aria-label="Lire le writeup d'Optimum">Lire <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
-            </div>
-          </article>
-
-          <!-- Writeup 3: THM Brainpan -->
-          <article class="writeup-card animate-on-scroll" role="listitem">
-            <div class="writeup-header">
-              <span class="difficulty-badge diff-hard">Hard</span>
-              <span class="writeup-platform">TryHackMe</span>
-            </div>
-            <h4 class="writeup-title">Brainpan</h4>
-            <p class="writeup-desc">
-              Buffer Overflow custom, exploitation manuelle de la stack, pivot réseau.
-              Introduction complète au développement d'exploit en environnement contrôlé.
-            </p>
-            <div class="writeup-footer">
-              <span class="writeup-date"><i class="fas fa-calendar" aria-hidden="true"></i> Jan 2026</span>
-              <a href="#" class="writeup-read" aria-label="Lire le writeup de Brainpan">Lire <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
+            <p class="ctf-platform-stat">80+ rooms completed</p>
+            <div class="ctf-progress-wrap">
+              <div class="ctf-progress">
+                <div class="ctf-progress-bar" style="--target: 85%; --bar-color: var(--accent-cyan)"></div>
+              </div>
+              <span style="color: var(--accent-cyan); font-size: 0.85rem; font-weight: 600">85%</span>
             </div>
           </article>
-
-          <!-- Writeup 4: HTB Blue -->
-          <article class="writeup-card animate-on-scroll" role="listitem">
-            <div class="writeup-header">
-              <span class="difficulty-badge diff-easy">Easy</span>
-              <span class="writeup-platform">HackTheBox</span>
+          <article class="ctf-platform glass reveal-up" role="listitem" style="--delay: 0.2s">
+            <div class="ctf-platform-header">
+              <div class="ctf-platform-icon" aria-hidden="true"><i class="fas fa-trophy" style="color: var(--accent-purple)"></i></div>
+              <div>
+                <h3 class="ctf-platform-name">Root-Me</h3>
+                <p class="ctf-platform-rank" style="color: var(--accent-purple)">Avancé</p>
+              </div>
             </div>
-            <h4 class="writeup-title">Blue</h4>
-            <p class="writeup-desc">
-              EternalBlue MS17-010, exploitation SMB sur Windows 7 non patché.
-              Comprendre l'une des vulnérabilités les plus célèbres de l'histoire de Windows.
-            </p>
-            <div class="writeup-footer">
-              <span class="writeup-date"><i class="fas fa-calendar" aria-hidden="true"></i> Déc 2025</span>
-              <a href="#" class="writeup-read" aria-label="Lire le writeup de Blue">Lire <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
-            </div>
-          </article>
-
-          <!-- Writeup 5: THM Relevant -->
-          <article class="writeup-card animate-on-scroll" role="listitem">
-            <div class="writeup-header">
-              <span class="difficulty-badge diff-medium">Medium</span>
-              <span class="writeup-platform">TryHackMe</span>
-            </div>
-            <h4 class="writeup-title">Relevant</h4>
-            <p class="writeup-desc">
-              SMB enumeration avancée, escalade de privilèges via PrintSpoofer.
-              Windows pentesting moderne avec techniques actuelles d'élévation de privilèges.
-            </p>
-            <div class="writeup-footer">
-              <span class="writeup-date"><i class="fas fa-calendar" aria-hidden="true"></i> Nov 2025</span>
-              <a href="#" class="writeup-read" aria-label="Lire le writeup de Relevant">Lire <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
+            <p class="ctf-platform-stat">150+ challenges</p>
+            <div class="ctf-progress-wrap">
+              <div class="ctf-progress">
+                <div class="ctf-progress-bar" style="--target: 65%; --bar-color: var(--accent-purple)"></div>
+              </div>
+              <span style="color: var(--accent-purple); font-size: 0.85rem; font-weight: 600">65%</span>
             </div>
           </article>
+        </div>
 
-          <!-- Writeup 6: HTB Active -->
-          <article class="writeup-card animate-on-scroll" role="listitem">
-            <div class="writeup-header">
-              <span class="difficulty-badge diff-hard">Hard</span>
-              <span class="writeup-platform">HackTheBox</span>
-            </div>
-            <h4 class="writeup-title">Active</h4>
-            <p class="writeup-desc">
-              Kerberoasting, GPP Passwords, compromission complète d'Active Directory.
-              Parcours complet d'une attaque AD du foothold jusqu'à la compromission totale du domaine.
-            </p>
-            <div class="writeup-footer">
-              <span class="writeup-date"><i class="fas fa-calendar" aria-hidden="true"></i> Oct 2025</span>
-              <a href="#" class="writeup-read" aria-label="Lire le writeup d'Active">Lire <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
-            </div>
+        <h3 class="ctf-writeups-title reveal-up">Derniers Writeups</h3>
+        <div class="ctf-writeups" role="list">
+          <article class="writeup-card glass reveal-up" role="listitem" style="--delay: 0s">
+            <span class="writeup-difficulty" style="--diff-color: var(--accent-green)" aria-label="Difficulté facile">Easy</span>
+            <h4 class="writeup-title">HTB Lame</h4>
+            <p class="writeup-desc">Samba CVE-2007-2447, nmap SUID privesc</p>
+            <time class="writeup-date" datetime="2026-03">Mars 2026</time>
           </article>
-
-        </div><!-- /.writeups-grid -->
+          <article class="writeup-card glass reveal-up" role="listitem" style="--delay: 0.05s">
+            <span class="writeup-difficulty" style="--diff-color: var(--accent-yellow)" aria-label="Difficulté moyenne">Medium</span>
+            <h4 class="writeup-title">HTB Optimum</h4>
+            <p class="writeup-desc">HttpFileServer RCE, MS16-098</p>
+            <time class="writeup-date" datetime="2026-02">Fév 2026</time>
+          </article>
+          <article class="writeup-card glass reveal-up" role="listitem" style="--delay: 0.1s">
+            <span class="writeup-difficulty" style="--diff-color: var(--accent-pink)" aria-label="Difficulté difficile">Hard</span>
+            <h4 class="writeup-title">THM Brainpan</h4>
+            <p class="writeup-desc">Buffer overflow, shellcode custom, pivot</p>
+            <time class="writeup-date" datetime="2026-01">Jan 2026</time>
+          </article>
+          <article class="writeup-card glass reveal-up" role="listitem" style="--delay: 0.15s">
+            <span class="writeup-difficulty" style="--diff-color: var(--accent-green)" aria-label="Difficulté facile">Easy</span>
+            <h4 class="writeup-title">HTB Blue</h4>
+            <p class="writeup-desc">EternalBlue MS17-010, SMB exploitation</p>
+            <time class="writeup-date" datetime="2025-12">Déc 2025</time>
+          </article>
+          <article class="writeup-card glass reveal-up" role="listitem" style="--delay: 0.2s">
+            <span class="writeup-difficulty" style="--diff-color: var(--accent-yellow)" aria-label="Difficulté moyenne">Medium</span>
+            <h4 class="writeup-title">THM Relevant</h4>
+            <p class="writeup-desc">SMB enumeration, PrintSpoofer</p>
+            <time class="writeup-date" datetime="2025-11">Nov 2025</time>
+          </article>
+          <article class="writeup-card glass reveal-up" role="listitem" style="--delay: 0.25s">
+            <span class="writeup-difficulty" style="--diff-color: var(--accent-pink)" aria-label="Difficulté difficile">Hard</span>
+            <h4 class="writeup-title">HTB Active</h4>
+            <p class="writeup-desc">Kerberoasting, GPP Passwords, AD</p>
+            <time class="writeup-date" datetime="2025-10">Oct 2025</time>
+          </article>
+        </div>
       </div>
     </section>
 
-    <!-- ─────────────────────────────────────────
-         SECTION: BLOG
-    ───────────────────────────────────────── -->
-    <section id="blog" class="section blog-section" aria-label="Blog">
-      <div class="section-container">
-
-        <h2 class="section-title">
-          <span class="prompt" aria-hidden="true">$ </span>tail -f ~/blog/latest.log
-        </h2>
-
+    <!-- ═══════════════════════════ BLOG ═══════════════════════════ -->
+    <section id="blog" class="section blog" aria-label="Articles et writeups">
+      <div class="section-divider" aria-hidden="true"></div>
+      <div class="container">
+        <div class="section-header reveal-up">
+          <div class="section-eyebrow">Partage de connaissances</div>
+          <h2 class="section-title">Articles &amp; Writeups</h2>
+        </div>
         <div class="blog-grid" role="list">
 
-          <!-- Blog 1: HomeLab SOC -->
-          <article class="blog-card animate-on-scroll" role="listitem">
-            <div class="blog-icon">
-              <i class="fas fa-house-signal" aria-hidden="true"></i>
+          <article class="blog-card glass reveal-up" role="listitem" style="--delay: 0s">
+            <div class="blog-meta">
+              <time class="blog-date" datetime="2026-03-12">12 Mars 2026</time>
+              <span class="blog-read"><i class="fas fa-clock" aria-hidden="true"></i> 12 min</span>
             </div>
-            <div class="blog-content">
-              <h3 class="blog-title">Comment j'ai monté mon HomeLab SOC pour moins de 100€</h3>
-              <p class="blog-excerpt">
-                Guide complet pour créer un SOC maison avec du matériel récupéré et des outils open-source.
-                Tout ce qu'il faut savoir sur ELK Stack, Wazuh, et la mise en place d'une détection d'intrusions efficace.
-              </p>
-              <div class="blog-tags">
-                <span class="blog-tag">HomeLab</span>
-                <span class="blog-tag">SOC</span>
-                <span class="blog-tag">ELK</span>
-                <span class="blog-tag">Wazuh</span>
-              </div>
-              <div class="blog-meta">
-                <span class="blog-date"><i class="fas fa-calendar" aria-hidden="true"></i> 15 mars 2026</span>
-                <span class="blog-read-time"><i class="fas fa-clock" aria-hidden="true"></i> 12 min</span>
-                <a href="#" class="blog-read-link" aria-label="Lire l'article sur le HomeLab SOC">Lire l'article <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
-              </div>
+            <div class="blog-icon" aria-hidden="true">🏠</div>
+            <h3 class="blog-title">Comment j'ai monté mon HomeLab SOC pour moins de 100€</h3>
+            <p class="blog-excerpt">Guide complet pour construire un SOC maison avec ELK Stack, Wazuh et Suricata. Matériel, configuration, dashboards Kibana — tout est détaillé pas à pas.</p>
+            <div class="blog-tags">
+              <span class="tag">HomeLab</span><span class="tag">SOC</span><span class="tag">Tutorial</span>
             </div>
+            <a href="#blog" class="blog-link" aria-label="Lire l'article sur le HomeLab SOC">Lire <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
           </article>
 
-          <!-- Blog 2: OWASP Top 10 -->
-          <article class="blog-card animate-on-scroll" role="listitem">
-            <div class="blog-icon">
-              <i class="fas fa-bug" aria-hidden="true"></i>
+          <article class="blog-card glass reveal-up" role="listitem" style="--delay: 0.1s">
+            <div class="blog-meta">
+              <time class="blog-date" datetime="2026-02-28">28 Fév 2026</time>
+              <span class="blog-read"><i class="fas fa-clock" aria-hidden="true"></i> 15 min</span>
             </div>
-            <div class="blog-content">
-              <h3 class="blog-title">Les 10 vulnérabilités web les plus courantes en 2026</h3>
-              <p class="blog-excerpt">
-                Tour d'horizon complet des failles OWASP avec des exemples concrets et des PoC fonctionnels.
-                Remédiations pratiques et conseils pour chaque vulnérabilité afin de sécuriser vos applications.
-              </p>
-              <div class="blog-tags">
-                <span class="blog-tag">OWASP</span>
-                <span class="blog-tag">Web Security</span>
-                <span class="blog-tag">Pentest</span>
-              </div>
-              <div class="blog-meta">
-                <span class="blog-date"><i class="fas fa-calendar" aria-hidden="true"></i> 2 mars 2026</span>
-                <span class="blog-read-time"><i class="fas fa-clock" aria-hidden="true"></i> 8 min</span>
-                <a href="#" class="blog-read-link" aria-label="Lire l'article sur les vulnérabilités web OWASP">Lire l'article <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
-              </div>
+            <div class="blog-icon" aria-hidden="true">🌐</div>
+            <h3 class="blog-title">Les 10 vulnérabilités web les plus critiques en 2026</h3>
+            <p class="blog-excerpt">Analyse approfondie des vulnérabilités OWASP Top 10 en 2026, avec exemples de code vulnérable et de correction, PoC et recommandations de remédiation.</p>
+            <div class="blog-tags">
+              <span class="tag">OWASP</span><span class="tag">Web Security</span>
             </div>
+            <a href="#blog" class="blog-link" aria-label="Lire l'article sur les vulnérabilités web">Lire <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
           </article>
 
-          <!-- Blog 3: Active Directory -->
-          <article class="blog-card animate-on-scroll" role="listitem">
-            <div class="blog-icon">
-              <i class="fas fa-sitemap" aria-hidden="true"></i>
+          <article class="blog-card glass reveal-up" role="listitem" style="--delay: 0.2s">
+            <div class="blog-meta">
+              <time class="blog-date" datetime="2026-01-15">15 Jan 2026</time>
+              <span class="blog-read"><i class="fas fa-clock" aria-hidden="true"></i> 20 min</span>
             </div>
-            <div class="blog-content">
-              <h3 class="blog-title">Active Directory : du débutant au pentester</h3>
-              <p class="blog-excerpt">
-                Parcours d'apprentissage complet pour maîtriser les attaques Active Directory.
-                De l'énumération BloodHound jusqu'au Golden Ticket, tout le chemin est détaillé pas à pas.
-              </p>
-              <div class="blog-tags">
-                <span class="blog-tag">Active Directory</span>
-                <span class="blog-tag">Kerberos</span>
-                <span class="blog-tag">BloodHound</span>
-              </div>
-              <div class="blog-meta">
-                <span class="blog-date"><i class="fas fa-calendar" aria-hidden="true"></i> 18 fév 2026</span>
-                <span class="blog-read-time"><i class="fas fa-clock" aria-hidden="true"></i> 20 min</span>
-                <a href="#" class="blog-read-link" aria-label="Lire l'article sur Active Directory">Lire l'article <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
-              </div>
+            <div class="blog-icon" aria-hidden="true">🏰</div>
+            <h3 class="blog-title">Active Directory&nbsp;: du débutant au pentester</h3>
+            <p class="blog-excerpt">Tout ce qu'il faut savoir pour passer de zéro à l'exploitation d'Active Directory. Enumération, Kerberoasting, Pass-the-Hash, BloodHound, Golden Ticket.</p>
+            <div class="blog-tags">
+              <span class="tag">AD</span><span class="tag">Pentesting</span><span class="tag">Red Team</span>
             </div>
+            <a href="#blog" class="blog-link" aria-label="Lire l'article sur Active Directory">Lire <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
           </article>
 
-          <!-- Blog 4: Setup CTF -->
-          <article class="blog-card animate-on-scroll" role="listitem">
-            <div class="blog-icon">
-              <i class="fas fa-flag" aria-hidden="true"></i>
+          <article class="blog-card glass reveal-up" role="listitem" style="--delay: 0.3s">
+            <div class="blog-meta">
+              <time class="blog-date" datetime="2025-12-01">1 Déc 2025</time>
+              <span class="blog-read"><i class="fas fa-clock" aria-hidden="true"></i> 8 min</span>
             </div>
-            <div class="blog-content">
-              <h3 class="blog-title">Mon setup CTF : outils, méthodologie et tips</h3>
-              <p class="blog-excerpt">
-                Configuration optimale pour performer en compétition CTF.
-                Tous mes outils, scripts personnalisés et ma méthodologie pour résoudre des machines efficacement.
-              </p>
-              <div class="blog-tags">
-                <span class="blog-tag">CTF</span>
-                <span class="blog-tag">Setup</span>
-                <span class="blog-tag">Methodology</span>
-              </div>
-              <div class="blog-meta">
-                <span class="blog-date"><i class="fas fa-calendar" aria-hidden="true"></i> 5 fév 2026</span>
-                <span class="blog-read-time"><i class="fas fa-clock" aria-hidden="true"></i> 10 min</span>
-                <a href="#" class="blog-read-link" aria-label="Lire l'article sur le setup CTF">Lire l'article <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
-              </div>
+            <div class="blog-icon" aria-hidden="true">🚩</div>
+            <h3 class="blog-title">Mon setup CTF&nbsp;: outils, méthodologie et tips</h3>
+            <p class="blog-excerpt">Mon environnement CTF optimisé&nbsp;: VMs Kali et Parrot, tmux, scripts d'automatisation, checklist de reconnaissance et ressources indispensables.</p>
+            <div class="blog-tags">
+              <span class="tag">CTF</span><span class="tag">Tools</span><span class="tag">Methodology</span>
             </div>
+            <a href="#blog" class="blog-link" aria-label="Lire l'article sur le setup CTF">Lire <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
           </article>
-
-        </div><!-- /.blog-grid -->
+        </div>
       </div>
     </section>
 
-    <!-- ─────────────────────────────────────────
-         SECTION: CONTACT
-    ───────────────────────────────────────── -->
-    <section id="contact" class="section contact-section" aria-label="Contact">
-      <div class="section-container">
-
-        <h2 class="section-title">
-          <span class="prompt" aria-hidden="true">$ </span>ssh contact@epicnoob22
-        </h2>
-
-        <p class="contact-subtitle">
-          Disponible pour alternance à partir de Septembre 2026 🚀
-        </p>
-
+    <!-- ═══════════════════════════ CONTACT ═══════════════════════════ -->
+    <section id="contact" class="section contact" aria-label="Contact">
+      <div class="section-divider" aria-hidden="true"></div>
+      <div class="container">
+        <div class="section-header reveal-up">
+          <div class="section-eyebrow">Entrons en contact</div>
+          <h2 class="section-title">Contact</h2>
+        </div>
         <div class="contact-grid">
-
-          <!-- Social Links -->
-          <div class="contact-info">
-            <h3 class="contact-info-title"><i class="fas fa-network-wired" aria-hidden="true"></i> Retrouve-moi ici</h3>
-
-            <div class="social-links" role="list">
-              <a
-                href="https://github.com/EpicNoob22"
-                class="social-link social-github"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="GitHub d'EpicNoob22"
-                role="listitem"
-              >
-                <i class="fab fa-github" aria-hidden="true"></i>
-                <div class="social-link-info">
-                  <span class="social-link-name">GitHub</span>
-                  <span class="social-link-handle">@EpicNoob22</span>
-                </div>
-                <i class="fas fa-arrow-right social-arrow" aria-hidden="true"></i>
-              </a>
-
-              <a
-                href="#"
-                class="social-link social-linkedin"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="LinkedIn d'EpicNoob22"
-                role="listitem"
-              >
-                <i class="fab fa-linkedin" aria-hidden="true"></i>
-                <div class="social-link-info">
-                  <span class="social-link-name">LinkedIn</span>
-                  <span class="social-link-handle">EpicNoob22</span>
-                </div>
-                <i class="fas fa-arrow-right social-arrow" aria-hidden="true"></i>
-              </a>
-
-              <a
-                href="mailto:epicnoob22@proton.me"
-                class="social-link social-email"
-                aria-label="Envoyer un email à EpicNoob22"
-                role="listitem"
-              >
-                <i class="fas fa-envelope" aria-hidden="true"></i>
-                <div class="social-link-info">
-                  <span class="social-link-name">Email</span>
-                  <span class="social-link-handle">epicnoob22@proton.me</span>
-                </div>
-                <i class="fas fa-arrow-right social-arrow" aria-hidden="true"></i>
-              </a>
-
-              <a
-                href="https://tryhackme.com/p/EpicNoob22"
-                class="social-link social-thm"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Profil TryHackMe d'EpicNoob22"
-                role="listitem"
-              >
-                <i class="fas fa-flag" aria-hidden="true"></i>
-                <div class="social-link-info">
-                  <span class="social-link-name">TryHackMe</span>
-                  <span class="social-link-handle">EpicNoob22</span>
-                </div>
-                <i class="fas fa-arrow-right social-arrow" aria-hidden="true"></i>
-              </a>
+          <div class="contact-info reveal-left">
+            <h3 class="contact-cta-title">Travaillons ensemble</h3>
+            <p class="contact-cta-text">Disponible pour une alternance en cybersécurité à partir de septembre 2026. Je suis ouvert à toute opportunité de collaboration, de stage ou de projet.</p>
+            <div class="contact-availability">
+              <span class="availability-dot"></span>
+              <span>Disponible — Remote &amp; Présentiel</span>
+              <span class="contact-location"><i class="fas fa-map-marker-alt" aria-hidden="true"></i> France</span>
             </div>
-
-            <!-- Availability note -->
-            <div class="availability-box">
-              <div class="availability-indicator">
-                <span class="availability-dot"></span>
-                <span>Disponible</span>
-              </div>
-              <p>Recherche une alternance en cybersécurité<br /><strong>à partir de Septembre 2026</strong></p>
-            </div>
+            <ul class="contact-links" role="list" aria-label="Liens de contact">
+              <li>
+                <a href="https://github.com/EpicNoob22" class="contact-link" target="_blank" rel="noopener noreferrer" aria-label="GitHub EpicNoob22">
+                  <i class="fab fa-github" aria-hidden="true"></i>
+                  <span>github.com/EpicNoob22</span>
+                </a>
+              </li>
+              <li>
+                <a href="https://linkedin.com/in/EpicNoob22" class="contact-link" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn EpicNoob22">
+                  <i class="fab fa-linkedin" aria-hidden="true"></i>
+                  <span>linkedin.com/in/EpicNoob22</span>
+                </a>
+              </li>
+              <li>
+                <a href="mailto:epicnoob22@proton.me" class="contact-link" aria-label="Email EpicNoob22">
+                  <i class="fas fa-envelope" aria-hidden="true"></i>
+                  <span>epicnoob22@proton.me</span>
+                </a>
+              </li>
+              <li>
+                <a href="https://tryhackme.com/p/EpicNoob22" class="contact-link" target="_blank" rel="noopener noreferrer" aria-label="TryHackMe EpicNoob22">
+                  <i class="fas fa-flag" aria-hidden="true"></i>
+                  <span>tryhackme.com/p/EpicNoob22</span>
+                </a>
+              </li>
+              <li>
+                <a href="https://app.hackthebox.com/profile/EpicNoob22" class="contact-link" target="_blank" rel="noopener noreferrer" aria-label="HackTheBox EpicNoob22">
+                  <i class="fas fa-cube" aria-hidden="true"></i>
+                  <span>app.hackthebox.com/EpicNoob22</span>
+                </a>
+              </li>
+              <li>
+                <a href="https://www.root-me.org/EpicNoob22" class="contact-link" target="_blank" rel="noopener noreferrer" aria-label="Root-Me EpicNoob22">
+                  <i class="fas fa-terminal" aria-hidden="true"></i>
+                  <span>root-me.org/EpicNoob22</span>
+                </a>
+              </li>
+            </ul>
           </div>
-
-          <!-- Contact Form -->
-          <div class="contact-form-wrapper">
-            <form id="contactForm" class="contact-form" novalidate aria-label="Formulaire de contact">
+          <div class="contact-form-wrap reveal-right">
+            <form id="contactForm" class="contact-form glass" novalidate aria-label="Formulaire de contact">
               <div class="form-group">
-                <label for="contactName" class="form-label">
-                  <i class="fas fa-user" aria-hidden="true"></i> Nom *
-                </label>
-                <input
-                  type="text"
-                  id="contactName"
-                  name="name"
-                  class="form-input"
-                  placeholder="Votre nom"
-                  required
-                  aria-required="true"
-                  autocomplete="name"
-                />
-                <span class="form-error" id="nameError" role="alert" aria-live="polite"></span>
+                <label for="contactName" class="form-label">Nom</label>
+                <input type="text" id="contactName" name="name" class="form-input" placeholder="Votre nom" required autocomplete="name" aria-required="true" />
+                <span class="form-error" id="nameError" role="alert"></span>
               </div>
-
               <div class="form-group">
-                <label for="contactEmail" class="form-label">
-                  <i class="fas fa-envelope" aria-hidden="true"></i> Email *
-                </label>
-                <input
-                  type="email"
-                  id="contactEmail"
-                  name="email"
-                  class="form-input"
-                  placeholder="votre@email.com"
-                  required
-                  aria-required="true"
-                  autocomplete="email"
-                />
-                <span class="form-error" id="emailError" role="alert" aria-live="polite"></span>
+                <label for="contactEmail" class="form-label">Email</label>
+                <input type="email" id="contactEmail" name="email" class="form-input" placeholder="votre@email.com" required autocomplete="email" aria-required="true" />
+                <span class="form-error" id="emailError" role="alert"></span>
               </div>
-
               <div class="form-group">
-                <label for="contactSubject" class="form-label">
-                  <i class="fas fa-tag" aria-hidden="true"></i> Sujet *
-                </label>
+                <label for="contactSubject" class="form-label">Sujet</label>
                 <select id="contactSubject" name="subject" class="form-input form-select" required aria-required="true">
-                  <option value="" disabled selected>Choisir un sujet...</option>
-                  <option value="alternance">Proposition d'alternance</option>
-                  <option value="collab">Collaboration sur un projet</option>
+                  <option value="" disabled selected>Choisissez un sujet</option>
+                  <option value="alternance">Alternance</option>
+                  <option value="stage">Stage</option>
+                  <option value="collaboration">Collaboration</option>
                   <option value="technique">Question technique</option>
                   <option value="autre">Autre</option>
                 </select>
-                <span class="form-error" id="subjectError" role="alert" aria-live="polite"></span>
+                <span class="form-error" id="subjectError" role="alert"></span>
               </div>
-
               <div class="form-group">
-                <label for="contactMessage" class="form-label">
-                  <i class="fas fa-comment-dots" aria-hidden="true"></i> Message * <span class="form-hint">(min. 20 caractères)</span>
-                </label>
-                <textarea
-                  id="contactMessage"
-                  name="message"
-                  class="form-input form-textarea"
-                  placeholder="Votre message..."
-                  required
-                  aria-required="true"
-                  minlength="20"
-                  rows="5"
-                ></textarea>
-                <span class="form-char-count" id="charCount">0 / 20 min</span>
-                <span class="form-error" id="messageError" role="alert" aria-live="polite"></span>
+                <label for="contactMessage" class="form-label">Message</label>
+                <textarea id="contactMessage" name="message" class="form-input form-textarea" placeholder="Votre message..." required rows="5" aria-required="true"></textarea>
+                <span class="form-error" id="messageError" role="alert"></span>
               </div>
-
-              <button type="submit" class="btn btn-primary btn-submit" id="submitBtn" aria-label="Envoyer le message">
-                <span class="btn-text">
-                  <i class="fas fa-paper-plane" aria-hidden="true"></i>
-                  Envoyer le message
-                </span>
-                <span class="btn-loading" aria-hidden="true">
-                  <i class="fas fa-spinner fa-spin" aria-hidden="true"></i>
-                  Envoi en cours...
-                </span>
+              <button type="submit" class="btn btn-primary btn-full magnetic-btn" data-magnetic>
+                <span>Envoyer</span>
+                <i class="fas fa-paper-plane" aria-hidden="true"></i>
               </button>
             </form>
           </div>
-
-        </div><!-- /.contact-grid -->
+        </div>
       </div>
     </section>
-
   </main>
 
-  <!-- ═══════════════════════════════════════════
-       FOOTER
-  ═══════════════════════════════════════════ -->
-  <footer class="footer" role="contentinfo">
-    <div class="footer-container">
-      <div class="footer-terminal">
-        <span class="terminal-prompt footer-prompt">$ </span>
-        <span class="footer-cmd">echo "Made with 💚 by EpicNoob22 — © 2026"</span>
-      </div>
-      <p class="footer-subtext">Hack the planet, but ethically. 🌍🔐</p>
-
-      <div class="footer-social" role="list" aria-label="Liens sociaux">
-        <a
-          href="https://github.com/EpicNoob22"
-          class="footer-social-link"
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label="GitHub"
-          role="listitem"
-        >
-          <i class="fab fa-github" aria-hidden="true"></i>
-        </a>
-        <a
-          href="#"
-          class="footer-social-link"
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label="LinkedIn"
-          role="listitem"
-        >
-          <i class="fab fa-linkedin" aria-hidden="true"></i>
-        </a>
-        <a
-          href="mailto:epicnoob22@proton.me"
-          class="footer-social-link"
-          aria-label="Email"
-          role="listitem"
-        >
-          <i class="fas fa-envelope" aria-hidden="true"></i>
-        </a>
-        <a
-          href="https://tryhackme.com/p/EpicNoob22"
-          class="footer-social-link"
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label="TryHackMe"
-          role="listitem"
-        >
-          <i class="fas fa-flag" aria-hidden="true"></i>
-        </a>
-      </div>
-
-      <button class="back-to-top" id="backToTop" aria-label="Retour en haut de la page">
-        <i class="fas fa-chevron-up" aria-hidden="true"></i>
+  <!-- FOOTER -->
+  <footer class="footer" aria-label="Pied de page">
+    <div class="footer-wave" aria-hidden="true">
+      <svg viewBox="0 0 1440 60" preserveAspectRatio="none" aria-hidden="true">
+        <path d="M0,30 C360,60 1080,0 1440,30 L1440,60 L0,60 Z" fill="var(--bg-void)"/>
+      </svg>
+    </div>
+    <div class="footer-inner container">
+      <p class="footer-text">Conçu avec passion par <span class="footer-name">EpicNoob22</span> &mdash; &copy; 2026</p>
+      <p class="footer-sub">Securing the digital world, one vulnerability at a time.</p>
+      <ul class="footer-socials" role="list" aria-label="Réseaux sociaux">
+        <li><a href="https://github.com/EpicNoob22" class="footer-social" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><i class="fab fa-github" aria-hidden="true"></i></a></li>
+        <li><a href="https://linkedin.com/in/EpicNoob22" class="footer-social" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><i class="fab fa-linkedin" aria-hidden="true"></i></a></li>
+        <li><a href="mailto:epicnoob22@proton.me" class="footer-social" aria-label="Email"><i class="fas fa-envelope" aria-hidden="true"></i></a></li>
+        <li><a href="https://tryhackme.com/p/EpicNoob22" class="footer-social" target="_blank" rel="noopener noreferrer" aria-label="TryHackMe"><i class="fas fa-flag" aria-hidden="true"></i></a></li>
+      </ul>
+      <button class="back-to-top" id="backToTop" aria-label="Retour en haut de page">
+        <i class="fas fa-arrow-up" aria-hidden="true"></i>
       </button>
     </div>
   </footer>
 
-  <!-- ═══════════════════════════════════════════
-       TERMINAL EASTER EGG
-  ═══════════════════════════════════════════ -->
-  <div id="terminalEgg" class="terminal-egg hidden" role="dialog" aria-modal="true" aria-label="Terminal interactif EpicNoob22">
-    <div class="terminal-egg-window">
-      <div class="terminal-egg-header">
-        <div class="terminal-egg-dots">
-          <button class="terminal-egg-dot dot-close" id="terminalClose" aria-label="Fermer le terminal">
-            <i class="fas fa-times" aria-hidden="true"></i>
-          </button>
-          <span class="terminal-egg-dot dot-minimize" aria-hidden="true"></span>
-          <span class="terminal-egg-dot dot-maximize" aria-hidden="true"></span>
+  <!-- TOAST NOTIFICATION -->
+  <div id="toast" class="toast" role="alert" aria-live="polite" aria-atomic="true"></div>
+
+  <!-- TERMINAL EASTER EGG -->
+  <button class="terminal-trigger" id="terminalTrigger" aria-label="Ouvrir le terminal (Ctrl+`)">
+    <i class="fas fa-terminal" aria-hidden="true"></i>
+  </button>
+
+  <div id="terminalModal" class="terminal-modal" role="dialog" aria-modal="true" aria-label="Terminal EpicNoob22" aria-hidden="true">
+    <div class="terminal-window glass">
+      <div class="terminal-header">
+        <div class="terminal-dots" aria-hidden="true">
+          <span class="terminal-dot terminal-dot-red"></span>
+          <span class="terminal-dot terminal-dot-yellow"></span>
+          <span class="terminal-dot terminal-dot-green"></span>
         </div>
-        <span class="terminal-egg-title">EpicNoob22@kali — root — 80x24</span>
-        <div class="terminal-egg-dots-spacer" aria-hidden="true"></div>
+        <span class="terminal-title">epicnoob22@terminal — bash</span>
+        <button class="terminal-close" id="terminalClose" aria-label="Fermer le terminal">
+          <i class="fas fa-times" aria-hidden="true"></i>
+        </button>
       </div>
-      <div class="terminal-egg-body">
-        <div id="terminalOutput" class="terminal-output" aria-live="polite" aria-label="Sortie du terminal"></div>
-        <div class="terminal-input-line">
-          <span class="terminal-prompt terminal-egg-prompt">root@kali:~# </span>
-          <input
-            type="text"
-            id="terminalInput"
-            class="terminal-input-field"
-            autocomplete="off"
-            spellcheck="false"
-            aria-label="Saisir une commande"
-            placeholder="Tapez 'help' pour commencer..."
-          />
+      <div class="terminal-body" id="terminalBody" aria-live="polite" aria-relevant="additions">
+        <div class="terminal-welcome">
+          <pre class="terminal-ascii" aria-label="ASCII art EpicNoob22">
+███████╗██████╗ ██╗ ██████╗███╗   ██╗ ██████╗  ██████╗ ██████╗ ██████╗ ██████╗
+██╔════╝██╔══██╗██║██╔════╝████╗  ██║██╔═══██╗██╔═══██╗██╔══██╗╚════██╗╚════██╗
+█████╗  ██████╔╝██║██║     ██╔██╗ ██║██║   ██║██║   ██║██████╔╝ █████╔╝ █████╔╝
+██╔══╝  ██╔═══╝ ██║██║     ██║╚██╗██║██║   ██║██║   ██║██╔══██╗██╔═══╝ ██╔═══╝
+███████╗██║     ██║╚██████╗██║ ╚████║╚██████╔╝╚██████╔╝██████╔╝███████╗███████╗
+╚══════╝╚═╝     ╚═╝ ╚═════╝╚═╝  ╚═══╝ ╚═════╝  ╚═════╝ ╚═════╝ ╚══════╝╚══════╝</pre>
+          <p class="terminal-welcome-text">Bienvenue dans mon terminal interactif. Tapez <kbd>help</kbd> pour voir les commandes disponibles.</p>
         </div>
+      </div>
+      <div class="terminal-input-row">
+        <span class="terminal-prompt" aria-hidden="true">epicnoob22&nbsp;→&nbsp;</span>
+        <input
+          type="text"
+          id="terminalInput"
+          class="terminal-input"
+          autocomplete="off"
+          autocorrect="off"
+          autocapitalize="off"
+          spellcheck="false"
+          placeholder="Entrez une commande..."
+          aria-label="Ligne de commande terminal"
+        />
       </div>
     </div>
   </div>
 
-  <!-- ═══════════════════════════════════════════
-       TERMINAL TOGGLE BUTTON (floating)
-  ═══════════════════════════════════════════ -->
-  <button
-    class="terminal-toggle-btn"
-    id="terminalToggle"
-    title="Open Terminal [Konami Code]"
-    aria-label="Ouvrir le terminal interactif (ou utilisez le Konami Code)"
-    aria-expanded="false"
-    aria-controls="terminalEgg"
-  >
-    <i class="fas fa-terminal" aria-hidden="true"></i>
-  </button>
-
-  <!-- ═══════════════════════════════════════════
-       TOAST CONTAINER
-  ═══════════════════════════════════════════ -->
-  <div id="toastContainer" class="toast-container" role="region" aria-live="polite" aria-label="Notifications"></div>
-
-  <!-- ═══════════════════════════════════════════
-       SCRIPT
-  ═══════════════════════════════════════════ -->
   <script src="script.js"></script>
 </body>
 </html>
