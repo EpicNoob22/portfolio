@@ -1,150 +1,60 @@
 /**
  * EpicNoob22 — Cybersecurity Portfolio
- * script.js — Complete interactive features
+ * script.js — Premium interactions & animations
  */
 
 (function () {
   'use strict';
 
   /* ============================================================
-     UTILITY FUNCTIONS
+     UTILITIES
   ============================================================ */
 
+  function lerp(a, b, t) {
+    return a + (b - a) * t;
+  }
+
+  function clamp(val, min, max) {
+    return Math.min(Math.max(val, min), max);
+  }
+
   function throttle(fn, limit) {
-    var lastCall = 0;
+    var last = 0;
     return function () {
       var now = Date.now();
-      if (now - lastCall >= limit) {
-        lastCall = now;
-        return fn.apply(this, arguments);
+      if (now - last >= limit) {
+        last = now;
+        fn.apply(this, arguments);
       }
     };
   }
 
   function debounce(fn, delay) {
-    var timer = null;
+    var timer;
     return function () {
       var ctx = this;
       var args = arguments;
       clearTimeout(timer);
-      timer = setTimeout(function () {
-        fn.apply(ctx, args);
-      }, delay);
+      timer = setTimeout(function () { fn.apply(ctx, args); }, delay);
     };
   }
 
-  function easeOutCubic(t) {
-    return 1 - Math.pow(1 - t, 3);
-  }
-
   /* ============================================================
-     1. PRELOADER + BOOT SEQUENCE
+     1. PRELOADER
   ============================================================ */
-
-  var bootSequenceDone = false;
-  var typewriterReady = false;
 
   function initPreloader() {
     var preloader = document.getElementById('preloader');
-    var bootSequence = document.getElementById('bootSequence');
-    var mainContent = document.getElementById('main-content');
-    var navbar = document.getElementById('navbar');
-    var footer = document.querySelector('.footer');
-
     if (!preloader) return;
 
-    /* Hide main content until boot is done */
-    if (mainContent) mainContent.style.opacity = '0';
-    if (navbar) navbar.style.opacity = '0';
-    if (footer) footer.style.opacity = '0';
-
+    // Hide after animation completes (letters + subtitle = ~1.8s, add extra)
     setTimeout(function () {
-      preloader.style.opacity = '0';
-      preloader.style.transition = 'opacity 0.5s ease';
+      preloader.classList.add('hidden');
       setTimeout(function () {
         preloader.style.display = 'none';
         preloader.setAttribute('aria-hidden', 'true');
-        showBootSequence(function () {
-          revealMainContent(mainContent, navbar, footer);
-        });
-      }, 500);
-    }, 1500);
-  }
-
-  function showBootSequence(onComplete) {
-    var bootSequence = document.getElementById('bootSequence');
-    var bootText = document.getElementById('bootText');
-
-    if (!bootSequence || !bootText) {
-      if (onComplete) onComplete();
-      return;
-    }
-
-    bootSequence.style.display = 'flex';
-    bootSequence.style.opacity = '1';
-    bootSequence.removeAttribute('aria-hidden');
-
-    var lines = [
-      'BIOS v2.0.1 Copyright EpicNoob Systems',
-      'CPU: Brain i9-13900K @ 3.00GHz',
-      'Memory Test: 16384 MB OK',
-      'Detecting hardware... OK',
-      'Loading kernel modules...',
-      'Starting network interfaces... eth0 UP [192.168.1.1]',
-      'Mounting filesystems... OK',
-      'Starting security services...',
-      'Initializing firewall rules... 2048 rules loaded',
-      'Starting SSH daemon... OK [port 22]',
-      'Loading Kali Linux...',
-      'Starting terminal services...',
-      '[  OK  ] Started EpicNoob22 Portfolio Service',
-      '[  OK  ] Reached target Multi-User System',
-      "Welcome to EpicNoob22's Cybersecurity Portfolio",
-      "Type 'help' to get started \u2014 Press any key to continue..."
-    ];
-
-    var index = 0;
-
-    function displayNextLine() {
-      if (index >= lines.length) {
-        setTimeout(function () {
-          bootSequence.style.transition = 'opacity 0.6s ease';
-          bootSequence.style.opacity = '0';
-          setTimeout(function () {
-            bootSequence.style.display = 'none';
-            bootSequence.setAttribute('aria-hidden', 'true');
-            bootSequenceDone = true;
-            if (onComplete) onComplete();
-            if (typewriterReady) startTypewriter();
-          }, 600);
-        }, 800);
-        return;
-      }
-
-      var span = document.createElement('span');
-      span.className = 'boot-line';
-      span.textContent = lines[index];
-      bootText.appendChild(span);
-      bootText.appendChild(document.createTextNode('\n'));
-
-      /* Auto-scroll boot terminal */
-      var bootTerminal = bootSequence.querySelector('.boot-terminal');
-      if (bootTerminal) bootTerminal.scrollTop = bootTerminal.scrollHeight;
-
-      index++;
-      setTimeout(displayNextLine, 120);
-    }
-
-    displayNextLine();
-  }
-
-  function revealMainContent(mainContent, navbar, footer) {
-    var elements = [mainContent, navbar, footer];
-    elements.forEach(function (el) {
-      if (!el) return;
-      el.style.transition = 'opacity 0.8s ease';
-      el.style.opacity = '1';
-    });
+      }, 800);
+    }, 2000);
   }
 
   /* ============================================================
@@ -152,492 +62,239 @@
   ============================================================ */
 
   function initCursor() {
-    var cursorInner = document.getElementById('cursorInner');
-    var cursorOuter = document.getElementById('cursorOuter');
+    // Only on pointer devices
+    if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
 
-    if (!cursorInner || !cursorOuter) return;
+    var dot = document.getElementById('cursorDot');
+    var ring = document.getElementById('cursorRing');
+    if (!dot || !ring) return;
 
-    var mouseX = -100;
-    var mouseY = -100;
-    var outerX = -100;
-    var outerY = -100;
-    var targetX = -100;
-    var targetY = -100;
-    var rafId = null;
-
-    var hoverSelectors = 'a, button, .btn, .skill-card, .project-card, .social-link, ' +
-      '.cert-card, .platform-card, .blog-card, .writeup-card, .tilt-card, ' +
-      '.nav-link, .terminal-toggle-btn, .back-to-top, .platform-link, ' +
-      '.writeup-read, .blog-read-link, .project-link, .cert-verify, ' +
-      '.footer-social-link, .hamburger, .terminal-egg-dot';
+    var mouseX = 0, mouseY = 0;
+    var ringX = 0, ringY = 0;
+    var isVisible = false;
 
     document.addEventListener('mousemove', function (e) {
       mouseX = e.clientX;
       mouseY = e.clientY;
-      targetX = mouseX;
-      targetY = mouseY;
-
-      cursorInner.style.left = mouseX + 'px';
-      cursorInner.style.top = mouseY + 'px';
-    });
-
-    function animateOuter() {
-      outerX += (targetX - outerX) * 0.15;
-      outerY += (targetY - outerY) * 0.15;
-
-      cursorOuter.style.left = outerX + 'px';
-      cursorOuter.style.top = outerY + 'px';
-
-      rafId = requestAnimationFrame(animateOuter);
-    }
-
-    animateOuter();
-
-    document.addEventListener('mouseover', function (e) {
-      if (e.target && e.target.matches && e.target.matches(hoverSelectors)) {
-        cursorOuter.classList.add('hovering');
-        cursorInner.classList.add('hovering');
+      if (!isVisible) {
+        isVisible = true;
+        dot.style.opacity = '1';
+        ring.style.opacity = '0.7';
       }
-    });
-
-    document.addEventListener('mouseout', function (e) {
-      if (e.target && e.target.matches && e.target.matches(hoverSelectors)) {
-        cursorOuter.classList.remove('hovering');
-        cursorInner.classList.remove('hovering');
-      }
+      dot.style.transform = 'translate(' + mouseX + 'px, ' + mouseY + 'px) translate(-50%, -50%)';
     });
 
     document.addEventListener('mouseleave', function () {
-      cursorInner.style.opacity = '0';
-      cursorOuter.style.opacity = '0';
+      dot.style.opacity = '0';
+      ring.style.opacity = '0';
+      isVisible = false;
     });
 
     document.addEventListener('mouseenter', function () {
-      cursorInner.style.opacity = '1';
-      cursorOuter.style.opacity = '1';
+      if (isVisible) {
+        dot.style.opacity = '1';
+        ring.style.opacity = '0.7';
+      }
     });
 
-    document.addEventListener('mousedown', function () {
-      cursorInner.classList.add('clicking');
-      cursorOuter.classList.add('clicking');
+    // Smooth ring follow
+    function animateRing() {
+      ringX = lerp(ringX, mouseX, 0.12);
+      ringY = lerp(ringY, mouseY, 0.12);
+      ring.style.transform = 'translate(' + ringX + 'px, ' + ringY + 'px) translate(-50%, -50%)';
+      requestAnimationFrame(animateRing);
+    }
+    animateRing();
+
+    // Hover states
+    var hoverTargets = document.querySelectorAll('a, button, [data-magnetic], .filter-btn, .nav-link, .tag');
+    hoverTargets.forEach(function (el) {
+      el.addEventListener('mouseenter', function () {
+        ring.classList.add('hover');
+      });
+      el.addEventListener('mouseleave', function () {
+        ring.classList.remove('hover');
+      });
     });
 
-    document.addEventListener('mouseup', function () {
-      cursorInner.classList.remove('clicking');
-      cursorOuter.classList.remove('clicking');
+    // Text hover
+    var textEls = document.querySelectorAll('p, li, span, .about-paragraphs, .project-desc, .timeline-desc');
+    textEls.forEach(function (el) {
+      el.addEventListener('mouseenter', function () {
+        ring.classList.add('text-hover');
+      });
+      el.addEventListener('mouseleave', function () {
+        ring.classList.remove('text-hover');
+      });
     });
   }
 
   /* ============================================================
-     3. MATRIX RAIN CANVAS
+     3. SCROLL PROGRESS
   ============================================================ */
 
-  var matrixAnimId = null;
+  function initScrollProgress() {
+    var bar = document.getElementById('scrollProgress');
+    if (!bar) return;
 
-  function initMatrix() {
-    var canvas = document.getElementById('matrixCanvas');
-    if (!canvas) return;
-
-    var ctx = canvas.getContext('2d');
-
-    function resizeMatrix() {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
+    function update() {
+      var scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+      var docHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      var pct = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+      bar.style.width = pct + '%';
     }
 
-    resizeMatrix();
-
-    var fontSize = 14;
-    var columns = [];
-    var lastFrameTime = 0;
-    var frameInterval = 1000 / 30;
-
-    function buildColumns() {
-      var colCount = Math.floor(canvas.width / fontSize);
-      columns = [];
-      for (var i = 0; i < colCount; i++) {
-        columns.push(Math.floor(Math.random() * canvas.height / fontSize) * -1);
-      }
-    }
-
-    buildColumns();
-
-    function getRandomChar() {
-      var rand = Math.random();
-      if (rand < 0.6) {
-        /* Katakana range: 0x30A0 - 0x30FF */
-        return String.fromCharCode(0x30A0 + Math.floor(Math.random() * 96));
-      } else if (rand < 0.85) {
-        return String.fromCharCode(0x30 + Math.floor(Math.random() * 10));
-      } else {
-        var symbols = ['@', '#', '$', '%', '&', '*', '!', '?', '>', '<', '/', '\\', '|', '~', '^'];
-        return symbols[Math.floor(Math.random() * symbols.length)];
-      }
-    }
-
-    function drawMatrix(timestamp) {
-      matrixAnimId = requestAnimationFrame(drawMatrix);
-
-      if (timestamp - lastFrameTime < frameInterval) return;
-      lastFrameTime = timestamp;
-
-      ctx.fillStyle = 'rgba(10, 10, 15, 0.05)';
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-      for (var i = 0; i < columns.length; i++) {
-        var y = columns[i] * fontSize;
-
-        /* Bright leading character */
-        ctx.fillStyle = '#ffffff';
-        ctx.font = fontSize + 'px JetBrains Mono, monospace';
-        ctx.fillText(getRandomChar(), i * fontSize, y);
-
-        /* Trail characters */
-        ctx.fillStyle = '#00ff88';
-        if (y > fontSize) {
-          ctx.globalAlpha = 0.85;
-          ctx.fillText(getRandomChar(), i * fontSize, y - fontSize);
-          ctx.globalAlpha = 0.6;
-          ctx.fillText(getRandomChar(), i * fontSize, y - fontSize * 2);
-          ctx.globalAlpha = 0.35;
-          ctx.fillText(getRandomChar(), i * fontSize, y - fontSize * 3);
-          ctx.globalAlpha = 0.15;
-          ctx.fillText(getRandomChar(), i * fontSize, y - fontSize * 4);
-          ctx.globalAlpha = 1;
-        }
-
-        columns[i]++;
-
-        if (y > canvas.height && Math.random() > 0.975) {
-          columns[i] = 0;
-        }
-      }
-    }
-
-    if (matrixAnimId) cancelAnimationFrame(matrixAnimId);
-    requestAnimationFrame(drawMatrix);
-
-    window._matrixResize = function () {
-      resizeMatrix();
-      buildColumns();
-    };
+    window.addEventListener('scroll', throttle(update, 16), { passive: true });
+    update();
   }
 
   /* ============================================================
-     4. PARTICLES SYSTEM
-  ============================================================ */
-
-  var particlesAnimId = null;
-  var particlesList = [];
-
-  function initParticles() {
-    var canvas = document.getElementById('particlesCanvas');
-    if (!canvas) return;
-
-    var ctx = canvas.getContext('2d');
-    var mouseX = -9999;
-    var mouseY = -9999;
-    var lastFrameTime = 0;
-    var frameInterval = 1000 / 60;
-
-    function resizeParticles() {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    }
-
-    resizeParticles();
-
-    var isMobile = window.innerWidth < 768;
-    var particleCount = isMobile ? 40 : 80;
-
-    function createParticle() {
-      var colors = ['#00ff88', '#00d4ff'];
-      return {
-        x: Math.random() * canvas.width,
-        y: Math.random() * canvas.height,
-        vx: (Math.random() - 0.5) * 0.8,
-        vy: (Math.random() - 0.5) * 0.8,
-        size: 1 + Math.random() * 2,
-        opacity: 0.3 + Math.random() * 0.5,
-        color: colors[Math.floor(Math.random() * colors.length)]
-      };
-    }
-
-    function buildParticles() {
-      particlesList = [];
-      for (var i = 0; i < particleCount; i++) {
-        particlesList.push(createParticle());
-      }
-    }
-
-    buildParticles();
-
-    document.addEventListener('mousemove', function (e) {
-      mouseX = e.clientX;
-      mouseY = e.clientY;
-    });
-
-    function drawParticles(timestamp) {
-      particlesAnimId = requestAnimationFrame(drawParticles);
-
-      if (timestamp - lastFrameTime < frameInterval) return;
-      lastFrameTime = timestamp;
-
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-      for (var i = 0; i < particlesList.length; i++) {
-        var p = particlesList[i];
-
-        /* Mouse repulsion */
-        var dx = p.x - mouseX;
-        var dy = p.y - mouseY;
-        var dist = Math.sqrt(dx * dx + dy * dy);
-
-        if (dist < 100 && dist > 0) {
-          var force = (100 - dist) / 100;
-          p.vx += (dx / dist) * force * 0.3;
-          p.vy += (dy / dist) * force * 0.3;
-        }
-
-        /* Speed cap */
-        var speed = Math.sqrt(p.vx * p.vx + p.vy * p.vy);
-        if (speed > 2) {
-          p.vx = (p.vx / speed) * 2;
-          p.vy = (p.vy / speed) * 2;
-        }
-
-        p.x += p.vx;
-        p.y += p.vy;
-
-        /* Bounce off walls */
-        if (p.x < 0) { p.x = 0; p.vx *= -1; }
-        if (p.x > canvas.width) { p.x = canvas.width; p.vx *= -1; }
-        if (p.y < 0) { p.y = 0; p.vy *= -1; }
-        if (p.y > canvas.height) { p.y = canvas.height; p.vy *= -1; }
-
-        /* Draw particle */
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-        ctx.fillStyle = p.color;
-        ctx.globalAlpha = p.opacity;
-        ctx.fill();
-        ctx.globalAlpha = 1;
-      }
-
-      /* Draw connection lines */
-      for (var i = 0; i < particlesList.length; i++) {
-        for (var j = i + 1; j < particlesList.length; j++) {
-          var pa = particlesList[i];
-          var pb = particlesList[j];
-          var lx = pa.x - pb.x;
-          var ly = pa.y - pb.y;
-          var lineD = Math.sqrt(lx * lx + ly * ly);
-
-          if (lineD < 120) {
-            var lineOpacity = (1 - lineD / 120) * 0.25;
-            ctx.beginPath();
-            ctx.moveTo(pa.x, pa.y);
-            ctx.lineTo(pb.x, pb.y);
-            ctx.strokeStyle = '#00ff88';
-            ctx.globalAlpha = lineOpacity;
-            ctx.lineWidth = 0.5;
-            ctx.stroke();
-            ctx.globalAlpha = 1;
-          }
-        }
-      }
-    }
-
-    if (particlesAnimId) cancelAnimationFrame(particlesAnimId);
-    requestAnimationFrame(drawParticles);
-
-    window._particlesResize = function () {
-      resizeParticles();
-      isMobile = window.innerWidth < 768;
-      particleCount = isMobile ? 40 : 80;
-      buildParticles();
-    };
-  }
-
-  /* ============================================================
-     5. TYPEWRITER EFFECT
-  ============================================================ */
-
-  var typewriterInstance = null;
-
-  function initTypewriter() {
-    typewriterReady = true;
-    if (bootSequenceDone) startTypewriter();
-  }
-
-  function startTypewriter() {
-    var el = document.getElementById('typewriter');
-    if (!el) return;
-
-    var phrases = [
-      'Passionn\u00e9 de cybers\u00e9curit\u00e9 \uD83D\uDD10',
-      'Ethical Hacker en formation \uD83D\uDC80',
-      'En recherche d\u2019alternance \uD83D\uDE80',
-      'CTF Player \u2014 Hack the Planet! \uD83C\uDF0D',
-      'Blue Team \uD83D\uDEE1\uFE0F + Red Team \u2694\uFE0F',
-      'Toujours un terminal ouvert... \uD83D\uDDA5\uFE0F',
-      'while(!(succeed = try()));',
-      'root@kali:~# nmap -sV target'
-    ];
-
-    var phraseIndex = 0;
-    var charIndex = 0;
-    var isDeleting = false;
-    var currentText = '';
-    var timeoutId = null;
-
-    function type() {
-      var current = phrases[phraseIndex];
-
-      if (isDeleting) {
-        currentText = current.substring(0, charIndex - 1);
-        charIndex--;
-      } else {
-        currentText = current.substring(0, charIndex + 1);
-        charIndex++;
-      }
-
-      el.textContent = currentText;
-
-      var delay = 80;
-
-      if (isDeleting) {
-        delay = 40;
-      }
-
-      if (!isDeleting && charIndex === current.length) {
-        delay = 2000;
-        isDeleting = true;
-      } else if (isDeleting && charIndex === 0) {
-        isDeleting = false;
-        phraseIndex = (phraseIndex + 1) % phrases.length;
-        delay = 500;
-      }
-
-      timeoutId = setTimeout(type, delay);
-    }
-
-    type();
-    typewriterInstance = timeoutId;
-  }
-
-  /* ============================================================
-     6. NAVBAR
+     4. NAVBAR
   ============================================================ */
 
   function initNavbar() {
     var navbar = document.getElementById('navbar');
-    var hamburger = document.getElementById('hamburger');
+    var hamburger = document.getElementById('navHamburger');
     var navLinks = document.getElementById('navLinks');
-    var navLinkItems = document.querySelectorAll('.nav-link');
-
     if (!navbar) return;
 
-    /* Scroll: add .scrolled class */
-    var handleScroll = throttle(function () {
-      if (window.scrollY > 50) {
+    // Scrolled state
+    function updateNavbar() {
+      if (window.pageYOffset > 50) {
         navbar.classList.add('scrolled');
       } else {
         navbar.classList.remove('scrolled');
       }
-      updateActiveNav();
-    }, 100);
+    }
 
-    window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener('scroll', throttle(updateNavbar, 100), { passive: true });
+    updateNavbar();
 
-    /* Active nav link via scroll position */
-    function updateActiveNav() {
-      var sections = document.querySelectorAll('section[id]');
-      var scrollPos = window.scrollY + 100;
+    // Hamburger toggle
+    if (hamburger && navLinks) {
+      hamburger.addEventListener('click', function () {
+        var isOpen = navLinks.classList.toggle('open');
+        hamburger.classList.toggle('open', isOpen);
+        hamburger.setAttribute('aria-expanded', String(isOpen));
+        document.body.style.overflow = isOpen ? 'hidden' : '';
+      });
 
-      sections.forEach(function (section) {
-        var top = section.offsetTop;
-        var height = section.offsetHeight;
-        var id = section.getAttribute('id');
+      // Close on link click
+      navLinks.querySelectorAll('.nav-link').forEach(function (link) {
+        link.addEventListener('click', function () {
+          navLinks.classList.remove('open');
+          hamburger.classList.remove('open');
+          hamburger.setAttribute('aria-expanded', 'false');
+          document.body.style.overflow = '';
+        });
+      });
 
-        if (scrollPos >= top && scrollPos < top + height) {
-          navLinkItems.forEach(function (link) {
-            link.classList.remove('active');
-            if (link.getAttribute('data-section') === id) {
-              link.classList.add('active');
-            }
-          });
+      // Close on outside click
+      document.addEventListener('click', function (e) {
+        if (!navbar.contains(e.target)) {
+          navLinks.classList.remove('open');
+          hamburger.classList.remove('open');
+          hamburger.setAttribute('aria-expanded', 'false');
+          document.body.style.overflow = '';
         }
       });
     }
 
-    /* Hamburger menu */
-    if (hamburger && navLinks) {
-      hamburger.addEventListener('click', function () {
-        var isOpen = navLinks.classList.contains('open');
-        navLinks.classList.toggle('open');
-        hamburger.classList.toggle('active');
-        hamburger.setAttribute('aria-expanded', isOpen ? 'false' : 'true');
-      });
+    // Active link tracking via IntersectionObserver
+    var sections = document.querySelectorAll('section[id]');
+    var navLinkEls = document.querySelectorAll('.nav-link[href^="#"]');
 
-      /* Close menu on nav link click */
-      navLinkItems.forEach(function (link) {
-        link.addEventListener('click', function () {
-          navLinks.classList.remove('open');
-          hamburger.classList.remove('active');
-          hamburger.setAttribute('aria-expanded', 'false');
+    if (sections.length && navLinkEls.length) {
+      var activeSection = '';
+
+      var observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            activeSection = entry.target.id;
+            navLinkEls.forEach(function (link) {
+              var href = link.getAttribute('href');
+              if (href === '#' + activeSection) {
+                link.classList.add('active');
+              } else {
+                link.classList.remove('active');
+              }
+            });
+          }
         });
-      });
+      }, { rootMargin: '-40% 0px -40% 0px', threshold: 0 });
 
-      /* Close menu on outside click */
-      document.addEventListener('click', function (e) {
-        if (!navbar.contains(e.target)) {
-          navLinks.classList.remove('open');
-          hamburger.classList.remove('active');
-          hamburger.setAttribute('aria-expanded', 'false');
-        }
-      });
+      sections.forEach(function (s) { observer.observe(s); });
     }
   }
 
   /* ============================================================
-     7. SCROLL ANIMATIONS (IntersectionObserver)
+     5. SCROLL REVEAL
   ============================================================ */
 
-  function initScrollAnimations() {
-    var elements = document.querySelectorAll('.animate-on-scroll');
+  function initScrollReveal() {
+    var elements = document.querySelectorAll('.reveal-up, .reveal-left, .reveal-right');
     if (!elements.length) return;
 
     var observer = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
         if (entry.isIntersecting) {
-          var el = entry.target;
-          var parent = el.parentElement;
-          var siblings = parent ? Array.from(parent.querySelectorAll('.animate-on-scroll')) : [];
-          var idx = siblings.indexOf(el);
-          var delay = idx * 100;
-
+          var delay = parseFloat(entry.target.style.getPropertyValue('--delay') || '0');
           setTimeout(function () {
-            el.classList.add('animated');
-          }, delay);
-
-          observer.unobserve(el);
+            entry.target.classList.add('visible');
+          }, delay * 1000);
+          observer.unobserve(entry.target);
         }
       });
-    }, { threshold: 0.1 });
+    }, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' });
 
-    elements.forEach(function (el) {
-      observer.observe(el);
-    });
+    elements.forEach(function (el) { observer.observe(el); });
   }
 
   /* ============================================================
-     8. ANIMATED COUNTERS
+     6. COUNTER ANIMATIONS
   ============================================================ */
 
+  function animateCounter(el) {
+    var target = parseInt(el.getAttribute('data-count'), 10);
+    var suffix = el.getAttribute('data-suffix') || '';
+    var numEl = el.querySelector('.stat-number');
+    if (!numEl || isNaN(target)) return;
+
+    var start = 0;
+    var duration = 1800;
+    var startTime = null;
+
+    function step(timestamp) {
+      if (!startTime) startTime = timestamp;
+      var progress = Math.min((timestamp - startTime) / duration, 1);
+      var eased = 1 - Math.pow(1 - progress, 3);
+      var current = Math.floor(start + (target - start) * eased);
+
+      if (current >= 1000) {
+        var formatted = current.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '\u202F');
+        numEl.textContent = formatted + suffix;
+      } else {
+        numEl.textContent = current + suffix;
+      }
+
+      if (progress < 1) {
+        requestAnimationFrame(step);
+      } else {
+        if (target >= 1000) {
+          var fmtFinal = target.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '\u202F');
+          numEl.textContent = fmtFinal + suffix;
+        } else {
+          numEl.textContent = target + suffix;
+        }
+      }
+    }
+
+    requestAnimationFrame(step);
+  }
+
   function initCounters() {
-    var counters = document.querySelectorAll('.stat-number[data-target]');
-    if (!counters.length) return;
+    var statCards = document.querySelectorAll('[data-count]');
+    if (!statCards.length) return;
 
     var observer = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
@@ -648,870 +305,155 @@
       });
     }, { threshold: 0.5 });
 
-    counters.forEach(function (counter) {
-      observer.observe(counter);
-    });
-  }
-
-  function animateCounter(el) {
-    var target = parseInt(el.getAttribute('data-target'), 10);
-    if (isNaN(target)) return;
-
-    var startTime = null;
-    var duration = 2000;
-
-    function step(timestamp) {
-      if (!startTime) startTime = timestamp;
-      var elapsed = timestamp - startTime;
-      var progress = Math.min(elapsed / duration, 1);
-      var eased = easeOutCubic(progress);
-      var current = Math.round(eased * target);
-      el.textContent = current;
-
-      if (progress < 1) {
-        requestAnimationFrame(step);
-      } else {
-        el.textContent = target;
-      }
-    }
-
-    requestAnimationFrame(step);
+    statCards.forEach(function (card) { observer.observe(card); });
   }
 
   /* ============================================================
-     9. SKILL BAR ANIMATIONS
+     7. PROGRESS BARS
   ============================================================ */
 
-  function initSkillBars() {
-    var bars = document.querySelectorAll('.skill-progress[data-width], .platform-progress[data-width]');
+  function initProgressBars() {
+    var bars = document.querySelectorAll('.skill-progress-bar, .ctf-progress-bar');
     if (!bars.length) return;
 
     var observer = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
         if (entry.isIntersecting) {
-          animateSkillBar(entry.target);
-          observer.unobserve(entry.target);
+          var bar = entry.target;
+          var target = bar.style.getPropertyValue('--target') || '0%';
+          setTimeout(function () {
+            bar.style.width = target;
+          }, 200);
+          observer.unobserve(bar);
         }
       });
     }, { threshold: 0.3 });
 
-    bars.forEach(function (bar) {
-      observer.observe(bar);
-    });
-  }
-
-  function animateSkillBar(bar) {
-    var targetWidth = parseInt(bar.getAttribute('data-width'), 10);
-    if (isNaN(targetWidth)) return;
-
-    var startTime = null;
-    var duration = 1500;
-
-    var percentEl = bar.closest('.skill-bar-container')
-      ? bar.closest('.skill-bar-container').querySelector('.skill-percent')
-      : bar.closest('.platform-bar-container')
-        ? bar.closest('.platform-bar-container').querySelector('.platform-percent')
-        : null;
-
-    function step(timestamp) {
-      if (!startTime) startTime = timestamp;
-      var elapsed = timestamp - startTime;
-      var progress = Math.min(elapsed / duration, 1);
-      var eased = easeOutCubic(progress);
-      var current = eased * targetWidth;
-
-      bar.style.width = current.toFixed(1) + '%';
-
-      if (percentEl) {
-        percentEl.textContent = Math.round(current) + '%';
-      }
-
-      if (progress < 1) {
-        requestAnimationFrame(step);
-      } else {
-        bar.style.width = targetWidth + '%';
-        if (percentEl) percentEl.textContent = targetWidth + '%';
-      }
-    }
-
-    requestAnimationFrame(step);
+    bars.forEach(function (bar) { observer.observe(bar); });
   }
 
   /* ============================================================
-     10. 3D TILT EFFECT
+     8. PROJECTS FILTER
   ============================================================ */
 
-  function initTiltEffect() {
-    var cards = document.querySelectorAll('.tilt-card');
-    if (!cards.length) return;
+  function initProjectsFilter() {
+    var filterBtns = document.querySelectorAll('.filter-btn');
+    var projectCards = document.querySelectorAll('.project-card');
+    if (!filterBtns.length || !projectCards.length) return;
 
-    cards.forEach(function (card) {
-      card.addEventListener('mousemove', function (e) {
-        var rect = card.getBoundingClientRect();
-        var percentX = (e.clientX - rect.left) / rect.width - 0.5;
-        var percentY = (e.clientY - rect.top) / rect.height - 0.5;
-        var rotateX = percentY * -15;
-        var rotateY = percentX * 15;
+    filterBtns.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var filter = btn.getAttribute('data-filter');
 
-        card.style.transition = 'transform 0.1s ease';
-        card.style.transform =
-          'perspective(1000px) rotateX(' + rotateX + 'deg) rotateY(' + rotateY + 'deg) scale(1.02)';
-      });
+        // Update active state
+        filterBtns.forEach(function (b) { b.classList.remove('active'); });
+        btn.classList.add('active');
 
-      card.addEventListener('mouseleave', function () {
-        card.style.transition = 'transform 0.3s ease';
-        card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale(1)';
+        // Filter cards
+        projectCards.forEach(function (card) {
+          if (filter === 'all') {
+            card.classList.remove('hidden-filter');
+            return;
+          }
+          var category = card.getAttribute('data-category');
+          if (category === filter) {
+            card.classList.remove('hidden-filter');
+          } else {
+            card.classList.add('hidden-filter');
+          }
+        });
       });
     });
   }
 
   /* ============================================================
-     11. TERMINAL EASTER EGG
+     9. MAGNETIC BUTTONS
   ============================================================ */
 
-  var terminalHistory = [];
-  var terminalHistoryIndex = -1;
-  var terminalOpen = false;
+  function initMagneticButtons() {
+    if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
 
-  var terminalCommands = {
-    help: function () {
-      return (
-        '<span class="t-cyan">╔══════════════════════════════════════════════════════════╗</span>\n' +
-        '<span class="t-cyan">║</span>       <span class="t-green">EpicNoob22 Terminal — Available Commands (35)</span>       <span class="t-cyan">║</span>\n' +
-        '<span class="t-cyan">╚══════════════════════════════════════════════════════════╝</span>\n\n' +
-        '<span class="t-yellow">── System Info ───────────────────────────────────────────</span>\n' +
-        '  <span class="t-green">whoami</span>             <span class="t-dim">Infos sur EpicNoob22</span>\n' +
-        '  <span class="t-green">id</span>                 <span class="t-dim">UID/GID et groupes</span>\n' +
-        '  <span class="t-green">hostname</span>           <span class="t-dim">Nom de la machine</span>\n' +
-        '  <span class="t-green">uname -a</span>           <span class="t-dim">Informations noyau</span>\n' +
-        '  <span class="t-green">uptime</span>             <span class="t-dim">Temps de fonctionnement</span>\n' +
-        '  <span class="t-green">date</span>               <span class="t-dim">Date et heure actuelles</span>\n' +
-        '  <span class="t-green">neofetch</span>           <span class="t-dim">Infos système avec ASCII art</span>\n\n' +
-        '<span class="t-yellow">── Fichiers ───────────────────────────────────────────────</span>\n' +
-        '  <span class="t-green">pwd</span>                <span class="t-dim">Répertoire courant</span>\n' +
-        '  <span class="t-green">ls</span>                 <span class="t-dim">Lister les fichiers</span>\n' +
-        '  <span class="t-green">ls -la</span>             <span class="t-dim">Liste détaillée avec permissions</span>\n' +
-        '  <span class="t-green">cat about.txt</span>      <span class="t-dim">Lire le fichier about</span>\n' +
-        '  <span class="t-green">cat skills.json</span>    <span class="t-dim">Compétences en JSON</span>\n' +
-        '  <span class="t-green">cat contact.txt</span>    <span class="t-dim">Informations de contact</span>\n' +
-        '  <span class="t-green">cat .secret</span>        <span class="t-dim">Fichier caché 👀</span>\n' +
-        '  <span class="t-green">cd &lt;section&gt;</span>       <span class="t-dim">Naviguer vers une section</span>\n' +
-        '  <span class="t-green">cd projects &amp;&amp; ls</span>   <span class="t-dim">Afficher les projets</span>\n\n' +
-        '<span class="t-yellow">── Portfolio ──────────────────────────────────────────────</span>\n' +
-        '  <span class="t-green">skills</span>             <span class="t-dim">Barres de compétences ASCII</span>\n' +
-        '  <span class="t-green">projects</span>           <span class="t-dim">Liste des 8 projets</span>\n' +
-        '  <span class="t-green">certs</span>              <span class="t-dim">Certifications obtenues</span>\n' +
-        '  <span class="t-green">ctf</span>                <span class="t-dim">Statistiques CTF</span>\n' +
-        '  <span class="t-green">contact</span>            <span class="t-dim">Informations de contact</span>\n\n' +
-        '<span class="t-yellow">── Réseau ─────────────────────────────────────────────────</span>\n' +
-        '  <span class="t-green">ping google.com</span>    <span class="t-dim">Simuler 4 pings</span>\n' +
-        '  <span class="t-green">nmap localhost</span>     <span class="t-dim">Scanner les ports locaux</span>\n' +
-        '  <span class="t-green">nmap -sV 192.168.1.1</span> <span class="t-dim">Scan avancé avec détection OS</span>\n\n' +
-        '<span class="t-yellow">── Fun & Easter Eggs ──────────────────────────────────────</span>\n' +
-        '  <span class="t-green">sudo hire me</span>       <span class="t-dim">Commande spéciale recruteur 😉</span>\n' +
-        '  <span class="t-green">sudo rm -rf /</span>      <span class="t-dim">Nice try... 😏</span>\n' +
-        '  <span class="t-green">hack &lt;target&gt;</span>      <span class="t-dim">Simulation de hacking animée</span>\n' +
-        '  <span class="t-green">cowsay &lt;text&gt;</span>     <span class="t-dim">Vache ASCII parlante</span>\n' +
-        '  <span class="t-green">fortune</span>            <span class="t-dim">Citation cybersécurité aléatoire</span>\n' +
-        '  <span class="t-green">banner</span>             <span class="t-dim">ASCII art EpicNoob22</span>\n' +
-        '  <span class="t-green">matrix</span>             <span class="t-dim">Toggle Matrix rain</span>\n\n' +
-        '<span class="t-yellow">── Terminal ───────────────────────────────────────────────</span>\n' +
-        '  <span class="t-green">echo &lt;text&gt;</span>        <span class="t-dim">Afficher du texte</span>\n' +
-        '  <span class="t-green">history</span>            <span class="t-dim">Historique des commandes</span>\n' +
-        '  <span class="t-green">clear</span>              <span class="t-dim">Effacer le terminal</span>\n' +
-        '  <span class="t-green">exit</span>               <span class="t-dim">Fermer le terminal</span>\n'
-      );
-    },
+    var btns = document.querySelectorAll('[data-magnetic]');
+    btns.forEach(function (btn) {
+      var rect, centerX, centerY;
+      var radius = 60;
 
-    whoami: function () {
-      return (
-        '<span class="t-green">uid=1337(epicnoob22) gid=1337(hackers) groups=1337(hackers),0(root)</span>\n\n' +
-        '<span class="t-cyan">Name:</span>       <span class="t-white">EpicNoob22</span>\n' +
-        '<span class="t-cyan">Role:</span>       <span class="t-white">Apprenti Cybersécurité | Ethical Hacker</span>\n' +
-        '<span class="t-cyan">Status:</span>     <span class="t-green">Available for alternance (Sept 2026)</span>\n' +
-        '<span class="t-cyan">Location:</span>   <span class="t-white">France 🇫🇷</span>\n' +
-        '<span class="t-cyan">Focus:</span>      <span class="t-white">Offensive Security + Blue Team</span>\n' +
-        '<span class="t-cyan">GitHub:</span>     <span class="t-yellow">https://github.com/EpicNoob22</span>\n' +
-        '<span class="t-cyan">Email:</span>      <span class="t-yellow">epicnoob22@proton.me</span>\n' +
-        '<span class="t-cyan">Mission:</span>    <span class="t-pink">Hack the planet, but ethically. 🌍🔐</span>\n'
-      );
-    },
-
-    skills: function () {
-      return (
-        '<span class="t-cyan">┌─ Skills ───────────────────────────────────────────┐</span>\n\n' +
-        '<span class="t-yellow">Sécurité Offensive</span>    <span class="t-green">████████████████░░░░</span> 75%\n' +
-        '  Pentesting, Red Team, OWASP Top 10, Exploitation\n\n' +
-        '<span class="t-yellow">Sécurité Défensive</span>    <span class="t-green">██████████████░░░░░░</span> 70%\n' +
-        '  SIEM/SOC, Incident Response, Forensics\n\n' +
-        '<span class="t-yellow">Réseau &amp; Infra</span>        <span class="t-green">████████████████░░░░</span> 80%\n' +
-        '  TCP/IP, Firewall, VPN, Active Directory\n\n' +
-        '<span class="t-yellow">Outils</span>                <span class="t-green">█████████████████░░░</span> 85%\n' +
-        '  Kali, Burp Suite, Wireshark, Nmap, Metasploit\n\n' +
-        '<span class="t-yellow">Scripting &amp; Dev</span>      <span class="t-green">██████████████░░░░░░</span> 70%\n' +
-        '  Python, Bash, PowerShell, C\n\n' +
-        '<span class="t-yellow">Systèmes</span>              <span class="t-green">████████████████░░░░</span> 75%\n' +
-        '  Linux, Windows Server, Docker, Proxmox\n' +
-        '<span class="t-cyan">└───────────────────────────────────────────────────┘</span>\n'
-      );
-    },
-
-    projects: function () {
-      return (
-        '<span class="t-cyan">drwxr-xr-x  8 epicnoob22 hackers 4096 2026  ~/projects/</span>\n\n' +
-        '<span class="t-green">🏠 homelab-soc</span>        <span class="t-dim">SOC maison avec ELK, Wazuh, Suricata</span>\n' +
-        '<span class="t-green">🔍 vulnscanner-pro</span>    <span class="t-dim">Scanner de vulnérabilités web en Python</span>\n' +
-        '<span class="t-green">🔐 ad-lab</span>             <span class="t-dim">Active Directory lab vulnérable</span>\n' +
-        '<span class="t-green">🦠 malware-sandbox</span>    <span class="t-dim">Sandbox analyse dynamique/statique</span>\n' +
-        '<span class="t-green">🎣 phishguard</span>         <span class="t-dim">Outil de sensibilisation au phishing</span>\n' +
-        '<span class="t-green">🤖 autorecon-bot</span>      <span class="t-dim">Bot de reconnaissance automatisée</span>\n' +
-        '<span class="t-green">🌐 honeypot-network</span>   <span class="t-dim">Réseau de honeypots VPS</span>\n' +
-        '<span class="t-green">🔑 cryptovault</span>        <span class="t-dim">Gestionnaire de mots de passe AES-256</span>\n\n' +
-        '<span class="t-yellow">→ Voir tous les projets : </span><span class="t-cyan">https://github.com/EpicNoob22</span>\n'
-      );
-    },
-
-    contact: function () {
-      return (
-        '<span class="t-cyan">┌─ Contact EpicNoob22 ───────────────────────────────┐</span>\n\n' +
-        '<span class="t-green">📧 Email:</span>     <span class="t-yellow">epicnoob22@proton.me</span>\n' +
-        '<span class="t-green">🐙 GitHub:</span>    <span class="t-yellow">https://github.com/EpicNoob22</span>\n' +
-        '<span class="t-green">💼 LinkedIn:</span>  <span class="t-yellow">EpicNoob22</span>\n' +
-        '<span class="t-green">🚩 TryHackMe:</span> <span class="t-yellow">https://tryhackme.com/p/EpicNoob22</span>\n' +
-        '<span class="t-green">🌐 HTB:</span>       <span class="t-yellow">https://app.hackthebox.com/profile/EpicNoob22</span>\n\n' +
-        '<span class="t-pink">Disponible pour alternance à partir de Septembre 2026 🚀</span>\n' +
-        '<span class="t-cyan">└───────────────────────────────────────────────────┘</span>\n'
-      );
-    },
-
-    clear: function () {
-      var output = document.getElementById('terminalOutput');
-      if (output) output.innerHTML = '';
-      return null;
-    },
-
-    ls: function () {
-      return (
-        '<span class="t-cyan">total 8</span>\n' +
-        '<span class="t-green">drwxr-xr-x</span> home/\n' +
-        '<span class="t-green">drwxr-xr-x</span> about/\n' +
-        '<span class="t-green">drwxr-xr-x</span> skills/\n' +
-        '<span class="t-green">drwxr-xr-x</span> projects/\n' +
-        '<span class="t-green">drwxr-xr-x</span> certifications/\n' +
-        '<span class="t-green">drwxr-xr-x</span> ctf/\n' +
-        '<span class="t-green">drwxr-xr-x</span> blog/\n' +
-        '<span class="t-green">drwxr-xr-x</span> contact/\n' +
-        '<span class="t-yellow">-rw-r--r--</span> about.txt\n' +
-        '<span class="t-yellow">-rw-r--r--</span> cv_epicnoob22.pdf\n'
-      );
-    },
-
-    'cat about.txt': function () {
-      return (
-        '<span class="t-dim">cat about.txt</span>\n\n' +
-        '<span class="t-green">## About EpicNoob22</span>\n\n' +
-        '<span class="t-white">Salut ! Je suis EpicNoob22, étudiant passionné de cybersécurité</span>\n' +
-        '<span class="t-white">en alternance. Je me spécialise en sécurité offensive et défensive.</span>\n\n' +
-        '<span class="t-cyan">Parcours:</span>\n' +
-        '  2020 — Découverte Linux & cybersécurité\n' +
-        '  2022 — Premiers CTF (TryHackMe)\n' +
-        '  2023 — Bac Pro SN mention Bien\n' +
-        '  2024 — BUT Informatique, option Cybersécurité\n' +
-        '  2025 — eJPT + CompTIA Security+\n' +
-        '  2026 — En recherche d\'alternance 🚀\n\n' +
-        '<span class="t-pink">Mission: Hack the planet, but ethically. 🌍🔐</span>\n'
-      );
-    },
-
-    'sudo hire me': function () {
-      return (
-        '<span class="t-yellow">[sudo] password for recruiter: </span><span class="t-dim">**************</span>\n\n' +
-        '<span class="t-green">✅ Permission granted!</span>\n\n' +
-        '<span class="t-pink">🎉 Félicitations ! Vous venez de prendre la meilleure décision de votre vie!</span>\n\n' +
-        '<span class="t-white">EpicNoob22 est maintenant disponible pour votre équipe.</span>\n' +
-        '<span class="t-cyan">→ Envoyer un email à: epicnoob22@proton.me</span>\n' +
-        '<span class="t-cyan">→ Ou utilisez le formulaire de contact sur ce site !</span>\n\n' +
-        '<span class="t-dim">// Note: sudo hire me might be the most important command you ever run.</span>\n'
-      );
-    },
-
-    neofetch: function () {
-      return (
-        '<span class="t-green">         .---.</span>       <span class="t-yellow">epicnoob22@kali</span>\n' +
-        '<span class="t-green">        /     \\</span>      <span class="t-yellow">──────────────────────────</span>\n' +
-        '<span class="t-green">       | () () |</span>      <span class="t-cyan">OS:</span>         Kali Linux 2026.1 x86_64\n' +
-        '<span class="t-green">       \\   ^   /</span>      <span class="t-cyan">Host:</span>       ThinkPad X1 Carbon\n' +
-        '<span class="t-green">        | --- |</span>       <span class="t-cyan">Kernel:</span>     6.6.0-kali-amd64\n' +
-        '<span class="t-green">        |_____|</span>       <span class="t-cyan">Uptime:</span>     Since 2003\n' +
-        '                       <span class="t-cyan">Packages:</span>   2048\n' +
-        '                       <span class="t-cyan">Shell:</span>      zsh 5.9\n' +
-        '                       <span class="t-cyan">Resolution:</span> 1920x1080\n' +
-        '                       <span class="t-cyan">Terminal:</span>   alacritty\n' +
-        '                       <span class="t-cyan">CPU:</span>        Brain i9-13900K @ 4.2GHz\n' +
-        '                       <span class="t-cyan">GPU:</span>        Imagination RTX 9090\n' +
-        '                       <span class="t-cyan">Memory:</span>     16384MB / 16384MB\n' +
-        '                       <span class="t-dim">           (100% used on CTFs)</span>\n\n' +
-        '<span class="t-green">███</span><span class="t-cyan">███</span><span class="t-yellow">███</span><span class="t-pink">███</span><span class="t-white">███</span><span class="t-dim">███</span>  <span class="t-green">███</span><span class="t-cyan">███</span><span class="t-yellow">███</span><span class="t-pink">███</span><span class="t-white">███</span><span class="t-dim">███</span>\n'
-      );
-    },
-
-    'ping google.com': function () {
-      return (
-        '<span class="t-white">PING google.com (142.250.74.142): 56 data bytes</span>\n' +
-        '<span class="t-green">64 bytes from 142.250.74.142: icmp_seq=0 ttl=117 time=12.4 ms</span>\n' +
-        '<span class="t-green">64 bytes from 142.250.74.142: icmp_seq=1 ttl=117 time=11.8 ms</span>\n' +
-        '<span class="t-green">64 bytes from 142.250.74.142: icmp_seq=2 ttl=117 time=13.2 ms</span>\n' +
-        '<span class="t-green">64 bytes from 142.250.74.142: icmp_seq=3 ttl=117 time=12.0 ms</span>\n\n' +
-        '<span class="t-cyan">--- google.com ping statistics ---</span>\n' +
-        '<span class="t-white">4 packets transmitted, 4 packets received, 0.0% packet loss</span>\n' +
-        '<span class="t-white">round-trip min/avg/max/stddev = 11.8/12.35/13.2/0.52 ms</span>\n'
-      );
-    },
-
-    'nmap localhost': function () {
-      return (
-        '<span class="t-white">Starting Nmap 7.94 ( https://nmap.org )</span>\n' +
-        '<span class="t-white">Nmap scan report for localhost (127.0.0.1)</span>\n' +
-        '<span class="t-white">Host is up (0.000087s latency).</span>\n\n' +
-        '<span class="t-cyan">PORT     STATE  SERVICE    VERSION</span>\n' +
-        '<span class="t-green">22/tcp   open   ssh        OpenSSH 9.5</span>\n' +
-        '<span class="t-green">80/tcp   open   http       Apache httpd 2.4.58</span>\n' +
-        '<span class="t-green">443/tcp  open   https      Apache httpd 2.4.58</span>\n' +
-        '<span class="t-green">3306/tcp open   mysql      MySQL 8.0.35</span>\n' +
-        '<span class="t-yellow">8080/tcp open   http-proxy Nginx 1.24.0</span>\n' +
-        '<span class="t-pink">31337/tcp open   ELITE      nc (netcat)</span>\n\n' +
-        '<span class="t-white">Service detection performed.</span>\n' +
-        '<span class="t-white">Nmap done: 1 IP address (1 host up) scanned in 2.42 seconds</span>\n'
-      );
-    },
-
-    history: function () {
-      if (!terminalHistory.length) {
-        return '<span class="t-dim">No commands in history yet.</span>\n';
-      }
-      var out = '<span class="t-cyan">Command History:</span>\n';
-      terminalHistory.forEach(function (cmd, i) {
-        out += '  <span class="t-dim">' + (i + 1) + '</span>  <span class="t-white">' + escapeHtml(cmd) + '</span>\n';
+      btn.addEventListener('mouseenter', function () {
+        rect = btn.getBoundingClientRect();
+        centerX = rect.left + rect.width / 2;
+        centerY = rect.top + rect.height / 2;
       });
-      return out;
-    },
 
-    date: function () {
-      var now = new Date();
-      return (
-        '<span class="t-green">' +
-        now.toLocaleDateString('fr-FR', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) +
-        ' ' +
-        now.toLocaleTimeString('fr-FR') +
-        ' CET</span>\n'
-      );
-    },
+      btn.addEventListener('mousemove', function (e) {
+        rect = btn.getBoundingClientRect();
+        centerX = rect.left + rect.width / 2;
+        centerY = rect.top + rect.height / 2;
+        var dx = e.clientX - centerX;
+        var dy = e.clientY - centerY;
+        var dist = Math.sqrt(dx * dx + dy * dy);
 
-    'uname -a': function () {
-      return (
-        '<span class="t-green">Linux kali 6.6.0-kali-amd64 #1 SMP PREEMPT_DYNAMIC Kali 6.6.9-1kali1 (2026-01-15) x86_64 GNU/Linux</span>\n'
-      );
-    },
+        if (dist < radius) {
+          var strength = (radius - dist) / radius;
+          var moveX = dx * strength * 0.4;
+          var moveY = dy * strength * 0.4;
+          btn.style.transform = 'translate(' + moveX + 'px, ' + moveY + 'px) translateY(-2px)';
+        }
+      });
 
-    exit: function () {
-      setTimeout(closeTerminal, 300);
-      return '<span class="t-yellow">Fermeture du terminal...</span>\n';
-    },
-
-    pwd: function () {
-      return '<span class="t-green">/home/epicnoob22/portfolio</span>\n';
-    },
-
-    echo: function (args) {
-      return '<span class="t-white">' + escapeHtml(args.join(' ')) + '</span>\n';
-    },
-
-    id: function () {
-      return '<span class="t-green">uid=1337(epicnoob22) gid=1337(hackers) groups=1337(hackers),27(sudo),100(users),999(docker)</span>\n';
-    },
-
-    hostname: function () {
-      return '<span class="t-green">epicnoob22-kali</span>\n';
-    },
-
-    'ls -la': function () {
-      return (
-        '<span class="t-cyan">total 64</span>\n' +
-        '<span class="t-dim">drwxr-xr-x  2 epicnoob22 hackers 4096 Mar 12 2026 .</span>\n' +
-        '<span class="t-dim">drwxr-xr-x 10 epicnoob22 hackers 4096 Mar 12 2026 ..</span>\n' +
-        '<span class="t-yellow">-rw-r--r--  1 epicnoob22 hackers 1337 Mar 12 2026 about.txt</span>\n' +
-        '<span class="t-yellow">-rw-r--r--  1 epicnoob22 hackers 2048 Mar 12 2026 skills.json</span>\n' +
-        '<span class="t-green">drwxr-xr-x  1 epicnoob22 hackers 4096 Mar 12 2026 projects/</span>\n' +
-        '<span class="t-green">drwxr-xr-x  1 epicnoob22 hackers 4096 Mar 12 2026 certs/</span>\n' +
-        '<span class="t-green">drwxr-xr-x  1 epicnoob22 hackers 4096 Mar 12 2026 ctf/</span>\n' +
-        '<span class="t-green">drwxr-xr-x  1 epicnoob22 hackers 4096 Mar 12 2026 blog/</span>\n' +
-        '<span class="t-yellow">-rw-r--r--  1 epicnoob22 hackers  512 Mar 12 2026 contact.txt</span>\n' +
-        '<span class="t-pink">-r--------  1 epicnoob22 hackers   64 Mar 12 2026 .secret</span>\n'
-      );
-    },
-
-    'cat skills.json': function () {
-      return (
-        '<span class="t-cyan">{</span>\n' +
-        '  <span class="t-yellow">"identity"</span>: <span class="t-green">"EpicNoob22"</span>,\n' +
-        '  <span class="t-yellow">"level"</span>: <span class="t-pink">1337</span>,\n' +
-        '  <span class="t-yellow">"skills"</span>: <span class="t-cyan">{</span>\n' +
-        '    <span class="t-yellow">"offensive"</span>: <span class="t-cyan">[</span><span class="t-green">"Pentesting"</span>, <span class="t-green">"OWASP Top 10"</span>, <span class="t-green">"Exploitation"</span>, <span class="t-green">"Kerberoasting"</span><span class="t-cyan">]</span>,\n' +
-        '    <span class="t-yellow">"defensive"</span>: <span class="t-cyan">[</span><span class="t-green">"SIEM/SOC"</span>, <span class="t-green">"Incident Response"</span>, <span class="t-green">"Threat Hunting"</span>, <span class="t-green">"Forensics"</span><span class="t-cyan">]</span>,\n' +
-        '    <span class="t-yellow">"tools"</span>: <span class="t-cyan">[</span><span class="t-green">"Burp Suite"</span>, <span class="t-green">"Metasploit"</span>, <span class="t-green">"Wireshark"</span>, <span class="t-green">"Nmap"</span>, <span class="t-green">"BloodHound"</span><span class="t-cyan">]</span>,\n' +
-        '    <span class="t-yellow">"languages"</span>: <span class="t-cyan">[</span><span class="t-green">"Python"</span>, <span class="t-green">"Bash"</span>, <span class="t-green">"PowerShell"</span>, <span class="t-green">"C"</span>, <span class="t-green">"Go"</span><span class="t-cyan">]</span>\n' +
-        '  <span class="t-cyan">}</span>,\n' +
-        '  <span class="t-yellow">"certifications"</span>: <span class="t-cyan">[</span><span class="t-green">"CompTIA Security+"</span>, <span class="t-green">"eJPT"</span>, <span class="t-green">"Google Cybersecurity"</span><span class="t-cyan">]</span>,\n' +
-        '  <span class="t-yellow">"ctf_platforms"</span>: <span class="t-cyan">[</span><span class="t-green">"HackTheBox"</span>, <span class="t-green">"TryHackMe"</span>, <span class="t-green">"Root-Me"</span><span class="t-cyan">]</span>\n' +
-        '<span class="t-cyan">}</span>\n'
-      );
-    },
-
-    'cat contact.txt': function () {
-      return (
-        '<span class="t-cyan">━━━ Contact EpicNoob22 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>\n\n' +
-        '<span class="t-yellow">📧 Email:    </span><span class="t-white">epicnoob22@proton.me</span>\n' +
-        '<span class="t-yellow">🐙 GitHub:   </span><span class="t-white">https://github.com/EpicNoob22</span>\n' +
-        '<span class="t-yellow">💼 LinkedIn: </span><span class="t-white">linkedin.com/in/EpicNoob22</span>\n' +
-        '<span class="t-yellow">🚩 THM:      </span><span class="t-white">https://tryhackme.com/p/EpicNoob22</span>\n' +
-        '<span class="t-yellow">🌐 HTB:      </span><span class="t-white">https://app.hackthebox.com/profile/EpicNoob22</span>\n' +
-        '<span class="t-yellow">📍 Location: </span><span class="t-white">France 🇫🇷</span>\n\n' +
-        '<span class="t-green">🟢 Disponible pour alternance — Septembre 2026</span>\n'
-      );
-    },
-
-    'cat .secret': function () {
-      return (
-        '<span class="t-pink">🔐 You found the secret file!</span>\n\n' +
-        '<span class="t-green">Flag: </span><span class="t-yellow">CTF{y0u_4r3_4_r34l_h4ck3r}</span>\n\n' +
-        '<span class="t-dim">Well done. You deserve a cookie 🍪</span>\n'
-      );
-    },
-
-    certs: function () {
-      return (
-        '<span class="t-cyan">┌─ Certifications ───────────────────────────────────┐</span>\n\n' +
-        '<span class="t-yellow">[1]</span> <span class="t-green">CompTIA Security+ (SY0-701)</span>  ✅ 2025\n' +
-        '    <span class="t-dim">Score: 812/900 — Fondamentaux, risques, crypto</span>\n\n' +
-        '<span class="t-yellow">[2]</span> <span class="t-green">eJPT (Junior Penetration Tester)</span>  ✅ 2025\n' +
-        '    <span class="t-dim">INE Security — Pentesting web &amp; réseau</span>\n\n' +
-        '<span class="t-yellow">[3]</span> <span class="t-green">Google Cybersecurity Certificate</span>  ✅ 2024\n' +
-        '    <span class="t-dim">Google/Coursera — 8 cours: SIEM, IDS, Python</span>\n\n' +
-        '<span class="t-yellow">[4]</span> <span class="t-green">TryHackMe Advent of Cyber 2025</span>  ✅ 2025\n' +
-        '    <span class="t-dim">24 challenges: OSINT, forensics, web, crypto</span>\n\n' +
-        '<span class="t-cyan">└───────────────────────────────────────────────────┘</span>\n'
-      );
-    },
-
-    ctf: function () {
-      return (
-        '<span class="t-cyan">┌─ CTF Stats ─────────────────────────────────────────┐</span>\n\n' +
-        '<span class="t-yellow">🟢 HackTheBox</span>\n' +
-        '   Rank:     <span class="t-green">Hacker</span>  |  Top <span class="t-pink">10%</span>\n' +
-        '   Machines: <span class="t-white">25+</span>    |  Score: <span class="t-cyan">████████████████░░░░</span> 75%\n\n' +
-        '<span class="t-yellow">🚩 TryHackMe</span>\n' +
-        '   Rank:     <span class="t-green">0x8 [Hacker]</span>  |  Top <span class="t-pink">5%</span>\n' +
-        '   Rooms:    <span class="t-white">80+</span>    |  Score: <span class="t-cyan">█████████████████░░░</span> 85%\n\n' +
-        '<span class="t-yellow">🌐 Root-Me</span>\n' +
-        '   Level:    <span class="t-green">Avancé</span>\n' +
-        '   Challs:   <span class="t-white">150+</span>   |  Score: <span class="t-cyan">█████████████░░░░░░░</span> 65%\n\n' +
-        '<span class="t-cyan">└───────────────────────────────────────────────────┘</span>\n'
-      );
-    },
-
-    uptime: function () {
-      var now = new Date();
-      var h = now.getHours().toString().padStart(2, '0');
-      var m = now.getMinutes().toString().padStart(2, '0');
-      var s = now.getSeconds().toString().padStart(2, '0');
-      return (
-        '<span class="t-green"> ' + h + ':' + m + ':' + s + ' up 22 years, 7 months, 12 days,  1 user,  load average: 0.42, 0.37, 0.29</span>\n' +
-        '<span class="t-dim">(since birth, always learning)</span>\n'
-      );
-    },
-
-    'nmap -sV 192.168.1.1': function () {
-      return (
-        '<span class="t-white">Starting Nmap 7.94 ( https://nmap.org ) at 2026-03-12 14:58 CET</span>\n' +
-        '<span class="t-white">Nmap scan report for router.local (192.168.1.1)</span>\n' +
-        '<span class="t-white">Host is up (0.0012s latency).</span>\n' +
-        '<span class="t-dim">Not shown: 994 filtered tcp ports (no-response)</span>\n\n' +
-        '<span class="t-cyan">PORT      STATE  SERVICE   VERSION</span>\n' +
-        '<span class="t-green">22/tcp    open   ssh       Dropbear sshd 2020.81</span>\n' +
-        '<span class="t-green">53/tcp    open   domain    dnsmasq 2.89</span>\n' +
-        '<span class="t-green">80/tcp    open   http      Lighttpd 1.4.64</span>\n' +
-        '<span class="t-yellow">443/tcp   open   https     Lighttpd 1.4.64</span>\n' +
-        '<span class="t-yellow">8080/tcp  open   http      mini_httpd 1.30</span>\n\n' +
-        '<span class="t-white">OS detection:</span>  <span class="t-cyan">Linux 3.x|4.x (embedded, ARM)</span>\n' +
-        '<span class="t-white">Device type:</span>   <span class="t-green">router|broadband router</span>\n' +
-        '<span class="t-dim">Traceroute: 1 hop (192.168.1.1)</span>\n\n' +
-        '<span class="t-white">Nmap done: 1 IP address (1 host up) scanned in 8.43 seconds</span>\n'
-      );
-    },
-
-    'sudo rm -rf /': function () {
-      return (
-        '<span class="t-yellow">[sudo] password for epicnoob22: </span><span class="t-dim">**************</span>\n\n' +
-        '<span class="t-pink">Nice try. 😏</span>\n' +
-        '<span class="t-pink">Permission denied: This portfolio is protected by quantum encryption.</span>\n' +
-        '<span class="t-dim">rm: cannot remove \'/\': Permission denied (and common sense)</span>\n' +
-        '<span class="t-dim">This incident will be reported to the NSA, FBI, Interpol, and your mom.</span>\n'
-      );
-    },
-
-    matrix: function () {
-      var canvas = document.getElementById('matrixCanvas');
-      if (!canvas) { return '<span class="t-pink">Matrix canvas not found.</span>\n'; }
-      var current = parseFloat(canvas.style.opacity);
-      if (isNaN(current)) { current = 0.07; }
-      if (current > 0.01) {
-        canvas.style.opacity = '0';
-        return '<span class="t-yellow">Matrix rain disabled. Welcome to the desert of the real.</span>\n';
-      } else {
-        canvas.style.opacity = '0.07';
-        return '<span class="t-green">Matrix rain enabled. There is no spoon.</span>\n';
-      }
-    },
-
-    banner: function () {
-      return (
-        '<span class="t-green">  ███████╗██████╗ ██╗ ██████╗ </span>\n' +
-        '<span class="t-green">  ██╔════╝██╔══██╗██║██╔════╝ </span>\n' +
-        '<span class="t-green">  █████╗  ██████╔╝██║██║      </span>\n' +
-        '<span class="t-green">  ██╔══╝  ██╔═══╝ ██║██║      </span>\n' +
-        '<span class="t-green">  ███████╗██║     ██║╚██████╗ </span>\n' +
-        '<span class="t-green">  ╚══════╝╚═╝     ╚═╝ ╚═════╝ </span>\n\n' +
-        '<span class="t-cyan">  ███╗   ██╗ ██████╗  ██████╗ ██████╗ ██████╗ ██████╗ </span>\n' +
-        '<span class="t-cyan">  ████╗  ██║██╔═══██╗██╔═══██╗██╔══██╗╚════██╗╚════██╗</span>\n' +
-        '<span class="t-cyan">  ██╔██╗ ██║██║   ██║██║   ██║██████╔╝ █████╔╝ █████╔╝</span>\n' +
-        '<span class="t-cyan">  ██║╚██╗██║██║   ██║██║   ██║██╔══██╗██╔═══╝ ██╔═══╝ </span>\n' +
-        '<span class="t-cyan">  ██║ ╚████║╚██████╔╝╚██████╔╝██████╔╝███████╗███████╗</span>\n' +
-        '<span class="t-cyan">  ╚═╝  ╚═══╝ ╚═════╝  ╚═════╝ ╚═════╝ ╚══════╝╚══════╝</span>\n\n' +
-        '<span class="t-yellow">  Cybersecurity Portfolio | Hack the planet ethically 🌍🔐</span>\n' +
-        '<span class="t-dim">  Type \'help\' to see available commands</span>\n'
-      );
-    },
-
-    fortune: function () {
-      var quotes = [
-        '"The quieter you become, the more you are able to hear." — Kali Linux',
-        '"The only truly secure system is one that is powered off." — Gene Spafford',
-        '"Security is a process, not a product." — Bruce Schneier',
-        '"Amateurs hack systems, professionals hack people." — Bruce Schneier',
-        '"The best defense is a good offense." — Sun Tzu (adapted)',
-        '"Hackers are breaking the systems for profit. Before, it was about intellectual curiosity." — Kevin Mitnick',
-        '"With enough time, resources and motivation, a determined adversary will always get in." — NIST',
-        '"In cybersecurity, the only constant is change — and attackers know this better than defenders." — Unknown',
-        '"If you think technology can solve your security problems, you don\'t understand the problems." — Bruce Schneier',
-        '"Privacy is not something that I\'m merely entitled to, it\'s an absolute prerequisite." — Marlon Brando',
-        '"To hack is not to destroy — it is to understand." — Unknown',
-        '"Every system is hackable. The question is whether the reward justifies the effort." — Anonymous',
-        '"Know your enemy, know yourself, and you need not fear the result of a hundred battles." — Sun Tzu',
-        '"Offense informs defense." — Every pentester ever',
-        '"Root is not a destination, it\'s a journey." — EpicNoob22'
-      ];
-      var quote = quotes[Math.floor(Math.random() * quotes.length)];
-      return '<span class="t-yellow">💬 ' + escapeHtml(quote) + '</span>\n';
-    },
-
-    'cd projects && ls': function () {
-      return (
-        '<span class="t-dim">Changing to projects directory...</span>\n\n' +
-        '<span class="t-cyan">drwxr-xr-x  8 epicnoob22 hackers 4096 2026  ~/projects/</span>\n\n' +
-        '<span class="t-green">🏠 homelab-soc      </span><span class="t-dim">SOC maison avec ELK, Wazuh, Suricata</span>\n' +
-        '<span class="t-green">🔍 vulnscanner-pro  </span><span class="t-dim">Scanner de vulnérabilités web en Python</span>\n' +
-        '<span class="t-green">🔐 ad-lab           </span><span class="t-dim">Active Directory lab vulnérable</span>\n' +
-        '<span class="t-green">🦠 malware-sandbox  </span><span class="t-dim">Sandbox analyse dynamique/statique</span>\n' +
-        '<span class="t-green">🎣 phishguard       </span><span class="t-dim">Outil de sensibilisation au phishing</span>\n' +
-        '<span class="t-green">🤖 autorecon-bot    </span><span class="t-dim">Bot de reconnaissance automatisée</span>\n' +
-        '<span class="t-green">🌐 honeypot-network </span><span class="t-dim">Réseau de honeypots VPS</span>\n' +
-        '<span class="t-green">🔑 cryptovault      </span><span class="t-dim">Gestionnaire de mots de passe AES-256</span>\n\n' +
-        '<span class="t-yellow">→ Voir tous les projets: </span><span class="t-cyan">https://github.com/EpicNoob22</span>\n'
-      );
-    }
-  };
-
-  function runHackAnimation(target) {
-    var steps = [
-      { text: '<span class="t-cyan">[*] Initializing exploit framework...</span>', delay: 200 },
-      { text: '<span class="t-cyan">[*] Target: </span><span class="t-yellow">' + target + '</span>', delay: 400 },
-      { text: '<span class="t-white">[*] Scanning open ports...</span>', delay: 600 },
-      { text: '<span class="t-green">[+] Port 22 (SSH) — OPEN</span>', delay: 900 },
-      { text: '<span class="t-green">[+] Port 80 (HTTP) — OPEN</span>', delay: 1100 },
-      { text: '<span class="t-white">[*] Bypassing firewall...</span> <span class="t-green">OK</span>', delay: 1400 },
-      { text: '<span class="t-white">[*] Loading payloads...</span> <span class="t-green">OK</span>', delay: 1700 },
-      { text: '<span class="t-white">[*] Injecting payload... </span><span class="t-green">████████████████████</span> 100%', delay: 2100 },
-      { text: '<span class="t-white">[*] Escalating privileges...</span>', delay: 2400 },
-      { text: '<span class="t-yellow">[!] Root shell obtained:</span>', delay: 2700 },
-      { text: '<span class="t-green">root@' + target + ':~# </span><span class="t-pink">ACCESS GRANTED 🎉</span>', delay: 3000 },
-      { text: '<span class="t-dim">// Purely cosmetic — No actual systems were harmed. Stay ethical! 🔐</span>', delay: 3300 }
-    ];
-    steps.forEach(function (step) {
-      setTimeout(function () {
-        appendTerminalOutput(step.text + '\n');
-      }, step.delay);
+      btn.addEventListener('mouseleave', function () {
+        btn.style.transform = '';
+        btn.style.transition = 'transform 0.5s cubic-bezier(0.16, 1, 0.3, 1)';
+        setTimeout(function () {
+          btn.style.transition = '';
+        }, 500);
+      });
     });
   }
 
+  /* ============================================================
+     10. BACK TO TOP
+  ============================================================ */
 
-  function escapeHtml(str) {
-    return String(str)
-      .replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;')
-      .replace(/"/g, '&quot;')
-      .replace(/'/g, '&#039;');
+  function initBackToTop() {
+    var btn = document.getElementById('backToTop');
+    if (!btn) return;
+
+    function update() {
+      if (window.pageYOffset > 400) {
+        btn.classList.add('visible');
+      } else {
+        btn.classList.remove('visible');
+      }
+    }
+
+    window.addEventListener('scroll', throttle(update, 200), { passive: true });
+    update();
+
+    btn.addEventListener('click', function () {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
   }
 
-  function openTerminal() {
-    var terminal = document.getElementById('terminalEgg');
-    var toggle = document.getElementById('terminalToggle');
-    var input = document.getElementById('terminalInput');
-    var output = document.getElementById('terminalOutput');
+  /* ============================================================
+     11. CONTACT FORM
+  ============================================================ */
 
-    if (!terminal) return;
+  function showToast(message, type) {
+    var toast = document.getElementById('toast');
+    if (!toast) return;
 
-    terminal.classList.remove('hidden');
-    terminalOpen = true;
-
-    if (toggle) {
-      toggle.setAttribute('aria-expanded', 'true');
-    }
-
-    /* Show welcome message if output is empty */
-    if (output && !output.hasChildNodes()) {
-      var welcome =
-        '<span class="t-green">╔════════════════════════════════════════════════════╗</span>\n' +
-        '<span class="t-green">║</span>    <span class="t-pink">EpicNoob22 Interactive Terminal v1.0.0</span>         <span class="t-green">║</span>\n' +
-        '<span class="t-green">║</span>    <span class="t-dim">Type \'help\' to see available commands</span>          <span class="t-green">║</span>\n' +
-        '<span class="t-green">╚════════════════════════════════════════════════════╝</span>\n\n' +
-        '<span class="t-cyan">Last login:</span> <span class="t-white">' + new Date().toUTCString() + '</span>\n\n';
-      appendTerminalOutput(welcome);
-    }
+    toast.textContent = message;
+    toast.className = 'toast ' + (type || '');
+    toast.classList.add('show');
 
     setTimeout(function () {
-      if (input) input.focus();
-    }, 100);
+      toast.classList.remove('show');
+    }, 3500);
   }
 
-  function closeTerminal() {
-    var terminal = document.getElementById('terminalEgg');
-    var toggle = document.getElementById('terminalToggle');
-
-    if (!terminal) return;
-
-    terminal.classList.add('hidden');
-    terminalOpen = false;
-
-    if (toggle) {
-      toggle.setAttribute('aria-expanded', 'false');
-    }
+  function validateEmail(email) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   }
-
-  function appendTerminalOutput(html) {
-    var output = document.getElementById('terminalOutput');
-    if (!output) return;
-
-    var div = document.createElement('div');
-    div.innerHTML = html;
-    output.appendChild(div);
-    output.scrollTop = output.scrollHeight;
-  }
-
-  function executeCommand(rawCmd) {
-    var cmd = rawCmd.trim();
-    if (!cmd) return;
-
-    /* Add to history (avoid consecutive duplicates) */
-    if (terminalHistory[terminalHistory.length - 1] !== cmd) {
-      terminalHistory.push(cmd);
-    }
-    terminalHistoryIndex = terminalHistory.length;
-
-    /* Echo the command with prompt */
-    appendTerminalOutput(
-      '<span class="t-green">root@kali:~#</span> <span class="t-white">' + escapeHtml(cmd) + '</span>\n'
-    );
-
-    /* Try exact match first */
-    var cmdLower = cmd.toLowerCase();
-    var result = null;
-
-    if (typeof terminalCommands[cmdLower] === 'function') {
-      result = terminalCommands[cmdLower]();
-    } else if (typeof terminalCommands[cmd] === 'function') {
-      result = terminalCommands[cmd]();
-    } else if (cmdLower.startsWith('echo ')) {
-      var echoArgs = cmd.slice(5).split(' ');
-      result = terminalCommands.echo(echoArgs);
-    } else if (cmdLower === 'cd projects && ls') {
-      result = terminalCommands['cd projects && ls']();
-    } else if (cmdLower.startsWith('cd ')) {
-      var target = cmd.slice(3).trim().toLowerCase();
-      var validSections = ['home', 'about', 'skills', 'projects', 'certifications', 'ctf', 'blog', 'contact'];
-      if (validSections.indexOf(target) !== -1) {
-        var section = document.getElementById(target);
-        if (section) {
-          section.scrollIntoView({ behavior: 'smooth', block: 'start' });
-          result = '<span class="t-green">Navigating to /' + target + '</span>\n';
-          closeTerminal();
-        } else {
-          result = '<span class="t-pink">bash: cd: ' + escapeHtml(target) + ': No such section</span>\n';
-        }
-      } else {
-        result = '<span class="t-pink">bash: cd: ' + escapeHtml(cmd.slice(3)) + ': No such file or directory</span>\n';
-      }
-    } else if (cmdLower === 'cat about.txt') {
-      result = terminalCommands['cat about.txt']();
-    } else if (cmdLower === 'cat skills.json') {
-      result = terminalCommands['cat skills.json']();
-    } else if (cmdLower === 'cat contact.txt') {
-      result = terminalCommands['cat contact.txt']();
-    } else if (cmdLower === 'cat .secret') {
-      result = terminalCommands['cat .secret']();
-    } else if (cmdLower === 'ls -la' || cmdLower === 'ls -al') {
-      result = terminalCommands['ls -la']();
-    } else if (cmdLower === 'sudo hire me') {
-      result = terminalCommands['sudo hire me']();
-    } else if (cmdLower === 'sudo rm -rf /' || cmdLower === 'sudo rm -rf /*') {
-      result = terminalCommands['sudo rm -rf /']();
-    } else if (cmdLower === 'ping google.com') {
-      result = terminalCommands['ping google.com']();
-    } else if (cmdLower === 'nmap localhost') {
-      result = terminalCommands['nmap localhost']();
-    } else if (cmdLower === 'nmap -sv 192.168.1.1') {
-      result = terminalCommands['nmap -sV 192.168.1.1']();
-    } else if (cmdLower === 'uname -a') {
-      result = terminalCommands['uname -a']();
-    } else if (cmdLower.startsWith('cowsay')) {
-      var cowText = cmd.slice(6).trim() || 'Moo!';
-      var textLine = escapeHtml(cowText);
-      var borderLen = textLine.length + 2;
-      var topBorder = '+' + '-'.repeat(borderLen) + '+';
-      var bottomBorder = '+' + '-'.repeat(borderLen) + '+';
-      result = (
-        '<span class="t-yellow">' + topBorder + '</span>\n' +
-        '<span class="t-yellow">| </span><span class="t-white">' + textLine + '</span><span class="t-yellow"> |</span>\n' +
-        '<span class="t-yellow">' + bottomBorder + '</span>\n' +
-        '<span class="t-yellow">        \\   ^__^</span>\n' +
-        '<span class="t-yellow">         \\  (oo)\\_______</span>\n' +
-        '<span class="t-yellow">            (__)\\       )\\/\\</span>\n' +
-        '<span class="t-yellow">                ||----w |</span>\n' +
-        '<span class="t-yellow">                ||     ||</span>\n'
-      );
-    } else if (cmdLower.startsWith('hack')) {
-      var hackTarget = cmd.slice(4).trim() || 'target';
-      runHackAnimation(escapeHtml(hackTarget));
-      return;
-    } else {
-      result =
-        '<span class="t-pink">bash: ' + escapeHtml(cmd) + ': command not found</span>\n' +
-        '<span class="t-dim">Type \'help\' to see available commands</span>\n';
-    }
-
-    if (result !== null && result !== undefined) {
-      appendTerminalOutput(result);
-    }
-  }
-
-  /* Konami Code: ↑↑↓↓←→←→BA */
-  var konamiSequence = [
-    'ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown',
-    'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight',
-    'b', 'a'
-  ];
-  var konamiIndex = 0;
-
-  function initTerminal() {
-    var toggle = document.getElementById('terminalToggle');
-    var closeBtn = document.getElementById('terminalClose');
-    var input = document.getElementById('terminalInput');
-    var terminal = document.getElementById('terminalEgg');
-
-    if (toggle) {
-      toggle.addEventListener('click', function () {
-        if (terminalOpen) {
-          closeTerminal();
-        } else {
-          openTerminal();
-        }
-      });
-    }
-
-    if (closeBtn) {
-      closeBtn.addEventListener('click', closeTerminal);
-    }
-
-    /* Close on Escape key */
-    document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape' && terminalOpen) {
-        closeTerminal();
-        return;
-      }
-
-      /* Konami code detection */
-      var expected = konamiSequence[konamiIndex];
-      if (e.key === expected) {
-        konamiIndex++;
-        if (konamiIndex === konamiSequence.length) {
-          konamiIndex = 0;
-          if (!terminalOpen) openTerminal();
-        }
-      } else {
-        konamiIndex = (e.key === konamiSequence[0]) ? 1 : 0;
-      }
-    });
-
-    if (input) {
-      input.addEventListener('keydown', function (e) {
-        if (e.key === 'Enter') {
-          var cmd = input.value;
-          input.value = '';
-          terminalHistoryIndex = terminalHistory.length;
-          executeCommand(cmd);
-        } else if (e.key === 'ArrowUp') {
-          e.preventDefault();
-          if (terminalHistoryIndex > 0) {
-            terminalHistoryIndex--;
-            input.value = terminalHistory[terminalHistoryIndex] || '';
-          }
-        } else if (e.key === 'ArrowDown') {
-          e.preventDefault();
-          if (terminalHistoryIndex < terminalHistory.length - 1) {
-            terminalHistoryIndex++;
-            input.value = terminalHistory[terminalHistoryIndex] || '';
-          } else {
-            terminalHistoryIndex = terminalHistory.length;
-            input.value = '';
-          }
-        } else if (e.key === 'Tab') {
-          e.preventDefault();
-          /* Basic tab completion */
-          var partial = input.value.toLowerCase().trim();
-          var allCmds = Object.keys(terminalCommands).concat(['cd', 'echo']);
-          var matches = allCmds.filter(function (c) { return c.startsWith(partial); });
-          if (matches.length === 1) {
-            input.value = matches[0];
-          } else if (matches.length > 1) {
-            appendTerminalOutput(
-              '<span class="t-dim">' + matches.join('  ') + '</span>\n'
-            );
-          }
-        }
-      });
-    }
-
-    /* Click outside to close */
-    if (terminal) {
-      terminal.addEventListener('click', function (e) {
-        if (e.target === terminal) closeTerminal();
-      });
-    }
-  }
-
-  /* ============================================================
-     12. CONTACT FORM VALIDATION
-  ============================================================ */
 
   function initContactForm() {
     var form = document.getElementById('contactForm');
@@ -1525,363 +467,525 @@
     var emailError = document.getElementById('emailError');
     var subjectError = document.getElementById('subjectError');
     var messageError = document.getElementById('messageError');
-    var charCount = document.getElementById('charCount');
-    var submitBtn = document.getElementById('submitBtn');
 
-    function showError(errorEl, msg) {
-      if (!errorEl) return;
-      errorEl.textContent = msg;
-      errorEl.style.display = 'block';
+    function clearError(input, errorEl) {
+      if (input) input.classList.remove('error');
+      if (errorEl) errorEl.textContent = '';
     }
 
-    function clearError(errorEl) {
-      if (!errorEl) return;
-      errorEl.textContent = '';
-      errorEl.style.display = 'none';
+    function setError(input, errorEl, message) {
+      if (input) input.classList.add('error');
+      if (errorEl) errorEl.textContent = message;
+      return false;
     }
 
-    function validateEmail(email) {
-      var re = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*\.[a-zA-Z]{2,}$/;
-      return re.test(email) && email.length <= 254;
-    }
-
-    /* Real-time char count */
-    if (messageInput && charCount) {
-      messageInput.addEventListener('input', function () {
-        var len = messageInput.value.length;
-        charCount.textContent = len + ' / 20 min';
-        if (len >= 20) {
-          charCount.style.color = '#00ff88';
-        } else {
-          charCount.style.color = '';
-        }
-      });
-    }
-
-    /* Real-time error clearing */
-    if (nameInput) {
-      nameInput.addEventListener('input', function () {
-        if (nameInput.value.trim().length >= 2) clearError(nameError);
-      });
-    }
-
-    if (emailInput) {
-      emailInput.addEventListener('input', function () {
-        if (validateEmail(emailInput.value.trim())) clearError(emailError);
-      });
-    }
-
-    if (subjectInput) {
-      subjectInput.addEventListener('change', function () {
-        if (subjectInput.value) clearError(subjectError);
-      });
-    }
-
-    if (messageInput) {
-      messageInput.addEventListener('input', function () {
-        if (messageInput.value.trim().length >= 20) clearError(messageError);
-      });
-    }
+    // Live validation
+    if (nameInput) nameInput.addEventListener('input', function () { clearError(nameInput, nameError); });
+    if (emailInput) emailInput.addEventListener('input', function () { clearError(emailInput, emailError); });
+    if (subjectInput) subjectInput.addEventListener('change', function () { clearError(subjectInput, subjectError); });
+    if (messageInput) messageInput.addEventListener('input', function () { clearError(messageInput, messageError); });
 
     form.addEventListener('submit', function (e) {
       e.preventDefault();
 
-      var isValid = true;
+      var valid = true;
 
-      /* Clear all errors */
-      clearError(nameError);
-      clearError(emailError);
-      clearError(subjectError);
-      clearError(messageError);
-
-      /* Validate name */
-      if (!nameInput || nameInput.value.trim().length < 2) {
-        showError(nameError, 'Le nom doit contenir au moins 2 caractères.');
-        isValid = false;
+      // Name
+      if (!nameInput || !nameInput.value.trim()) {
+        setError(nameInput, nameError, 'Veuillez entrer votre nom.');
+        valid = false;
+      } else if (nameInput.value.trim().length < 2) {
+        setError(nameInput, nameError, 'Le nom doit contenir au moins 2 caractères.');
+        valid = false;
       }
 
-      /* Validate email */
-      if (!emailInput || !validateEmail(emailInput.value.trim())) {
-        showError(emailError, 'Veuillez entrer une adresse email valide.');
-        isValid = false;
+      // Email
+      if (!emailInput || !emailInput.value.trim()) {
+        setError(emailInput, emailError, 'Veuillez entrer votre email.');
+        valid = false;
+      } else if (!validateEmail(emailInput.value.trim())) {
+        setError(emailInput, emailError, 'Veuillez entrer un email valide.');
+        valid = false;
       }
 
-      /* Validate subject */
+      // Subject
       if (!subjectInput || !subjectInput.value) {
-        showError(subjectError, 'Veuillez choisir un sujet.');
-        isValid = false;
+        setError(subjectInput, subjectError, 'Veuillez choisir un sujet.');
+        valid = false;
       }
 
-      /* Validate message */
-      if (!messageInput || messageInput.value.trim().length < 20) {
-        showError(messageError, 'Le message doit contenir au moins 20 caractères.');
-        isValid = false;
+      // Message
+      if (!messageInput || !messageInput.value.trim()) {
+        setError(messageInput, messageError, 'Veuillez entrer votre message.');
+        valid = false;
+      } else if (messageInput.value.trim().length < 10) {
+        setError(messageInput, messageError, 'Le message doit contenir au moins 10 caractères.');
+        valid = false;
       }
 
-      if (!isValid) {
-        showToast('Veuillez corriger les erreurs dans le formulaire.', 'error');
-        return;
-      }
+      if (!valid) return;
 
-      /* Simulate form submission */
+      // Simulate success (static site — no backend)
+      var submitBtn = form.querySelector('button[type="submit"]');
+      var originalText = submitBtn ? submitBtn.querySelector('span').textContent : 'Envoyer';
       if (submitBtn) {
-        var btnText = submitBtn.querySelector('.btn-text');
-        var btnLoading = submitBtn.querySelector('.btn-loading');
         submitBtn.disabled = true;
-
-        if (btnText) btnText.style.display = 'none';
-        if (btnLoading) btnLoading.style.display = 'flex';
+        submitBtn.querySelector('span').textContent = 'Envoi en cours\u2026';
       }
 
       setTimeout(function () {
-        if (submitBtn) {
-          var btnText = submitBtn.querySelector('.btn-text');
-          var btnLoading = submitBtn.querySelector('.btn-loading');
-          submitBtn.disabled = false;
-
-          if (btnLoading) btnLoading.style.display = 'none';
-          if (btnText) {
-            btnText.style.display = 'flex';
-            btnText.innerHTML = '<i class="fas fa-check" aria-hidden="true"></i> Envoyé!';
-          }
-
-          setTimeout(function () {
-            if (btnText) {
-              btnText.innerHTML = '<i class="fas fa-paper-plane" aria-hidden="true"></i> Envoyer le message';
-            }
-          }, 3000);
-        }
-
+        showToast('\u2705 Message envoy\u00e9 ! Je vous r\u00e9pondrai tr\u00e8s vite.', 'success');
         form.reset();
-        if (charCount) charCount.textContent = '0 / 20 min';
-
-        showToast('Message envoyé avec succès ! Je vous répondrai bientôt. 🚀', 'success');
-      }, 1500);
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.querySelector('span').textContent = originalText;
+        }
+      }, 1200);
     });
   }
 
   /* ============================================================
-     13. TOAST NOTIFICATIONS
+     12. TERMINAL
   ============================================================ */
 
-  function showToast(message, type) {
-    type = type || 'success';
-    var container = document.getElementById('toastContainer');
-    if (!container) return;
+  function initTerminal() {
+    var trigger = document.getElementById('terminalTrigger');
+    var modal = document.getElementById('terminalModal');
+    var closeBtn = document.getElementById('terminalClose');
+    var body = document.getElementById('terminalBody');
+    var input = document.getElementById('terminalInput');
 
-    var toast = document.createElement('div');
-    toast.className = 'toast toast-' + type;
+    if (!trigger || !modal || !body || !input) return;
 
-    var icon = type === 'success' ? 'fa-check-circle' : type === 'error' ? 'fa-times-circle' : 'fa-info-circle';
-    var color = type === 'success' ? '#00ff88' : type === 'error' ? '#ff006e' : '#00d4ff';
+    var commandHistory = [];
+    var historyIndex = -1;
+    var themeGlow = false;
 
-    toast.innerHTML =
-      '<i class="fas ' + icon + '" style="color:' + color + '" aria-hidden="true"></i>' +
-      '<span>' + message + '</span>' +
-      '<button class="toast-close" aria-label="Fermer la notification">' +
-      '<i class="fas fa-times" aria-hidden="true"></i></button>';
+    // Open/close
+    function openTerminal() {
+      modal.classList.add('open');
+      modal.removeAttribute('aria-hidden');
+      modal.setAttribute('aria-hidden', 'false');
+      input.focus();
+    }
 
-    toast.style.cssText =
-      'display:flex;align-items:center;gap:12px;padding:14px 18px;' +
-      'background:rgba(13,13,21,0.95);border:1px solid ' + color + ';' +
-      'border-radius:8px;color:#e0e0e0;font-family:"JetBrains Mono",monospace;' +
-      'font-size:0.85rem;max-width:400px;box-shadow:0 4px 20px rgba(0,0,0,0.5);' +
-      'transform:translateX(120%);transition:transform 0.35s cubic-bezier(0.4,0,0.2,1);' +
-      'margin-top:8px;position:relative;';
+    function closeTerminal() {
+      modal.classList.remove('open');
+      modal.setAttribute('aria-hidden', 'true');
+    }
 
-    var closeBtn = toast.querySelector('.toast-close');
-    if (closeBtn) {
-      closeBtn.style.cssText =
-        'background:none;border:none;color:#888899;cursor:pointer;' +
-        'padding:0;margin-left:auto;font-size:0.9rem;flex-shrink:0;';
-      closeBtn.addEventListener('click', function () {
-        removeToast(toast);
+    trigger.addEventListener('click', function () {
+      if (modal.classList.contains('open')) {
+        closeTerminal();
+      } else {
+        openTerminal();
+      }
+    });
+
+    if (closeBtn) closeBtn.addEventListener('click', closeTerminal);
+
+    modal.addEventListener('click', function (e) {
+      if (e.target === modal) closeTerminal();
+    });
+
+    // Keyboard shortcut Ctrl+`
+    document.addEventListener('keydown', function (e) {
+      if (e.ctrlKey && e.key === '`') {
+        e.preventDefault();
+        if (modal.classList.contains('open')) {
+          closeTerminal();
+        } else {
+          openTerminal();
+        }
+      }
+      if (e.key === 'Escape' && modal.classList.contains('open')) {
+        closeTerminal();
+      }
+    });
+
+    // Terminal commands
+    var COMMANDS = {
+      help: function () {
+        return [
+          { text: '\u250c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2510', cls: 'accent' },
+          { text: '\u2502  Commandes disponibles                          \u2502', cls: 'accent' },
+          { text: '\u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518', cls: 'accent' },
+          { text: '  about        \u2192 Pr\u00e9sentation d\'EpicNoob22', cls: '' },
+          { text: '  skills       \u2192 Comp\u00e9tences avec barres ASCII', cls: '' },
+          { text: '  projects     \u2192 Liste des 8 projets', cls: '' },
+          { text: '  certs        \u2192 Certifications obtenues', cls: '' },
+          { text: '  ctf          \u2192 Statistiques CTF', cls: '' },
+          { text: '  blog         \u2192 Articles publi\u00e9s', cls: '' },
+          { text: '  contact      \u2192 Informations de contact', cls: '' },
+          { text: '  socials      \u2192 Tous les liens sociaux', cls: '' },
+          { text: '  whoami       \u2192 Identit\u00e9', cls: '' },
+          { text: '  date         \u2192 Date et heure actuelles', cls: '' },
+          { text: '  history      \u2192 Historique des commandes', cls: '' },
+          { text: '  theme        \u2192 Toggle glow effect', cls: '' },
+          { text: '  goto [sect]  \u2192 Naviguer vers une section', cls: '' },
+          { text: '  echo [text]  \u2192 Afficher du texte', cls: '' },
+          { text: '  fortune      \u2192 Citation cybers\u00e9curit\u00e9 al\u00e9atoire', cls: '' },
+          { text: '  ascii        \u2192 ASCII art EpicNoob22', cls: '' },
+          { text: '  secret       \u2192 \ud83e\udd2b', cls: '' },
+          { text: '  clear        \u2192 Effacer le terminal', cls: '' },
+          { text: '  exit         \u2192 Fermer le terminal', cls: '' },
+        ];
+      },
+      about: function () {
+        return [
+          { text: '\u2554\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2557', cls: 'accent' },
+          { text: '\u2551        EpicNoob22 \u2014 About        \u2551', cls: 'accent' },
+          { text: '\u255a\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u255d', cls: 'accent' },
+          { text: '', cls: '' },
+          { text: '  Nom       : EpicNoob22', cls: '' },
+          { text: '  R\u00f4le      : Apprenti en Cybers\u00e9curit\u00e9', cls: '' },
+          { text: '  Sp\u00e9cia.   : Red Team & Blue Team', cls: '' },
+          { text: '  Dispo.    : Alternance \u2014 Sept. 2026', cls: 'success' },
+          { text: '  Lieu      : France (Remote & Pr\u00e9sentiel)', cls: '' },
+          { text: '', cls: '' },
+          { text: '  Passionn\u00e9 de cybers\u00e9curit\u00e9 depuis 2020.', cls: '' },
+          { text: '  CTF, pentesting, homelab SOC \u2014 c\'est ma vie.', cls: '' },
+        ];
+      },
+      whoami: function () {
+        return [
+          { text: 'EpicNoob22 \u2014 Cybersecurity Apprentice', cls: 'cyan' },
+          { text: 'Red Team \u00b7 Blue Team \u00b7 Ethical Hacker', cls: '' },
+          { text: 'uid=1337(epicnoob22) gid=1337(hackers)', cls: 'accent' },
+        ];
+      },
+      skills: function () {
+        return [
+          { text: '  Comp\u00e9tences \u2014 EpicNoob22', cls: 'accent' },
+          { text: '', cls: '' },
+          { text: '  S\u00e9curit\u00e9 Offensive  [\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2591\u2591] 78%', cls: '' },
+          { text: '  S\u00e9curit\u00e9 D\u00e9fensive  [\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2591\u2591\u2591] 72%', cls: '' },
+          { text: '  R\u00e9seau & Infra      [\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2591\u2591] 82%', cls: '' },
+          { text: '  Outils & Tech       [\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2591] 85%', cls: '' },
+          { text: '  Scripting & Dev     [\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2591\u2591\u2591] 73%', cls: '' },
+          { text: '  Syst\u00e8mes & Cloud    [\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2591\u2591] 77%', cls: '' },
+          { text: '', cls: '' },
+          { text: '  Outils : Kali \u00b7 Burp Suite \u00b7 Wireshark \u00b7 Nmap', cls: '' },
+          { text: '           Metasploit \u00b7 Ghidra \u00b7 BloodHound \u00b7 ELK', cls: '' },
+        ];
+      },
+      projects: function () {
+        return [
+          { text: '  Projets \u2014 EpicNoob22', cls: 'accent' },
+          { text: '', cls: '' },
+          { text: '  1. \ud83c\udfe0  HomeLab SOC          [D\u00e9fensif]', cls: '' },
+          { text: '         ELK Stack \u00b7 Wazuh \u00b7 Suricata \u00b7 Docker', cls: '' },
+          { text: '', cls: '' },
+          { text: '  2. \ud83d\udd0d  VulnScanner Pro       [Offensif]', cls: '' },
+          { text: '         Python \u00b7 OWASP \u00b7 Automation \u00b7 ReportLab', cls: '' },
+          { text: '', cls: '' },
+          { text: '  3. \ud83d\udd10  Active Directory Lab   [Labs]', cls: '' },
+          { text: '         BloodHound \u00b7 Mimikatz \u00b7 Proxmox', cls: '' },
+          { text: '', cls: '' },
+          { text: '  4. \ud83e\uddec  Malware Analysis Sandbox [D\u00e9fensif]', cls: '' },
+          { text: '         Ghidra \u00b7 REMnux \u00b7 YARA \u00b7 Volatility 3', cls: '' },
+          { text: '', cls: '' },
+          { text: '  5. \ud83c\udfa3  PhishGuard            [Outils]', cls: '' },
+          { text: '         GoPhish \u00b7 Flask \u00b7 PostgreSQL \u00b7 Docker', cls: '' },
+          { text: '', cls: '' },
+          { text: '  6. \ud83e\udd16  AutoRecon Bot          [Offensif]', cls: '' },
+          { text: '         Bash \u00b7 Python \u00b7 Nmap \u00b7 OSINT', cls: '' },
+          { text: '', cls: '' },
+          { text: '  7. \ud83c\udf10  Honeypot Network        [D\u00e9fensif]', cls: '' },
+          { text: '         Cowrie \u00b7 Dionaea \u00b7 ELK Stack', cls: '' },
+          { text: '', cls: '' },
+          { text: '  8. \ud83d\udd11  CryptoVault            [Outils]', cls: '' },
+          { text: '         Python \u00b7 AES-256-GCM \u00b7 SQLite \u00b7 HIBP', cls: '' },
+        ];
+      },
+      certs: function () {
+        return [
+          { text: '  Certifications \u2014 EpicNoob22', cls: 'accent' },
+          { text: '', cls: '' },
+          { text: '  \u2705  CompTIA Security+ (SY0-701) \u2014 812/900 \u2014 2025', cls: 'success' },
+          { text: '  \u2705  eJPT \u2014 INE Security \u2014 2025', cls: 'success' },
+          { text: '  \u2705  Google Cybersecurity Certificate \u2014 2024', cls: 'success' },
+          { text: '  \u2705  Advent of Cyber 2025 \u2014 TryHackMe \u2014 2025', cls: 'success' },
+        ];
+      },
+      ctf: function () {
+        return [
+          { text: '  CTF Stats \u2014 EpicNoob22', cls: 'accent' },
+          { text: '', cls: '' },
+          { text: '  \ud83d\udfe9  HackTheBox   : Hacker \u2014 Top 10% \u2014 25+ machines', cls: '' },
+          { text: '  \ud83d\udfe6  TryHackMe    : 0x8 [Hacker] \u2014 Top 5% \u2014 80+ rooms', cls: 'cyan' },
+          { text: '  \ud83d\udfe5  Root-Me      : Avanc\u00e9 \u2014 150+ challenges', cls: '' },
+          { text: '', cls: '' },
+          { text: '  Total : 50+ CTF r\u00e9solus sur 3 plateformes', cls: 'success' },
+        ];
+      },
+      contact: function () {
+        return [
+          { text: '  Contact \u2014 EpicNoob22', cls: 'accent' },
+          { text: '', cls: '' },
+          { text: '  \ud83d\udce7  epicnoob22@proton.me', cls: '' },
+          { text: '  \ud83d\udc19  github.com/EpicNoob22', cls: '' },
+          { text: '  \ud83d\udcbc  linkedin.com/in/EpicNoob22', cls: '' },
+          { text: '  \ud83d\udea9  tryhackme.com/p/EpicNoob22', cls: '' },
+          { text: '  \ud83d\udce6  app.hackthebox.com/EpicNoob22', cls: '' },
+          { text: '  \ud83c\udf10  root-me.org/EpicNoob22', cls: '' },
+          { text: '', cls: '' },
+          { text: '  \ud83d\udccd  France \u2014 Remote & Pr\u00e9sentiel', cls: '' },
+          { text: '  \ud83d\udfe2  Disponible \u2014 Alternance Sept. 2026', cls: 'success' },
+        ];
+      },
+      socials: function () {
+        return [
+          { text: '  Liens sociaux \u2014 EpicNoob22', cls: 'accent' },
+          { text: '', cls: '' },
+          { text: '  GitHub     \u2192 https://github.com/EpicNoob22', cls: '' },
+          { text: '  LinkedIn   \u2192 https://linkedin.com/in/EpicNoob22', cls: '' },
+          { text: '  TryHackMe  \u2192 https://tryhackme.com/p/EpicNoob22', cls: '' },
+          { text: '  HackTheBox \u2192 https://app.hackthebox.com/profile/EpicNoob22', cls: '' },
+          { text: '  Root-Me    \u2192 https://www.root-me.org/EpicNoob22', cls: '' },
+          { text: '  Email      \u2192 epicnoob22@proton.me', cls: '' },
+        ];
+      },
+      blog: function () {
+        return [
+          { text: '  Articles \u2014 EpicNoob22', cls: 'accent' },
+          { text: '', cls: '' },
+          { text: '  1. \ud83c\udfe0 Comment j\'ai mont\u00e9 mon HomeLab SOC pour <100\u20ac', cls: '' },
+          { text: '        12 Mars 2026 \u00b7 12 min \u00b7 HomeLab \u00b7 SOC \u00b7 Tutorial', cls: '' },
+          { text: '', cls: '' },
+          { text: '  2. \ud83c\udf10 Les 10 vuln\u00e9rabilit\u00e9s web les plus critiques en 2026', cls: '' },
+          { text: '        28 F\u00e9v 2026 \u00b7 15 min \u00b7 OWASP \u00b7 Web Security', cls: '' },
+          { text: '', cls: '' },
+          { text: '  3. \ud83c\udff0 Active Directory : du d\u00e9butant au pentester', cls: '' },
+          { text: '        15 Jan 2026 \u00b7 20 min \u00b7 AD \u00b7 Pentesting \u00b7 Red Team', cls: '' },
+          { text: '', cls: '' },
+          { text: '  4. \ud83d\udea9 Mon setup CTF : outils, m\u00e9thodo et tips', cls: '' },
+          { text: '        1 D\u00e9c 2025 \u00b7 8 min \u00b7 CTF \u00b7 Tools \u00b7 Methodology', cls: '' },
+        ];
+      },
+      date: function () {
+        var now = new Date();
+        return [
+          { text: now.toLocaleString('fr-FR', { dateStyle: 'full', timeStyle: 'medium' }), cls: 'cyan' },
+        ];
+      },
+      history: function () {
+        if (!commandHistory.length) {
+          return [{ text: '  Aucune commande dans l\'historique.', cls: '' }];
+        }
+        return commandHistory.map(function (cmd, i) {
+          return { text: '  ' + (i + 1) + '  ' + cmd, cls: '' };
+        });
+      },
+      theme: function () {
+        themeGlow = !themeGlow;
+        var termWin = document.querySelector('.terminal-window');
+        if (termWin) {
+          if (themeGlow) {
+            termWin.style.boxShadow = '0 0 40px rgba(129, 140, 248, 0.3), 0 0 80px rgba(34, 211, 238, 0.1)';
+          } else {
+            termWin.style.boxShadow = '';
+          }
+        }
+        return [{ text: 'Glow effect ' + (themeGlow ? 'activ\u00e9 \u2728' : 'd\u00e9sactiv\u00e9'), cls: themeGlow ? 'accent' : '' }];
+      },
+      clear: function () {
+        body.innerHTML = '';
+        return null;
+      },
+      exit: function () {
+        setTimeout(closeTerminal, 300);
+        return [{ text: 'Au revoir ! \ud83d\udc4b', cls: 'success' }];
+      },
+      secret: function () {
+        return [
+          { text: '  \ud83d\udd10 Acc\u00e8s restreint d\u00e9verrouill\u00e9...', cls: 'accent' },
+          { text: '', cls: '' },
+          { text: '  Flag: CTF{y0u_f0und_th3_s3cr3t_t3rm1n4l}', cls: 'success' },
+          { text: '', cls: '' },
+          { text: '  F\u00e9licitations, hacker \ud83d\udc40', cls: 'cyan' },
+        ];
+      },
+      fortune: function () {
+        var quotes = [
+          '"The only truly secure system is one that is powered off, cast in a block of concrete and sealed in a lead-lined room." \u2014 Gene Spafford',
+          '"Security is not a product, but a process." \u2014 Bruce Schneier',
+          '"Hackers are breaking the systems for profit. Before, it was about intellectual curiosity and the pursuit of knowledge." \u2014 Kevin Mitnick',
+          '"In security, there\'s no such thing as too much paranoia." \u2014 Anonymous',
+          '"The internet is a dangerous place. Trust no one, verify everything." \u2014 Zero Trust Principle',
+          '"A hacker doesn\'t break through security; they walk through the door you left open." \u2014 Anonymous',
+          '"The best way to predict the future is to create it." \u2014 Alan Kay',
+          '"To know your enemy, you must become your enemy." \u2014 Sun Tzu',
+          '"Offense informs defense. Build red team skills to be a better blue teamer." \u2014 Anonymous',
+          '"There are only two types of companies: those that have been hacked, and those that don\'t know it yet." \u2014 John Chambers',
+          '"Security without privacy is not security at all." \u2014 EFF',
+          '"The quieter you become, the more you can hear." \u2014 Kali Linux motto',
+        ];
+        var quote = quotes[Math.floor(Math.random() * quotes.length)];
+        return [{ text: quote, cls: 'cyan' }];
+      },
+      ascii: function () {
+        return [
+          { text: ' \u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2563\u2588\u2588\u2588\u2588\u2588\u2588\u2557 \u2588\u2588\u2557\u2588\u2588\u2588\u2588\u2588\u2588\u2557', cls: 'accent' },
+          { text: ' \u2588\u2588\u2554\u2550\u2550\u2550\u2550\u255d\u2588\u2588\u2554\u2550\u2550\u2588\u2588\u2557\u2588\u2588\u2551\u2588\u2588\u2554\u2550\u2550\u2550\u2550\u255d', cls: 'accent' },
+          { text: ' \u2588\u2588\u2588\u2588\u2588\u2557  \u2588\u2588\u2588\u2588\u2588\u2588\u2554\u255d\u2588\u2588\u2551\u2588\u2588\u2551     ', cls: 'accent' },
+          { text: ' \u2588\u2588\u2554\u2550\u2550\u255d  \u2588\u2588\u2554\u2550\u2550\u2550\u255d \u2588\u2588\u2551\u2588\u2588\u2551     ', cls: 'accent' },
+          { text: ' \u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2557\u2588\u2588\u2551     \u2588\u2588\u2551\u255a\u2588\u2588\u2588\u2588\u2588\u2588\u2557', cls: 'accent' },
+          { text: ' \u255a\u2550\u2550\u2550\u2550\u2550\u2550\u255d\u255a\u2550\u255d     \u255a\u2550\u255d \u255a\u2550\u2550\u2550\u2550\u2550\u255d', cls: 'accent' },
+          { text: '', cls: '' },
+          { text: ' \u2588\u2588\u2588\u2557   \u2588\u2588\u2557 \u2588\u2588\u2588\u2588\u2588\u2588\u2557  \u2588\u2588\u2588\u2588\u2588\u2588\u2557 \u2588\u2588\u2588\u2588\u2588\u2588\u2557 \u2588\u2588\u2588\u2588\u2588\u2588\u2557 \u2588\u2588\u2588\u2588\u2588\u2588\u2557', cls: 'cyan' },
+          { text: ' \u2588\u2588\u2588\u2588\u2557  \u2588\u2588\u2551\u2588\u2588\u2554\u2550\u2550\u2550\u2588\u2588\u2557\u2588\u2588\u2554\u2550\u2550\u2550\u2588\u2588\u2557\u2588\u2588\u2554\u2550\u2550\u2588\u2588\u2557\u255a\u2550\u2550\u2550\u2550\u2588\u2588\u2557\u255a\u2550\u2550\u2550\u2550\u2588\u2588\u2557', cls: 'cyan' },
+          { text: ' \u2588\u2588\u2554\u2588\u2588\u2557 \u2588\u2588\u2551\u2588\u2588\u2551   \u2588\u2588\u2551\u2588\u2588\u2551   \u2588\u2588\u2551\u2588\u2588\u2588\u2588\u2588\u2588\u2554\u255d \u2588\u2588\u2588\u2588\u2588\u2554\u255d \u2588\u2588\u2588\u2588\u2588\u2554\u255d', cls: 'cyan' },
+          { text: ' \u2588\u2588\u2551\u255a\u2588\u2588\u2557\u2588\u2588\u2551\u2588\u2588\u2551   \u2588\u2588\u2551\u2588\u2588\u2551   \u2588\u2588\u2551\u2588\u2588\u2554\u2550\u2550\u2588\u2588\u2557\u2588\u2588\u2554\u2550\u2550\u2550\u255d \u2588\u2588\u2554\u2550\u2550\u2550\u255d', cls: 'cyan' },
+          { text: ' \u2588\u2588\u2551 \u255a\u2588\u2588\u2588\u2588\u2551\u255a\u2588\u2588\u2588\u2588\u2588\u2588\u2554\u255d\u255a\u2588\u2588\u2588\u2588\u2588\u2588\u2554\u255d\u2588\u2588\u2588\u2588\u2588\u2588\u2554\u255d\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2557\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2557', cls: 'cyan' },
+          { text: ' \u255a\u2550\u255d  \u255a\u2550\u2550\u2550\u255d \u255a\u2550\u2550\u2550\u2550\u2550\u255d  \u255a\u2550\u2550\u2550\u2550\u2550\u255d \u255a\u2550\u2550\u2550\u2550\u2550\u255d \u255a\u2550\u2550\u2550\u2550\u2550\u2550\u255d\u255a\u2550\u2550\u2550\u2550\u2550\u2550\u255d', cls: 'cyan' },
+        ];
+      },
+    };
+
+    // Process goto command
+    function processGoto(args) {
+      var sectionMap = {
+        home: '#home', about: '#about', journey: '#journey',
+        skills: '#skills', projects: '#projects',
+        certifications: '#certifications', certs: '#certifications',
+        ctf: '#ctf', blog: '#blog', contact: '#contact'
+      };
+      var section = args[0] ? args[0].toLowerCase() : '';
+      var target = sectionMap[section];
+      if (target) {
+        var el = document.querySelector(target);
+        if (el) {
+          closeTerminal();
+          setTimeout(function () {
+            el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }, 300);
+          return [{ text: 'Navigation vers #' + section + ' \u2713', cls: 'success' }];
+        }
+      }
+      var available = Object.keys(sectionMap).filter(function(k) { return sectionMap[k] !== '#certifications' || k === 'certifications'; });
+      return [
+        { text: 'Section inconnue : "' + (args[0] || '') + '"', cls: 'error' },
+        { text: 'Sections disponibles : ' + available.join(', '), cls: '' },
+      ];
+    }
+
+    // Render output
+    function appendOutput(lines) {
+      if (!lines) return;
+      lines.forEach(function (line) {
+        var p = document.createElement('p');
+        p.className = 'terminal-output' + (line.cls ? ' ' + line.cls : '');
+        p.textContent = line.text;
+        body.appendChild(p);
       });
     }
 
-    container.appendChild(toast);
+    function appendCommandLine(cmd) {
+      var line = document.createElement('div');
+      line.className = 'terminal-line';
+      line.innerHTML = '<span class="terminal-line-prompt">epicnoob22 \u2192 </span><span class="terminal-line-cmd">' + escapeHtml(cmd) + '</span>';
+      body.appendChild(line);
+    }
 
-    /* Slide in */
-    requestAnimationFrame(function () {
-      requestAnimationFrame(function () {
-        toast.style.transform = 'translateX(0)';
-      });
-    });
+    function escapeHtml(str) {
+      return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    }
 
-    var autoRemove = setTimeout(function () {
-      removeToast(toast);
-    }, 4000);
+    function scrollToBottom() {
+      body.scrollTop = body.scrollHeight;
+    }
 
-    toast._autoRemove = autoRemove;
-  }
+    function executeCommand(raw) {
+      var trimmed = raw.trim();
+      if (!trimmed) return;
 
-  function removeToast(toast) {
-    if (!toast || !toast.parentElement) return;
-    clearTimeout(toast._autoRemove);
-    toast.style.transform = 'translateX(120%)';
-    setTimeout(function () {
-      if (toast.parentElement) toast.parentElement.removeChild(toast);
-    }, 350);
-  }
+      commandHistory.push(trimmed);
+      historyIndex = commandHistory.length;
 
-  /* ============================================================
-     14. BACK TO TOP BUTTON
-  ============================================================ */
+      var parts = trimmed.split(/\s+/);
+      var cmd = parts[0].toLowerCase();
+      var args = parts.slice(1);
 
-  function initBackToTop() {
-    var btn = document.getElementById('backToTop');
-    if (!btn) return;
+      appendCommandLine(trimmed);
 
-    var handleScroll = throttle(function () {
-      if (window.scrollY > 300) {
-        btn.classList.add('visible');
-        btn.style.opacity = '1';
-        btn.style.pointerEvents = 'auto';
+      if (cmd === 'echo') {
+        appendOutput([{ text: args.join(' ') || '', cls: '' }]);
+      } else if (cmd === 'goto') {
+        appendOutput(processGoto(args));
+      } else if (COMMANDS[cmd]) {
+        var result = COMMANDS[cmd](args);
+        appendOutput(result);
       } else {
-        btn.classList.remove('visible');
-        btn.style.opacity = '0';
-        btn.style.pointerEvents = 'none';
+        appendOutput([
+          { text: 'Commande introuvable : "' + escapeHtml(cmd) + '"', cls: 'error' },
+          { text: 'Tapez "help" pour voir les commandes disponibles.', cls: '' },
+        ]);
       }
-    }, 100);
 
-    window.addEventListener('scroll', handleScroll, { passive: true });
+      scrollToBottom();
+    }
 
-    btn.addEventListener('click', function () {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
-
-    /* Initial state */
-    btn.style.opacity = '0';
-    btn.style.pointerEvents = 'none';
-    btn.style.transition = 'opacity 0.3s ease';
-  }
-
-  /* ============================================================
-     15. SMOOTH SCROLL
-  ============================================================ */
-
-  function initSmoothScroll() {
-    var anchors = document.querySelectorAll('a[href^="#"]');
-
-    anchors.forEach(function (anchor) {
-      anchor.addEventListener('click', function (e) {
-        var href = anchor.getAttribute('href');
-        if (!href || href === '#') return;
-
-        var target = document.querySelector(href);
-        if (!target) return;
-
+    // Input handling
+    input.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter') {
+        executeCommand(input.value);
+        input.value = '';
+      } else if (e.key === 'ArrowUp') {
         e.preventDefault();
-        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      });
-    });
-  }
-
-  /* ============================================================
-     17. RESIZE HANDLER
-  ============================================================ */
-
-  function initResizeHandler() {
-    var handleResize = debounce(function () {
-      if (typeof window._matrixResize === 'function') {
-        window._matrixResize();
+        if (historyIndex > 0) {
+          historyIndex--;
+          input.value = commandHistory[historyIndex];
+          // Move cursor to end
+          setTimeout(function () {
+            input.selectionStart = input.selectionEnd = input.value.length;
+          }, 0);
+        }
+      } else if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        if (historyIndex < commandHistory.length - 1) {
+          historyIndex++;
+          input.value = commandHistory[historyIndex];
+        } else {
+          historyIndex = commandHistory.length;
+          input.value = '';
+        }
+      } else if (e.key === 'Tab') {
+        e.preventDefault();
+        var partial = input.value.toLowerCase();
+        var cmdNames = Object.keys(COMMANDS).concat(['goto', 'echo']);
+        var matches = cmdNames.filter(function (c) { return c.startsWith(partial); });
+        if (matches.length === 1) {
+          input.value = matches[0];
+        } else if (matches.length > 1) {
+          appendCommandLine(partial + '[TAB]');
+          appendOutput([{ text: matches.join('  '), cls: 'accent' }]);
+          scrollToBottom();
+        }
       }
-      if (typeof window._particlesResize === 'function') {
-        window._particlesResize();
-      }
-    }, 250);
-
-    window.addEventListener('resize', handleResize);
-  }
-
-  /* ============================================================
-     16. PROJECT FILTER
-  ============================================================ */
-
-  function initProjectFilter() {
-    var filterBtns = document.querySelectorAll('.filter-btn');
-    var projectCards = document.querySelectorAll('.project-card[data-filter]');
-
-    if (!filterBtns.length || !projectCards.length) return;
-
-    filterBtns.forEach(function (btn) {
-      btn.addEventListener('click', function () {
-        /* Update active button */
-        filterBtns.forEach(function (b) {
-          b.classList.remove('active');
-          b.setAttribute('aria-pressed', 'false');
-        });
-        btn.classList.add('active');
-        btn.setAttribute('aria-pressed', 'true');
-
-        var filter = btn.getAttribute('data-filter');
-
-        projectCards.forEach(function (card) {
-          var categories = (card.getAttribute('data-filter') || '').split(' ');
-          if (filter === 'all' || categories.indexOf(filter) !== -1) {
-            card.style.display = '';
-            card.style.opacity = '0';
-            card.style.transform = 'scale(0.95)';
-            requestAnimationFrame(function () {
-              requestAnimationFrame(function () {
-                card.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
-                card.style.opacity = '1';
-                card.style.transform = 'scale(1)';
-              });
-            });
-          } else {
-            card.style.transition = 'opacity 0.2s ease, transform 0.2s ease';
-            card.style.opacity = '0';
-            card.style.transform = 'scale(0.9)';
-            setTimeout(function () {
-              card.style.display = 'none';
-            }, 200);
-          }
-        });
-      });
     });
+
+    // Click on modal body to focus input
+    body.addEventListener('click', function () { input.focus(); });
   }
 
   /* ============================================================
-     17. SCROLL PROGRESS BAR
-  ============================================================ */
-
-  function initScrollProgress() {
-    var bar = document.getElementById('scrollProgressBar');
-    if (!bar) return;
-
-    var handleScroll = throttle(function () {
-      var scrollTop = window.scrollY || document.documentElement.scrollTop;
-      var docHeight = document.documentElement.scrollHeight - window.innerHeight;
-      var pct = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
-      bar.style.width = Math.min(pct, 100) + '%';
-    }, 16);
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-  }
-
-  /* ============================================================
-     18. INIT ALL
+     13. INIT
   ============================================================ */
 
   function init() {
     initPreloader();
     initCursor();
-    initMatrix();
-    initParticles();
-    initNavbar();
-    initScrollAnimations();
-    initTypewriter();
-    initCounters();
-    initSkillBars();
-    initTiltEffect();
-    initTerminal();
-    initContactForm();
-    initBackToTop();
-    initSmoothScroll();
-    initProjectFilter();
     initScrollProgress();
-    initResizeHandler();
+    initNavbar();
+    initScrollReveal();
+    initCounters();
+    initProgressBars();
+    initProjectsFilter();
+    initMagneticButtons();
+    initBackToTop();
+    initContactForm();
+    initTerminal();
   }
 
   if (document.readyState === 'loading') {
