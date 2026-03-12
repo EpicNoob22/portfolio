@@ -14,10 +14,6 @@
     return a + (b - a) * t;
   }
 
-  function clamp(val, min, max) {
-    return Math.min(Math.max(val, min), max);
-  }
-
   function throttle(fn, limit) {
     var last = 0;
     return function () {
