@@ -250,13 +250,19 @@
      6. COUNTER ANIMATIONS
   ============================================================ */
 
+  function formatNumber(n) {
+    if (n >= 1000) {
+      return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '\u202F');
+    }
+    return String(n);
+  }
+
   function animateCounter(el) {
     var target = parseInt(el.getAttribute('data-count'), 10);
     var suffix = el.getAttribute('data-suffix') || '';
     var numEl = el.querySelector('.stat-number');
     if (!numEl || isNaN(target)) return;
 
-    var start = 0;
     var duration = 1800;
     var startTime = null;
 
@@ -264,24 +270,12 @@
       if (!startTime) startTime = timestamp;
       var progress = Math.min((timestamp - startTime) / duration, 1);
       var eased = 1 - Math.pow(1 - progress, 3);
-      var current = Math.floor(start + (target - start) * eased);
-
-      if (current >= 1000) {
-        var formatted = current.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '\u202F');
-        numEl.textContent = formatted + suffix;
-      } else {
-        numEl.textContent = current + suffix;
-      }
-
+      var current = Math.floor(target * eased);
+      numEl.textContent = formatNumber(current) + suffix;
       if (progress < 1) {
         requestAnimationFrame(step);
       } else {
-        if (target >= 1000) {
-          var fmtFinal = target.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '\u202F');
-          numEl.textContent = fmtFinal + suffix;
-        } else {
-          numEl.textContent = target + suffix;
-        }
+        numEl.textContent = formatNumber(target) + suffix;
       }
     }
 
@@ -526,11 +520,11 @@
       var originalText = submitBtn ? submitBtn.querySelector('span').textContent : 'Envoyer';
       if (submitBtn) {
         submitBtn.disabled = true;
-        submitBtn.querySelector('span').textContent = 'Envoi en cours\u2026';
+        submitBtn.querySelector('span').textContent = 'Envoi en cours…';
       }
 
       setTimeout(function () {
-        showToast('\u2705 Message envoy\u00e9 ! Je vous r\u00e9pondrai tr\u00e8s vite.', 'success');
+        showToast('✅ Message envoyé ! Je vous répondrai très vite.', 'success');
         form.reset();
         if (submitBtn) {
           submitBtn.disabled = false;
@@ -856,10 +850,11 @@
           setTimeout(function () {
             el.scrollIntoView({ behavior: 'smooth', block: 'start' });
           }, 300);
-          return [{ text: 'Navigation vers #' + section + ' \u2713', cls: 'success' }];
+          return [{ text: 'Navigation vers #' + section + ' ✓', cls: 'success' }];
         }
       }
-      var available = Object.keys(sectionMap).filter(function(k) { return sectionMap[k] !== '#certifications' || k === 'certifications'; });
+      /* Show all section names except the 'certs' alias (use 'certifications') */
+      var available = Object.keys(sectionMap).filter(function (k) { return k !== 'certs'; });
       return [
         { text: 'Section inconnue : "' + (args[0] || '') + '"', cls: 'error' },
         { text: 'Sections disponibles : ' + available.join(', '), cls: '' },
