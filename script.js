@@ -1196,6 +1196,27 @@
           { text: '  secret       \u2192 \ud83e\udd2b', cls: '' },
           { text: '  clear        \u2192 Effacer le terminal', cls: '' },
           { text: '  exit         \u2192 Fermer le terminal', cls: '' },
+          { text: '', cls: '' },
+          { text: '  \u2500\u2500\u2500 Commandes Bonus \u2500\u2500\u2500', cls: 'cyan' },
+          { text: '  neofetch     \u2192 Infos syst\u00e8me', cls: '' },
+          { text: '  matrix       \u2192 Simulation Matrix', cls: '' },
+          { text: '  ping         \u2192 Ping simul\u00e9', cls: '' },
+          { text: '  nmap [ip]    \u2192 Scan de ports simul\u00e9', cls: '' },
+          { text: '  cowsay [msg] \u2192 Vache qui parle', cls: '' },
+          { text: '  uptime       \u2192 Temps d\u0027activit\u00e9', cls: '' },
+          { text: '  sudo [cmd]   \u2192 Tenter sudo', cls: '' },
+          { text: '  cat [file]   \u2192 Afficher un fichier', cls: '' },
+          { text: '  ls [dir]     \u2192 Lister les fichiers', cls: '' },
+          { text: '  rm [file]    \u2192 Supprimer un fichier', cls: '' },
+          { text: '  weather      \u2192 M\u00e9t\u00e9o simul\u00e9e', cls: '' },
+          { text: '  hack         \u2192 \ud83d\ude0f', cls: '' },
+          { text: '  id           \u2192 Identit\u00e9 utilisateur', cls: '' },
+          { text: '  hostname     \u2192 Nom de la machine', cls: '' },
+          { text: '  uname        \u2192 Infos noyau', cls: '' },
+          { text: '  ifconfig     \u2192 Interfaces r\u00e9seau', cls: '' },
+          { text: '  pwd          \u2192 R\u00e9pertoire courant', cls: '' },
+          { text: '  cd [dir]     \u2192 Changer de r\u00e9pertoire', cls: '' },
+          { text: '  whoisprivate \u2192 Whois lookup', cls: '' },
         ];
       },
       about: function () {
@@ -1407,6 +1428,271 @@
           { text: ' \u2588\u2588\u2551 \u255a\u2588\u2588\u2588\u2588\u2551\u255a\u2588\u2588\u2588\u2588\u2588\u2588\u2554\u255d\u255a\u2588\u2588\u2588\u2588\u2588\u2588\u2554\u255d\u2588\u2588\u2588\u2588\u2588\u2588\u2554\u255d\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2557\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2557', cls: 'cyan' },
           { text: ' \u255a\u2550\u255d  \u255a\u2550\u2550\u2550\u255d \u255a\u2550\u2550\u2550\u2550\u2550\u255d  \u255a\u2550\u2550\u2550\u2550\u2550\u255d \u255a\u2550\u2550\u2550\u2550\u2550\u255d \u255a\u2550\u2550\u2550\u2550\u2550\u2550\u255d\u255a\u2550\u2550\u2550\u2550\u2550\u2550\u255d', cls: 'cyan' },
         ];
+      },
+      neofetch: function () {
+        return [
+          { text: '        .--.        epicnoob22@portfolio', cls: 'accent' },
+          { text: '       |o_o |       \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500', cls: 'accent' },
+          { text: '       |:_/ |       OS: Kali GNU/Linux Rolling', cls: '' },
+          { text: '      //   \\ \\      Host: HomeLab SOC', cls: '' },
+          { text: '     (|     | )     Kernel: 6.6.15-amd64', cls: '' },
+          { text: '    /\'\\_   _/`\\     Shell: zsh 5.9', cls: '' },
+          { text: '    \\___)=(___/     Terminal: epicnoob22-term v2.0', cls: '' },
+          { text: '', cls: '' },
+          { text: '  Uptime    : Since 2020 (6 years)', cls: 'cyan' },
+          { text: '  Packages  : 15+ projects, 4 certs, 50+ CTF', cls: '' },
+          { text: '  Resolution: 1337x1337 (hacker mode)', cls: '' },
+          { text: '  DE        : Cybersecurity', cls: '' },
+          { text: '  WM        : Red Team / Blue Team', cls: '' },
+          { text: '  Theme     : Premium Dark [glassmorphism]', cls: '' },
+          { text: '  CPU       : Caffeinated Brain @ 3.4GHz', cls: '' },
+          { text: '  Memory    : 1500+ hours of lab / \u221e', cls: '' },
+          { text: '', cls: '' },
+          { text: '  \u2588\u2588 \u2588\u2588 \u2588\u2588 \u2588\u2588 \u2588\u2588 \u2588\u2588 \u2588\u2588 \u2588\u2588', cls: 'accent' },
+        ];
+      },
+      matrix: function () {
+        var lines = [];
+        for (var i = 0; i < 12; i++) {
+          var row = '  ';
+          for (var j = 0; j < 40; j++) {
+            var chars = '\u30a7\u30a2\u30ab\u30b5\u30bf\u30ca\u30cf\u30de\u30e4\u30e9\u30ef01234567890ABCDEF!@#$%';
+            row += chars.charAt(Math.floor(Math.random() * chars.length));
+          }
+          lines.push({ text: row, cls: i % 3 === 0 ? 'success' : 'cyan' });
+        }
+        lines.push({ text: '', cls: '' });
+        lines.push({ text: '  [SIMULATION] The Matrix has you...', cls: 'accent' });
+        lines.push({ text: '  Tip: Try the Konami code (\u2191\u2191\u2193\u2193\u2190\u2192\u2190\u2192BA) for the real thing!', cls: '' });
+        return lines;
+      },
+      ping: function () {
+        var targets = ['10.10.10.1', '192.168.1.1', 'hackthebox.com', 'tryhackme.com'];
+        var target = targets[Math.floor(Math.random() * targets.length)];
+        var lines = [
+          { text: '  PING ' + target + ' (' + target + ') 56(84) bytes of data.', cls: '' }
+        ];
+        for (var i = 0; i < 4; i++) {
+          var time = (Math.random() * 50 + 5).toFixed(1);
+          lines.push({ text: '  64 bytes from ' + target + ': icmp_seq=' + (i + 1) + ' ttl=64 time=' + time + ' ms', cls: 'cyan' });
+        }
+        lines.push({ text: '', cls: '' });
+        lines.push({ text: '  --- ' + target + ' ping statistics ---', cls: '' });
+        lines.push({ text: '  4 packets transmitted, 4 received, 0% packet loss', cls: 'success' });
+        return lines;
+      },
+      cowsay: function (args) {
+        var message = args.length ? args.join(' ') : 'Moo! I mean... hack the planet!';
+        var border = '  ' + new Array(message.length + 4).join('-');
+        return [
+          { text: border, cls: '' },
+          { text: '  | ' + message + ' |', cls: 'cyan' },
+          { text: border, cls: '' },
+          { text: '         \\   ^__^', cls: '' },
+          { text: '          \\  (oo)\\_______', cls: '' },
+          { text: '             (__)\\       )\\/\\', cls: '' },
+          { text: '                 ||----w |', cls: '' },
+          { text: '                 ||     ||', cls: '' },
+        ];
+      },
+      uptime: function () {
+        var start = new Date(2020, 0, 1);
+        var now = new Date();
+        var diff = now - start;
+        var days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        var hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        return [
+          { text: '  System uptime: ' + days + ' days, ' + hours + ' hours', cls: 'cyan' },
+          { text: '  Hacking since: January 2020', cls: '' },
+          { text: '  Status: Still learning, still hacking \ud83d\udd25', cls: 'success' },
+        ];
+      },
+      sudo: function (args) {
+        if (args.length === 0) {
+          return [{ text: '  usage: sudo <command>', cls: 'error' }];
+        }
+        var cmd = args.join(' ').toLowerCase();
+        if (cmd === 'rm -rf /' || cmd === 'rm -rf /*') {
+          return [
+            { text: '  [sudo] password for epicnoob22: ********', cls: '' },
+            { text: '  rm: cannot remove \'/\': Permission denied', cls: 'error' },
+            { text: '  Nice try! \ud83d\ude0f This is a portfolio, not a real system.', cls: 'accent' },
+          ];
+        }
+        if (cmd.includes('hack') || cmd.includes('exploit')) {
+          return [
+            { text: '  [sudo] password for epicnoob22: ********', cls: '' },
+            { text: '  Permission granted. Remember: only ethical hacking! \ud83d\udee1\ufe0f', cls: 'success' },
+          ];
+        }
+        return [
+          { text: '  [sudo] password for epicnoob22: ********', cls: '' },
+          { text: '  epicnoob22 is not in the sudoers file. This incident will be reported. \ud83d\udc40', cls: 'error' },
+        ];
+      },
+      cat: function (args) {
+        var file = args[0] ? args[0].toLowerCase() : '';
+        if (file === '/etc/passwd' || file === 'etc/passwd') {
+          return [
+            { text: '  root:x:0:0:root:/root:/bin/bash', cls: '' },
+            { text: '  epicnoob22:x:1337:1337:Ethical Hacker:/home/epicnoob22:/bin/zsh', cls: 'accent' },
+            { text: '  nmap:x:1000:1000:Network Scanner:/opt/nmap:/usr/sbin/nologin', cls: '' },
+            { text: '  burpsuite:x:1001:1001:Web Proxy:/opt/burp:/usr/sbin/nologin', cls: '' },
+            { text: '  wireshark:x:1002:1002:Packet Analyzer:/opt/wireshark:/usr/sbin/nologin', cls: '' },
+          ];
+        }
+        if (file === 'flag.txt' || file === '/flag.txt') {
+          return [
+            { text: '  CTF{t3rm1n4l_m4st3r_2026}', cls: 'success' },
+            { text: '  Congratulations! You found another flag! \ud83c\udfc6', cls: 'accent' },
+          ];
+        }
+        if (!file) {
+          return [{ text: '  usage: cat <filename>', cls: 'error' }];
+        }
+        return [{ text: '  cat: ' + file + ': No such file or directory', cls: 'error' }];
+      },
+      ls: function (args) {
+        var dir = args[0] ? args[0].toLowerCase() : '.';
+        if (dir === '.' || dir === '~' || dir === '/home/epicnoob22') {
+          return [
+            { text: '  drwxr-xr-x  projects/', cls: 'accent' },
+            { text: '  drwxr-xr-x  certifications/', cls: 'accent' },
+            { text: '  drwxr-xr-x  ctf/', cls: 'accent' },
+            { text: '  drwxr-xr-x  tools/', cls: 'accent' },
+            { text: '  drwxr-xr-x  .ssh/', cls: '' },
+            { text: '  -rw-r--r--  portfolio.html', cls: '' },
+            { text: '  -rw-r--r--  flag.txt', cls: 'success' },
+            { text: '  -rw-r--r--  .bashrc', cls: '' },
+            { text: '  -rw-------  .bash_history', cls: '' },
+          ];
+        }
+        if (dir === 'projects' || dir === 'projects/') {
+          return [
+            { text: '  drwxr-xr-x  homelab-soc/', cls: 'accent' },
+            { text: '  drwxr-xr-x  vulnscanner-pro/', cls: 'accent' },
+            { text: '  drwxr-xr-x  ad-lab/', cls: 'accent' },
+            { text: '  drwxr-xr-x  malware-sandbox/', cls: 'accent' },
+            { text: '  drwxr-xr-x  phishguard/', cls: 'accent' },
+            { text: '  drwxr-xr-x  autorecon-bot/', cls: 'accent' },
+            { text: '  drwxr-xr-x  honeypot-network/', cls: 'accent' },
+            { text: '  drwxr-xr-x  cryptovault/', cls: 'accent' },
+          ];
+        }
+        return [{ text: '  ls: cannot access \'' + dir + '\': No such file or directory', cls: 'error' }];
+      },
+      weather: function () {
+        var conditions = ['\u2600\ufe0f Clear sky', '\ud83c\udf24\ufe0f Partly cloudy', '\ud83c\udf27\ufe0f Light rain', '\u26c8\ufe0f Thunderstorm', '\ud83c\udf2b\ufe0f Foggy', '\u2744\ufe0f Snowing'];
+        var temps = [18, 22, 15, 28, 12, 5, 25, 20];
+        var condition = conditions[Math.floor(Math.random() * conditions.length)];
+        var temp = temps[Math.floor(Math.random() * temps.length)];
+        return [
+          { text: '  Weather Report \u2014 France \ud83c\uddeb\ud83c\uddf7', cls: 'accent' },
+          { text: '', cls: '' },
+          { text: '  Condition : ' + condition, cls: '' },
+          { text: '  Temp      : ' + temp + '\u00b0C', cls: 'cyan' },
+          { text: '  Humidity  : ' + (Math.floor(Math.random() * 60) + 30) + '%', cls: '' },
+          { text: '  Wind      : ' + (Math.floor(Math.random() * 30) + 5) + ' km/h', cls: '' },
+          { text: '', cls: '' },
+          { text: '  (Simulated data \u2014 not a real API call)', cls: '' },
+        ];
+      },
+      whoisprivate: function () {
+        return [
+          { text: '  WHOIS Lookup \u2014 epicnoob22.dev', cls: 'accent' },
+          { text: '', cls: '' },
+          { text: '  Domain     : epicnoob22.dev', cls: '' },
+          { text: '  Registrar  : GitHub Pages', cls: '' },
+          { text: '  Created    : 2020-01-01', cls: '' },
+          { text: '  Updated    : 2026-03-14', cls: '' },
+          { text: '  Status     : ACTIVE', cls: 'success' },
+          { text: '  Nameserver : ns1.github.io', cls: '' },
+          { text: '', cls: '' },
+          { text: '  Owner      : EpicNoob22', cls: 'cyan' },
+          { text: '  Location   : France', cls: '' },
+          { text: '  Purpose    : Cybersecurity Portfolio', cls: '' },
+        ];
+      },
+      nmap: function (args) {
+        var target = args[0] || '10.10.10.1';
+        return [
+          { text: '  Starting Nmap 7.94 ( https://nmap.org )', cls: '' },
+          { text: '  Nmap scan report for ' + target, cls: 'accent' },
+          { text: '  Host is up (0.023s latency).', cls: 'success' },
+          { text: '', cls: '' },
+          { text: '  PORT     STATE  SERVICE     VERSION', cls: '' },
+          { text: '  22/tcp   open   ssh         OpenSSH 8.9p1', cls: 'cyan' },
+          { text: '  80/tcp   open   http        nginx 1.24.0', cls: 'cyan' },
+          { text: '  443/tcp  open   https       nginx 1.24.0', cls: 'cyan' },
+          { text: '  3389/tcp closed ms-wbt-server', cls: '' },
+          { text: '  8080/tcp open   http-proxy  Squid 5.7', cls: 'cyan' },
+          { text: '', cls: '' },
+          { text: '  Service detection performed. 5 services scanned.', cls: '' },
+          { text: '  Nmap done: 1 IP address (1 host up) scanned in 12.34s', cls: 'success' },
+          { text: '', cls: '' },
+          { text: '  (Simulated scan \u2014 for educational purposes only)', cls: '' },
+        ];
+      },
+      hack: function () {
+        return [
+          { text: '  [ACCESS DENIED]', cls: 'error' },
+          { text: '', cls: '' },
+          { text: '  Nice try! But remember:', cls: '' },
+          { text: '  "With great power comes great responsibility"', cls: 'cyan' },
+          { text: '', cls: '' },
+          { text: '  \u2696\ufe0f  Always hack ethically.', cls: 'success' },
+          { text: '  \ud83d\udcdd  Always get written authorization.', cls: 'success' },
+          { text: '  \ud83d\udee1\ufe0f  Always report vulnerabilities responsibly.', cls: 'success' },
+        ];
+      },
+      rm: function (args) {
+        var target = args.join(' ');
+        if (target.includes('-rf') && target.includes('/')) {
+          return [
+            { text: '  \ud83d\udeab PERMISSION DENIED', cls: 'error' },
+            { text: '  rm: it is dangerous to operate recursively on \'/\'', cls: 'error' },
+            { text: '', cls: '' },
+            { text: '  Did you really just try to rm -rf / ? \ud83d\ude02', cls: 'accent' },
+            { text: '  This portfolio survives everything!', cls: 'success' },
+          ];
+        }
+        return [
+          { text: '  rm: cannot remove \'' + (args[args.length - 1] || '') + '\': Read-only file system', cls: 'error' },
+        ];
+      },
+      id: function () {
+        return [
+          { text: '  uid=1337(epicnoob22) gid=1337(hackers) groups=1337(hackers),27(sudo),100(users)', cls: 'cyan' },
+        ];
+      },
+      hostname: function () {
+        return [
+          { text: '  epicnoob22-portfolio', cls: 'cyan' },
+        ];
+      },
+      uname: function () {
+        return [
+          { text: '  Linux epicnoob22-portfolio 6.6.15-amd64 #1 SMP PREEMPT_DYNAMIC x86_64 GNU/Linux', cls: 'cyan' },
+        ];
+      },
+      ifconfig: function () {
+        return [
+          { text: '  eth0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>', cls: '' },
+          { text: '        inet 192.168.1.137  netmask 255.255.255.0  broadcast 192.168.1.255', cls: 'cyan' },
+          { text: '        inet6 fe80::1337:dead:beef:cafe  prefixlen 64  scopeid 0x20<link>', cls: '' },
+          { text: '        ether 00:13:37:de:ad:22  txqueuelen 1000  (Ethernet)', cls: '' },
+          { text: '', cls: '' },
+          { text: '  tun0: flags=4305<UP,POINTOPOINT,RUNNING,NOARP,MULTICAST>', cls: '' },
+          { text: '        inet 10.10.14.22  netmask 255.255.254.0', cls: 'success' },
+          { text: '        (HackTheBox VPN connection)', cls: '' },
+        ];
+      },
+      pwd: function () {
+        return [{ text: '  /home/epicnoob22', cls: 'cyan' }];
+      },
+      cd: function (args) {
+        var dir = args[0] || '~';
+        return [{ text: '  Changed directory to ' + (dir === '~' ? '/home/epicnoob22' : dir), cls: '' }];
       },
     };
 
