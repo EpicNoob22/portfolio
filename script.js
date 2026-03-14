@@ -425,6 +425,35 @@
   }
 
   /* ============================================================
+     10b. THEME TOGGLE
+  ============================================================ */
+
+  function initThemeToggle() {
+    var toggle = document.getElementById('themeToggle');
+    var icon = document.getElementById('themeIcon');
+    if (!toggle || !icon) return;
+
+    var savedTheme = localStorage.getItem('epicnoob22-theme') || 'dark';
+    applyTheme(savedTheme);
+
+    function applyTheme(theme) {
+      if (theme === 'light') {
+        document.documentElement.setAttribute('data-theme', 'light');
+        icon.className = 'fas fa-sun';
+      } else {
+        document.documentElement.removeAttribute('data-theme');
+        icon.className = 'fas fa-moon';
+      }
+      localStorage.setItem('epicnoob22-theme', theme);
+    }
+
+    toggle.addEventListener('click', function () {
+      var current = document.documentElement.getAttribute('data-theme');
+      applyTheme(current === 'light' ? 'dark' : 'light');
+    });
+  }
+
+  /* ============================================================
      11. CONTACT FORM
   ============================================================ */
 
@@ -1198,6 +1227,7 @@
     initProjectsFilter();
     initMagneticButtons();
     initBackToTop();
+    initThemeToggle();
     initContactForm();
     initTerminal();
     initTypingAnimation();

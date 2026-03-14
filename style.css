@@ -56,6 +56,57 @@
 }
 
 /* ============================================================
+   LIGHT THEME
+   ============================================================ */
+[data-theme="light"] {
+  --bg-void: #f0f0f5;
+  --bg-deep: #e8e8f0;
+  --bg-primary: #dddde8;
+  --bg-elevated: #d0d0e0;
+  --bg-card: rgba(255, 255, 255, 0.6);
+  --text-white: #1a1a2e;
+  --text-primary: #2d2d44;
+  --text-secondary: #4a4a6a;
+  --text-muted: #6b6b8a;
+  --text-faint: #8a8aa0;
+  --glass-bg: rgba(255, 255, 255, 0.5);
+  --glass-border: rgba(79, 70, 229, 0.2);
+  --glass-hover: rgba(79, 70, 229, 0.3);
+  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="light"] body {
+  background-color: var(--bg-void);
+}
+
+[data-theme="light"] .navbar.scrolled {
+  background: rgba(240, 240, 245, 0.85);
+}
+
+[data-theme="light"] .preloader {
+  background: var(--bg-void);
+}
+
+[data-theme="light"] .grain-overlay {
+  opacity: 0.02;
+}
+
+[data-theme="light"] .terminal-window {
+  background: rgba(255, 255, 255, 0.85);
+}
+
+[data-theme="light"] .form-input {
+  background: rgba(255, 255, 255, 0.5);
+  border-color: rgba(79, 70, 229, 0.2);
+  color: var(--text-primary);
+}
+
+[data-theme="light"] .tag {
+  background: rgba(79, 70, 229, 0.1);
+  color: var(--accent-primary);
+}
+
+/* ============================================================
    2. RESET & BASE
    ============================================================ */
 *, *::before, *::after {
@@ -409,6 +460,29 @@ h1, h2, h3, h4, h5, h6 {
 .nav-link-cta:hover {
   background: rgba(129, 140, 248, 0.2);
   border-color: rgba(129, 140, 248, 0.4);
+}
+
+/* Theme Toggle */
+.theme-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border: 1px solid var(--glass-border);
+  border-radius: 50%;
+  background: var(--glass-bg);
+  color: var(--accent-primary);
+  font-size: 1rem;
+  transition: var(--transition);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.theme-toggle:hover {
+  background: var(--glass-hover);
+  border-color: var(--accent-primary);
+  transform: rotate(20deg);
 }
 
 .nav-hamburger {
