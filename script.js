@@ -523,11 +523,13 @@
         submitBtn.querySelector('span').textContent = 'Envoi en cours…';
       }
 
+      var honeyField = form.querySelector('input[name="_honey"]');
       var formData = {
         name: nameInput.value.trim(),
         email: emailInput.value.trim(),
         subject: subjectInput.value,
         message: messageInput.value.trim(),
+        _honey: honeyField ? honeyField.value : '',
         _subject: 'Portfolio — ' + (subjectInput.value || 'Nouveau message'),
         _template: 'table'
       };
