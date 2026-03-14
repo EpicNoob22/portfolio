@@ -987,7 +987,204 @@
   }
 
   /* ============================================================
-     13. INIT
+     13. TYPING ANIMATION
+  ============================================================ */
+
+  function initTypingAnimation() {
+    var el = document.getElementById('typingText');
+    if (!el) return;
+
+    var phrases = [
+      'Apprenti en Cybersécurité',
+      'Ethical Hacker',
+      'Red Team · Blue Team',
+      'Pentester & Défenseur',
+      'Passionné de CTF',
+      'Builder de HomeLab SOC'
+    ];
+    var phraseIndex = 0;
+    var charIndex = 0;
+    var isDeleting = false;
+    var typeSpeed = 60;
+    var deleteSpeed = 35;
+    var pauseEnd = 2000;
+    var pauseStart = 400;
+
+    function type() {
+      var current = phrases[phraseIndex];
+
+      if (isDeleting) {
+        el.textContent = current.substring(0, charIndex - 1);
+        charIndex--;
+      } else {
+        el.textContent = current.substring(0, charIndex + 1);
+        charIndex++;
+      }
+
+      var delay = isDeleting ? deleteSpeed : typeSpeed;
+
+      if (!isDeleting && charIndex === current.length) {
+        delay = pauseEnd;
+        isDeleting = true;
+      } else if (isDeleting && charIndex === 0) {
+        isDeleting = false;
+        phraseIndex = (phraseIndex + 1) % phrases.length;
+        delay = pauseStart;
+      }
+
+      setTimeout(type, delay);
+    }
+
+    type();
+  }
+
+  /* ============================================================
+     14. PARTICLE NETWORK (Hero Canvas)
+  ============================================================ */
+
+  function initParticleNetwork() {
+    var canvas = document.getElementById('heroParticles');
+    if (!canvas) return;
+
+    var ctx = canvas.getContext('2d');
+    var particles = [];
+    var maxParticles = 60;       // balance between visual density and performance
+    var connectionDistance = 150; // max px between particles to draw a connection line
+    var mouseX = -1000;
+    var mouseY = -1000;
+
+    function resize() {
+      var hero = canvas.closest('.hero-bg');
+      if (!hero) return;
+      canvas.width = hero.offsetWidth;
+      canvas.height = hero.offsetHeight;
+    }
+
+    resize();
+    window.addEventListener('resize', debounce(resize, 200));
+
+    function Particle() {
+      this.x = Math.random() * canvas.width;
+      this.y = Math.random() * canvas.height;
+      this.vx = (Math.random() - 0.5) * 0.5;
+      this.vy = (Math.random() - 0.5) * 0.5;
+      this.radius = Math.random() * 1.5 + 0.5;
+      this.opacity = Math.random() * 0.4 + 0.1;
+    }
+
+    for (var i = 0; i < maxParticles; i++) {
+      particles.push(new Particle());
+    }
+
+    document.addEventListener('mousemove', function (e) {
+      var rect = canvas.getBoundingClientRect();
+      mouseX = e.clientX - rect.left;
+      mouseY = e.clientY - rect.top;
+    });
+
+    function animate() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      for (var i = 0; i < particles.length; i++) {
+        var p = particles[i];
+        p.x += p.vx;
+        p.y += p.vy;
+
+        if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
+        if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+
+        // Draw particle
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(129, 140, 248, ' + p.opacity + ')';
+        ctx.fill();
+
+        // Connect nearby particles
+        for (var j = i + 1; j < particles.length; j++) {
+          var p2 = particles[j];
+          var dx = p.x - p2.x;
+          var dy = p.y - p2.y;
+          var dist = Math.sqrt(dx * dx + dy * dy);
+
+          if (dist < connectionDistance) {
+            var alpha = (1 - dist / connectionDistance) * 0.15;
+            ctx.beginPath();
+            ctx.moveTo(p.x, p.y);
+            ctx.lineTo(p2.x, p2.y);
+            ctx.strokeStyle = 'rgba(129, 140, 248, ' + alpha + ')';
+            ctx.lineWidth = 0.5;
+            ctx.stroke();
+          }
+        }
+
+        // Connect to mouse
+        var mDx = p.x - mouseX;
+        var mDy = p.y - mouseY;
+        var mDist = Math.sqrt(mDx * mDx + mDy * mDy);
+        if (mDist < connectionDistance * 1.5) {
+          var mAlpha = (1 - mDist / (connectionDistance * 1.5)) * 0.3;
+          ctx.beginPath();
+          ctx.moveTo(p.x, p.y);
+          ctx.lineTo(mouseX, mouseY);
+          ctx.strokeStyle = 'rgba(34, 211, 238, ' + mAlpha + ')';
+          ctx.lineWidth = 0.8;
+          ctx.stroke();
+        }
+      }
+
+      requestAnimationFrame(animate);
+    }
+
+    animate();
+  }
+
+  /* ============================================================
+     15. TILT EFFECT ON GLASS CARDS
+  ============================================================ */
+
+  function initTiltEffect() {
+    if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+
+    var cards = document.querySelectorAll('.bento-card.glass, .cert-card.glass, .ctf-platform.glass, .writeup-card.glass, .blog-card.glass');
+    cards.forEach(function (card) {
+      // Add glare element
+      var glare = document.createElement('div');
+      glare.className = 'glass-glare';
+      card.appendChild(glare);
+
+      card.addEventListener('mouseenter', function () {
+        card.classList.add('tilt-active');
+      });
+
+      card.addEventListener('mousemove', function (e) {
+        var rect = card.getBoundingClientRect();
+        var x = e.clientX - rect.left;
+        var y = e.clientY - rect.top;
+        var centerX = rect.width / 2;
+        var centerY = rect.height / 2;
+        var rotateX = ((y - centerY) / centerY) * -4;
+        var rotateY = ((x - centerX) / centerX) * 4;
+        var glareX = (x / rect.width) * 100;
+        var glareY = (y / rect.height) * 100;
+
+        card.style.transform = 'perspective(800px) rotateX(' + rotateX + 'deg) rotateY(' + rotateY + 'deg) scale3d(1.02, 1.02, 1.02)';
+        glare.style.setProperty('--glare-x', glareX + '%');
+        glare.style.setProperty('--glare-y', glareY + '%');
+      });
+
+      card.addEventListener('mouseleave', function () {
+        card.classList.remove('tilt-active');
+        card.style.transform = '';
+        card.style.transition = 'transform 0.5s cubic-bezier(0.16, 1, 0.3, 1)';
+        setTimeout(function () {
+          card.style.transition = '';
+        }, 500);
+      });
+    });
+  }
+
+  /* ============================================================
+     16. INIT
   ============================================================ */
 
   function init() {
@@ -1003,6 +1200,9 @@
     initBackToTop();
     initContactForm();
     initTerminal();
+    initTypingAnimation();
+    initParticleNetwork();
+    initTiltEffect();
   }
 
   if (document.readyState === 'loading') {
