@@ -2817,3 +2817,20 @@ h1, h2, h3, h4, h5, h6 {
   color: var(--text-secondary);
   font-size: 0.9rem;
 }
+
+/* ============================================================
+   MATRIX RAIN EASTER EGG
+   ============================================================ */
+.matrix-canvas {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.matrix-canvas.active {
+  opacity: 1;
+  pointer-events: auto;
+}

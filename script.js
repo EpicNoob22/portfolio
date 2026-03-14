@@ -1022,6 +1022,96 @@
   }
 
   /* ============================================================
+     10f. KONAMI CODE EASTER EGG
+  ============================================================ */
+
+  function initKonamiCode() {
+    var sequence = ['ArrowUp','ArrowUp','ArrowDown','ArrowDown','ArrowLeft','ArrowRight','ArrowLeft','ArrowRight','b','a'];
+    var position = 0;
+    var canvas = document.getElementById('matrixCanvas');
+    if (!canvas) return;
+    var ctx = canvas.getContext('2d');
+    var animationId = null;
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === sequence[position] || e.key.toLowerCase() === sequence[position]) {
+        position++;
+        if (position === sequence.length) {
+          position = 0;
+          startMatrixRain();
+        }
+      } else {
+        position = 0;
+      }
+    });
+
+    function startMatrixRain() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      canvas.classList.add('active');
+
+      var fontSize = 14;
+      var columns = Math.floor(canvas.width / fontSize);
+      var drops = [];
+      for (var i = 0; i < columns; i++) {
+        drops[i] = Math.floor(Math.random() * -canvas.height / fontSize);
+      }
+
+      var chars = 'アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヰヱヲン0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*(){}[];:<>?~';
+      var charArray = chars.split('');
+
+      function draw() {
+        ctx.fillStyle = 'rgba(6, 6, 14, 0.06)';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        for (var i = 0; i < drops.length; i++) {
+          var char = charArray[Math.floor(Math.random() * charArray.length)];
+
+          // Lead character is white/bright
+          if (drops[i] > 0) {
+            ctx.fillStyle = '#ffffff';
+            ctx.font = 'bold ' + fontSize + 'px "JetBrains Mono", monospace';
+            ctx.fillText(char, i * fontSize, drops[i] * fontSize);
+
+            // Trail characters are green
+            ctx.fillStyle = 'rgba(34, 211, 238, 0.8)';
+            ctx.font = fontSize + 'px "JetBrains Mono", monospace';
+            var trailChar = charArray[Math.floor(Math.random() * charArray.length)];
+            if (drops[i] > 1) {
+              ctx.fillText(trailChar, i * fontSize, (drops[i] - 1) * fontSize);
+            }
+          }
+
+          drops[i]++;
+
+          if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+            drops[i] = 0;
+          }
+        }
+
+        animationId = requestAnimationFrame(draw);
+      }
+
+      // Show toast
+      var toast = document.getElementById('toast');
+      if (toast) {
+        toast.textContent = '🎮 Konami Code activated! Matrix rain unlocked!';
+        toast.className = 'toast success show';
+        setTimeout(function () { toast.classList.remove('show'); }, 3500);
+      }
+
+      draw();
+
+      // Stop after 8 seconds
+      setTimeout(function () {
+        if (animationId) cancelAnimationFrame(animationId);
+        canvas.classList.remove('active');
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+      }, 8000);
+    }
+  }
+
+  /* ============================================================
      12. TERMINAL
   ============================================================ */
 
@@ -1663,6 +1753,7 @@
     initLangToggle();
     initKeyboardShortcuts();
     initProjectModals();
+    initKonamiCode();
     initContactForm();
     initTerminal();
     initTypingAnimation();
