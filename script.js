@@ -660,6 +660,7 @@
       if (e.key === 'ArrowUp' && !isInput) {
         // Only if shortcuts panel is not open
         if (!modal.classList.contains('open')) {
+          e.preventDefault();
           window.scrollTo({ top: 0, behavior: 'smooth' });
         }
         return;
