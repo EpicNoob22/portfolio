@@ -695,6 +695,213 @@
     }, 3500);
   }
 
+  /* ============================================================
+     10e. PROJECT DETAIL MODALS
+  ============================================================ */
+
+  function initProjectModals() {
+    var modal = document.getElementById('projectModal');
+    var closeBtn = document.getElementById('projectModalClose');
+    var overlay = modal ? modal.querySelector('.project-modal-overlay') : null;
+    if (!modal) return;
+
+    var projectData = {
+      'homelab-soc': {
+        emoji: '🏠',
+        title: 'HomeLab SOC',
+        category: 'Défensif',
+        desc: 'Construction d\'un Security Operations Center complet en environnement domestique. ELK Stack pour l\'agrégation des logs, Wazuh comme EDR, Suricata pour la détection d\'intrusions réseau. Dashboards Kibana personnalisés avec alerting automatisé via Discord et Telegram. Monitoring 24/7 avec règles de corrélation personnalisées.',
+        tags: ['ELK Stack', 'Wazuh', 'Suricata', 'Docker', 'Grafana', 'Kibana', 'Sigma Rules', 'Discord API'],
+        features: [
+          'Agrégation centralisée des logs via Elasticsearch',
+          'Détection d\'intrusions réseau avec Suricata',
+          'EDR endpoint avec Wazuh agents',
+          'Dashboards Kibana personnalisés pour SOC',
+          'Alerting temps réel via Discord & Telegram',
+          'Règles de corrélation Sigma personnalisées'
+        ],
+        github: 'https://github.com/EpicNoob22'
+      },
+      'vulnscanner': {
+        emoji: '🔍',
+        title: 'VulnScanner Pro',
+        category: 'Offensif',
+        desc: 'Scanner de vulnérabilités web automatisé développé en Python. Détection d\'injections SQL, XSS, SSRF et directory traversal. Génération de rapports PDF professionnels avec scoring CVSS, PoC et recommandations de remédiation. Architecture modulaire avec plugins extensibles.',
+        tags: ['Python', 'OWASP', 'Automation', 'ReportLab', 'Requests', 'BeautifulSoup', 'CVSS'],
+        features: [
+          'Détection automatisée SQLi, XSS, SSRF, LFI',
+          'Scoring CVSS v3.1 automatique',
+          'Génération de rapports PDF professionnels',
+          'Architecture modulaire avec plugins',
+          'Mode silencieux pour intégration CI/CD',
+          'Export JSON/CSV/PDF des résultats'
+        ],
+        github: 'https://github.com/EpicNoob22'
+      },
+      'ad-lab': {
+        emoji: '🔐',
+        title: 'Active Directory Lab',
+        category: 'Labs',
+        desc: 'Environnement AD vulnérable sur Proxmox : DC Windows Server 2022, 3 clients Windows, 1 serveur Linux. Scénarios Kerberoasting, Pass-the-Hash, Golden Ticket, DCSync. Documentation offensive et défensive complète avec guides pas-à-pas.',
+        tags: ['Active Directory', 'BloodHound', 'Mimikatz', 'Proxmox', 'Windows Server', 'Kerberos', 'LDAP'],
+        features: [
+          'Domain Controller Windows Server 2022',
+          '3 postes clients + 1 serveur Linux joints au domaine',
+          'Scénarios Kerberoasting & AS-REP Roasting',
+          'Pass-the-Hash, Pass-the-Ticket, Golden Ticket',
+          'DCSync et attaques de délégation',
+          'Documentation offensive & défensive complète'
+        ],
+        github: 'https://github.com/EpicNoob22'
+      },
+      'malware': {
+        emoji: '🦠',
+        title: 'Malware Analysis Sandbox',
+        category: 'Défensif',
+        desc: 'Sandbox isolée pour analyse dynamique et statique de malwares. Pipeline automatisé : soumission → analyse comportementale → extraction IOCs → rapport. Reverse engineering avec Ghidra, YARA rules custom.',
+        tags: ['Ghidra', 'REMnux', 'YARA', 'Volatility 3', 'PE Analysis', 'Cuckoo', 'VirusTotal API'],
+        features: [
+          'Pipeline d\'analyse automatisé end-to-end',
+          'Analyse statique avec Ghidra et radare2',
+          'Analyse dynamique en sandbox isolée',
+          'Extraction automatique des IOCs',
+          'YARA rules custom pour détection',
+          'Intégration VirusTotal API'
+        ],
+        github: 'https://github.com/EpicNoob22'
+      },
+      'phishguard': {
+        emoji: '🎣',
+        title: 'PhishGuard',
+        category: 'Outils',
+        desc: 'Plateforme de sensibilisation au phishing avec GoPhish customisé. Templates réalistes, dashboard analytique, module de formation automatisé pour les utilisateurs piégés. Rapports mensuels auto-générés.',
+        tags: ['GoPhish', 'Python Flask', 'PostgreSQL', 'Docker', 'Chart.js', 'SMTP', 'Jinja2'],
+        features: [
+          'Campagnes de phishing simulées réalistes',
+          'Dashboard analytique temps réel',
+          'Module de formation automatisé post-piège',
+          'Templates personnalisables par entreprise',
+          'Rapports mensuels PDF auto-générés',
+          'Scoring de sensibilisation par département'
+        ],
+        github: 'https://github.com/EpicNoob22'
+      },
+      'autorecon': {
+        emoji: '🤖',
+        title: 'AutoRecon Bot',
+        category: 'Offensif',
+        desc: 'Bot de reconnaissance automatisée pour pentesting. Orchestration de Subfinder, Nmap, WhatWeb et TheHarvester. Rapports Markdown structurés, mode silencieux, configuration YAML.',
+        tags: ['Bash', 'Python', 'Nmap', 'OSINT', 'Subfinder', 'WhatWeb', 'TheHarvester'],
+        features: [
+          'Orchestration de 10+ outils de reconnaissance',
+          'Scan de ports intelligent avec classification',
+          'Enumération DNS et subdomain discovery',
+          'OSINT automatisé avec TheHarvester',
+          'Rapports Markdown structurés',
+          'Configuration YAML flexible'
+        ],
+        github: 'https://github.com/EpicNoob22'
+      },
+      'honeypot': {
+        emoji: '🌐',
+        title: 'Honeypot Network',
+        category: 'Défensif',
+        desc: 'Réseau de honeypots sur 3 VPS : Cowrie (SSH), Dionaea (SMB), Conpot (SCADA). Logs centralisés ELK Stack, dashboard Kibana avec géoloc attaquants et mapping MITRE ATT&CK.',
+        tags: ['Cowrie', 'Dionaea', 'Conpot', 'ELK Stack', 'MITRE ATT&CK', 'GeoIP', 'Kibana'],
+        features: [
+          'Honeypots SSH (Cowrie), SMB (Dionaea), SCADA (Conpot)',
+          'Déployé sur 3 VPS dans différentes régions',
+          'Centralisation des logs via ELK Stack',
+          'Géolocalisation des attaquants',
+          'Mapping MITRE ATT&CK automatisé',
+          'Dashboard Kibana de threat intelligence'
+        ],
+        github: 'https://github.com/EpicNoob22'
+      },
+      'cryptovault': {
+        emoji: '🔑',
+        title: 'CryptoVault',
+        category: 'Outils',
+        desc: 'Gestionnaire de mots de passe CLI chiffré AES-256-GCM avec PBKDF2. Vault SQLite chiffré, génération de mots de passe forts, audit de sécurité, intégration Have I Been Pwned.',
+        tags: ['Python', 'AES-256-GCM', 'SQLite', 'HIBP API', 'PBKDF2', 'Click', 'Rich'],
+        features: [
+          'Chiffrement AES-256-GCM avec dérivation PBKDF2',
+          'Vault SQLite entièrement chiffré',
+          'Générateur de mots de passe configurable',
+          'Audit de sécurité des mots de passe',
+          'Vérification Have I Been Pwned',
+          'Interface CLI élégante avec Rich'
+        ],
+        github: 'https://github.com/EpicNoob22'
+      }
+    };
+
+    function openProjectModal(projectId) {
+      var data = projectData[projectId];
+      if (!data) return;
+
+      document.getElementById('modalEmoji').textContent = data.emoji;
+      document.getElementById('modalTitle').textContent = data.title;
+      document.getElementById('modalCategory').textContent = data.category;
+      document.getElementById('modalDesc').textContent = data.desc;
+
+      var tagsContainer = document.getElementById('modalTags');
+      tagsContainer.innerHTML = '';
+      data.tags.forEach(function (tag) {
+        var span = document.createElement('span');
+        span.className = 'tag';
+        span.textContent = tag;
+        tagsContainer.appendChild(span);
+      });
+
+      var featuresContainer = document.getElementById('modalFeatures');
+      featuresContainer.innerHTML = '';
+      data.features.forEach(function (feature) {
+        var li = document.createElement('li');
+        li.textContent = feature;
+        featuresContainer.appendChild(li);
+      });
+
+      var actionsContainer = document.getElementById('modalActions');
+      actionsContainer.innerHTML = '';
+      if (data.github) {
+        var a = document.createElement('a');
+        a.href = data.github;
+        a.className = 'btn btn-primary';
+        a.target = '_blank';
+        a.rel = 'noopener noreferrer';
+        a.innerHTML = '<i class="fab fa-github"></i> Voir sur GitHub';
+        actionsContainer.appendChild(a);
+      }
+
+      modal.classList.add('open');
+      modal.setAttribute('aria-hidden', 'false');
+    }
+
+    function closeProjectModal() {
+      modal.classList.remove('open');
+      modal.setAttribute('aria-hidden', 'true');
+    }
+
+    var projectCards = document.querySelectorAll('.project-card[data-project]');
+    projectCards.forEach(function (card) {
+      card.style.cursor = 'pointer';
+      card.addEventListener('click', function (e) {
+        if (e.target.closest('a')) return;
+        openProjectModal(card.getAttribute('data-project'));
+      });
+    });
+
+    if (closeBtn) closeBtn.addEventListener('click', closeProjectModal);
+    if (overlay) overlay.addEventListener('click', closeProjectModal);
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && modal.classList.contains('open')) {
+        closeProjectModal();
+      }
+    });
+  }
+
   function validateEmail(email) {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   }
@@ -1455,6 +1662,7 @@
     initThemeToggle();
     initLangToggle();
     initKeyboardShortcuts();
+    initProjectModals();
     initContactForm();
     initTerminal();
     initTypingAnimation();

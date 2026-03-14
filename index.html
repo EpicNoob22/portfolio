@@ -447,7 +447,7 @@
         </div>
         <div class="projects-bento" id="projectsGrid" role="list">
 
-          <article class="bento-card bento-wide glass project-card featured reveal-up" role="listitem" data-category="defensif" style="--delay: 0s">
+          <article class="bento-card bento-wide glass project-card featured reveal-up" role="listitem" data-category="defensif" data-project="homelab-soc" style="--delay: 0s">
             <div class="project-badge" style="--badge-color: var(--accent-cyan)">Défensif</div>
             <div class="project-featured-badge">Featured</div>
             <div class="project-header">
@@ -465,7 +465,7 @@
             </div>
           </article>
 
-          <article class="bento-card bento-wide glass project-card featured reveal-up" role="listitem" data-category="offensif" style="--delay: 0.05s">
+          <article class="bento-card bento-wide glass project-card featured reveal-up" role="listitem" data-category="offensif" data-project="vulnscanner" style="--delay: 0.05s">
             <div class="project-badge" style="--badge-color: var(--accent-pink)">Offensif</div>
             <div class="project-featured-badge">Featured</div>
             <div class="project-header">
@@ -483,7 +483,7 @@
             </div>
           </article>
 
-          <article class="bento-card glass project-card reveal-up" role="listitem" data-category="labs" style="--delay: 0.1s">
+          <article class="bento-card glass project-card reveal-up" role="listitem" data-category="labs" data-project="ad-lab" style="--delay: 0.1s">
             <div class="project-badge" style="--badge-color: var(--accent-blue)">Labs</div>
             <div class="project-header">
               <span class="project-emoji" aria-hidden="true">🔐</span>
@@ -500,7 +500,7 @@
             </div>
           </article>
 
-          <article class="bento-card glass project-card reveal-up" role="listitem" data-category="defensif" style="--delay: 0.15s">
+          <article class="bento-card glass project-card reveal-up" role="listitem" data-category="defensif" data-project="malware" style="--delay: 0.15s">
             <div class="project-badge" style="--badge-color: var(--accent-cyan)">Défensif</div>
             <div class="project-header">
               <span class="project-emoji" aria-hidden="true">🦠</span>
@@ -517,7 +517,7 @@
             </div>
           </article>
 
-          <article class="bento-card glass project-card reveal-up" role="listitem" data-category="outils" style="--delay: 0.2s">
+          <article class="bento-card glass project-card reveal-up" role="listitem" data-category="outils" data-project="phishguard" style="--delay: 0.2s">
             <div class="project-badge" style="--badge-color: var(--accent-purple)">Outils</div>
             <div class="project-header">
               <span class="project-emoji" aria-hidden="true">🎣</span>
@@ -534,7 +534,7 @@
             </div>
           </article>
 
-          <article class="bento-card glass project-card reveal-up" role="listitem" data-category="offensif" style="--delay: 0.25s">
+          <article class="bento-card glass project-card reveal-up" role="listitem" data-category="offensif" data-project="autorecon" style="--delay: 0.25s">
             <div class="project-badge" style="--badge-color: var(--accent-pink)">Offensif</div>
             <div class="project-header">
               <span class="project-emoji" aria-hidden="true">🤖</span>
@@ -551,7 +551,7 @@
             </div>
           </article>
 
-          <article class="bento-card glass project-card reveal-up" role="listitem" data-category="defensif" style="--delay: 0.3s">
+          <article class="bento-card glass project-card reveal-up" role="listitem" data-category="defensif" data-project="honeypot" style="--delay: 0.3s">
             <div class="project-badge" style="--badge-color: var(--accent-cyan)">Défensif</div>
             <div class="project-header">
               <span class="project-emoji" aria-hidden="true">🌐</span>
@@ -568,7 +568,7 @@
             </div>
           </article>
 
-          <article class="bento-card glass project-card reveal-up" role="listitem" data-category="outils" style="--delay: 0.35s">
+          <article class="bento-card glass project-card reveal-up" role="listitem" data-category="outils" data-project="cryptovault" style="--delay: 0.35s">
             <div class="project-badge" style="--badge-color: var(--accent-purple)">Outils</div>
             <div class="project-header">
               <span class="project-emoji" aria-hidden="true">🔑</span>
@@ -989,6 +989,31 @@
           aria-label="Ligne de commande terminal"
         />
       </div>
+    </div>
+  </div>
+
+  <!-- PROJECT DETAIL MODAL -->
+  <div id="projectModal" class="project-modal" role="dialog" aria-modal="true" aria-label="Détails du projet" aria-hidden="true">
+    <div class="project-modal-overlay"></div>
+    <div class="project-modal-content glass">
+      <button class="project-modal-close" id="projectModalClose" aria-label="Fermer"><i class="fas fa-times"></i></button>
+      <div class="project-modal-header">
+        <span class="project-modal-emoji" id="modalEmoji"></span>
+        <div>
+          <h3 class="project-modal-title" id="modalTitle"></h3>
+          <span class="project-modal-category" id="modalCategory"></span>
+        </div>
+      </div>
+      <p class="project-modal-desc" id="modalDesc"></p>
+      <div class="project-modal-section">
+        <h4 class="project-modal-label"><i class="fas fa-cogs"></i> Stack Technique</h4>
+        <div class="project-modal-tags" id="modalTags"></div>
+      </div>
+      <div class="project-modal-section">
+        <h4 class="project-modal-label"><i class="fas fa-list-check"></i> Points Clés</h4>
+        <ul class="project-modal-features" id="modalFeatures"></ul>
+      </div>
+      <div class="project-modal-actions" id="modalActions"></div>
     </div>
   </div>
 
