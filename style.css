@@ -485,6 +485,31 @@ h1, h2, h3, h4, h5, h6 {
   transform: rotate(20deg);
 }
 
+/* Language Toggle */
+.lang-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border: 1px solid var(--glass-border);
+  border-radius: 50%;
+  background: var(--glass-bg);
+  color: var(--accent-cyan);
+  font-size: 0.75rem;
+  font-weight: 700;
+  font-family: 'Space Grotesk', sans-serif;
+  transition: var(--transition);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  letter-spacing: 0.02em;
+}
+
+.lang-toggle:hover {
+  background: var(--glass-hover);
+  border-color: var(--accent-cyan);
+}
+
 .nav-hamburger {
   display: none;
   flex-direction: column;

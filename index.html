@@ -47,15 +47,18 @@
         <span class="nav-logo-dot"></span>
       </a>
       <ul class="nav-links" role="list" id="navLinks">
-        <li><a href="#about" class="nav-link">À propos</a></li>
-        <li><a href="#journey" class="nav-link">Parcours</a></li>
-        <li><a href="#skills" class="nav-link">Compétences</a></li>
-        <li><a href="#projects" class="nav-link">Projets</a></li>
-        <li><a href="#certifications" class="nav-link">Certifications</a></li>
+        <li><a href="#about" class="nav-link" data-i18n="nav_about">À propos</a></li>
+        <li><a href="#journey" class="nav-link" data-i18n="nav_journey">Parcours</a></li>
+        <li><a href="#skills" class="nav-link" data-i18n="nav_skills">Compétences</a></li>
+        <li><a href="#projects" class="nav-link" data-i18n="nav_projects">Projets</a></li>
+        <li><a href="#certifications" class="nav-link" data-i18n="nav_certs">Certifications</a></li>
         <li><a href="#ctf" class="nav-link">CTF</a></li>
         <li><a href="#blog" class="nav-link">Blog</a></li>
         <li><a href="#contact" class="nav-link nav-link-cta">Contact</a></li>
       </ul>
+      <button class="lang-toggle" id="langToggle" aria-label="Switch to English" title="Français / English">
+        <span class="lang-label">FR</span>
+      </button>
       <button class="theme-toggle" id="themeToggle" aria-label="Basculer thème clair/sombre" title="Thème clair/sombre">
         <i class="fas fa-moon" id="themeIcon"></i>
       </button>
@@ -85,26 +88,26 @@
         <div class="shape shape-dot shape-4"></div>
       </div>
       <div class="hero-content reveal-up" data-delay="0">
-        <p class="hero-eyebrow">Portfolio 2026 &nbsp;·&nbsp; Cybersecurity Specialist</p>
+        <p class="hero-eyebrow" data-i18n="hero_eyebrow">Portfolio 2026 &nbsp;·&nbsp; Cybersecurity Specialist</p>
         <h1 class="hero-name">EpicNoob22</h1>
         <p class="hero-subtitle"><span id="typingText"></span><span class="typing-cursor">|</span></p>
-        <p class="hero-desc">Passionné par la sécurité offensive et défensive, je construis des outils, je casse des systèmes (éthiquement), et je protège les infrastructures. Actuellement en recherche d'alternance.</p>
+        <p class="hero-desc" data-i18n="hero_desc">Passionné par la sécurité offensive et défensive, je construis des outils, je casse des systèmes (éthiquement), et je protège les infrastructures. Actuellement en recherche d'alternance.</p>
         <div class="hero-badge">
           <span class="badge-dot"></span>
-          Disponible pour alternance &mdash; Sept. 2026
+          <span data-i18n="hero_badge">Disponible pour alternance &mdash; Sept. 2026</span>
         </div>
         <div class="hero-actions">
           <a href="#projects" class="btn btn-primary magnetic-btn" data-magnetic>
-            <span>Découvrir mes projets</span>
+            <span data-i18n="hero_cta_projects">Découvrir mes projets</span>
             <i class="fas fa-arrow-right" aria-hidden="true"></i>
           </a>
           <a href="#contact" class="btn btn-outline magnetic-btn" data-magnetic>
-            <span>Me contacter</span>
+            <span data-i18n="hero_cta_contact">Me contacter</span>
           </a>
         </div>
       </div>
       <div class="hero-scroll-indicator" aria-hidden="true">
-        <span class="scroll-label">Scroll</span>
+        <span class="scroll-label" data-i18n="hero_scroll">Scroll</span>
         <span class="scroll-line"></span>
       </div>
     </section>
@@ -129,26 +132,26 @@
             <div class="about-stats">
               <div class="stat-card glass" data-count="50" data-suffix="+">
                 <span class="stat-number accent-primary">50+</span>
-                <span class="stat-label">CTF résolus</span>
+                <span class="stat-label" data-i18n="stat_ctf">CTF résolus</span>
               </div>
               <div class="stat-card glass" data-count="4" data-suffix="">
                 <span class="stat-number accent-cyan">4</span>
-                <span class="stat-label">Certifications</span>
+                <span class="stat-label" data-i18n="stat_certs">Certifications</span>
               </div>
               <div class="stat-card glass" data-count="15" data-suffix="+">
                 <span class="stat-number accent-purple">15+</span>
-                <span class="stat-label">Projets</span>
+                <span class="stat-label" data-i18n="stat_projects">Projets</span>
               </div>
               <div class="stat-card glass" data-count="1500" data-suffix="+">
                 <span class="stat-number accent-pink">1 500+</span>
-                <span class="stat-label">Heures de lab</span>
+                <span class="stat-label" data-i18n="stat_hours">Heures de lab</span>
               </div>
             </div>
           </div>
           <div class="about-text reveal-right">
-            <div class="section-eyebrow">Qui suis-je ?</div>
-            <h2 class="section-title">À propos</h2>
-            <p class="section-subtitle">Qui se cache derrière le pseudo&nbsp;?</p>
+            <div class="section-eyebrow" data-i18n="about_eyebrow">Qui suis-je ?</div>
+            <h2 class="section-title" data-i18n="about_title">À propos</h2>
+            <p class="section-subtitle" data-i18n="about_subtitle">Qui se cache derrière le pseudo&nbsp;?</p>
             <div class="about-paragraphs">
               <p>Passionné de cybersécurité depuis 2020, j'ai découvert le hacking éthique en résolvant mes premiers challenges sur Root-Me et TryHackMe. Depuis, cette passion dévorante ne m'a plus quitté. Je passe mes journées et mes nuits à explorer les failles, comprendre les attaques et renforcer les défenses.</p>
               <p>Ma double compétence Red Team / Blue Team est ma plus grande force. Côté offensif, je pratique le pentesting web et réseau, l'exploitation de vulnérabilités et les attaques Active Directory. Côté défensif, j'ai construit mon propre SOC avec ELK Stack et Wazuh, et je m'entraîne quotidiennement à la réponse aux incidents.</p>
@@ -164,8 +167,8 @@
       <div class="section-divider" aria-hidden="true"></div>
       <div class="container">
         <div class="section-header reveal-up">
-          <div class="section-eyebrow">Mon histoire</div>
-          <h2 class="section-title">Mon Parcours</h2>
+          <div class="section-eyebrow" data-i18n="journey_eyebrow">Mon histoire</div>
+          <h2 class="section-title" data-i18n="journey_title">Mon Parcours</h2>
         </div>
         <div class="timeline">
           <div class="timeline-line" aria-hidden="true"></div>
@@ -238,8 +241,8 @@
       <div class="section-divider" aria-hidden="true"></div>
       <div class="container">
         <div class="section-header reveal-up">
-          <div class="section-eyebrow">Expertise</div>
-          <h2 class="section-title">Compétences</h2>
+          <div class="section-eyebrow" data-i18n="skills_eyebrow">Expertise</div>
+          <h2 class="section-title" data-i18n="skills_title">Compétences</h2>
         </div>
         <div class="skills-bento" role="list">
 
@@ -431,16 +434,16 @@
       <div class="section-divider" aria-hidden="true"></div>
       <div class="container">
         <div class="section-header reveal-up">
-          <div class="section-eyebrow">Réalisations</div>
-          <h2 class="section-title">Projets</h2>
-          <p class="section-subtitle">Une sélection de mes réalisations en cybersécurité</p>
+          <div class="section-eyebrow" data-i18n="projects_eyebrow">Réalisations</div>
+          <h2 class="section-title" data-i18n="projects_title">Projets</h2>
+          <p class="section-subtitle" data-i18n="projects_subtitle">Une sélection de mes réalisations en cybersécurité</p>
         </div>
         <div class="projects-filters reveal-up" role="group" aria-label="Filtres projets">
-          <button class="filter-btn active" data-filter="all">Tous</button>
-          <button class="filter-btn" data-filter="offensif">Offensif</button>
-          <button class="filter-btn" data-filter="defensif">Défensif</button>
-          <button class="filter-btn" data-filter="outils">Outils</button>
-          <button class="filter-btn" data-filter="labs">Labs</button>
+          <button class="filter-btn active" data-filter="all" data-i18n="filter_all">Tous</button>
+          <button class="filter-btn" data-filter="offensif" data-i18n="filter_offensive">Offensif</button>
+          <button class="filter-btn" data-filter="defensif" data-i18n="filter_defensive">Défensif</button>
+          <button class="filter-btn" data-filter="outils" data-i18n="filter_tools">Outils</button>
+          <button class="filter-btn" data-filter="labs" data-i18n="filter_labs">Labs</button>
         </div>
         <div class="projects-bento" id="projectsGrid" role="list">
 
@@ -590,8 +593,8 @@
       <div class="section-divider" aria-hidden="true"></div>
       <div class="container">
         <div class="section-header reveal-up">
-          <div class="section-eyebrow">Validations officielles</div>
-          <h2 class="section-title">Certifications</h2>
+          <div class="section-eyebrow" data-i18n="certs_eyebrow">Validations officielles</div>
+          <h2 class="section-title" data-i18n="certs_title">Certifications</h2>
         </div>
         <div class="certs-grid" role="list">
 
@@ -655,7 +658,7 @@
       <div class="section-divider" aria-hidden="true"></div>
       <div class="container">
         <div class="section-header reveal-up">
-          <div class="section-eyebrow">Compétitions</div>
+          <div class="section-eyebrow" data-i18n="ctf_eyebrow">Compétitions</div>
           <h2 class="section-title">Capture The Flag</h2>
         </div>
         <div class="ctf-platforms" role="list">
@@ -709,7 +712,7 @@
           </article>
         </div>
 
-        <h3 class="ctf-writeups-title reveal-up">Derniers Writeups</h3>
+        <h3 class="ctf-writeups-title reveal-up" data-i18n="ctf_writeups_title">Derniers Writeups</h3>
         <div class="ctf-writeups" role="list">
           <article class="writeup-card glass reveal-up" role="listitem" style="--delay: 0s">
             <span class="writeup-difficulty" style="--diff-color: var(--accent-green)" aria-label="Difficulté facile">Easy</span>
@@ -756,8 +759,8 @@
       <div class="section-divider" aria-hidden="true"></div>
       <div class="container">
         <div class="section-header reveal-up">
-          <div class="section-eyebrow">Partage de connaissances</div>
-          <h2 class="section-title">Articles &amp; Writeups</h2>
+          <div class="section-eyebrow" data-i18n="blog_eyebrow">Partage de connaissances</div>
+          <h2 class="section-title" data-i18n="blog_title">Articles &amp; Writeups</h2>
         </div>
         <div class="blog-grid" role="list">
 
@@ -825,13 +828,13 @@
       <div class="section-divider" aria-hidden="true"></div>
       <div class="container">
         <div class="section-header reveal-up">
-          <div class="section-eyebrow">Entrons en contact</div>
+          <div class="section-eyebrow" data-i18n="contact_eyebrow">Entrons en contact</div>
           <h2 class="section-title">Contact</h2>
         </div>
         <div class="contact-grid">
           <div class="contact-info reveal-left">
-            <h3 class="contact-cta-title">Travaillons ensemble</h3>
-            <p class="contact-cta-text">Disponible pour une alternance en cybersécurité à partir de septembre 2026. Je suis ouvert à toute opportunité de collaboration, de stage ou de projet.</p>
+            <h3 class="contact-cta-title" data-i18n="contact_cta_title">Travaillons ensemble</h3>
+            <p class="contact-cta-text" data-i18n="contact_cta_text">Disponible pour une alternance en cybersécurité à partir de septembre 2026. Je suis ouvert à toute opportunité de collaboration, de stage ou de projet.</p>
             <div class="contact-availability">
               <span class="availability-dot"></span>
               <span>Disponible — Remote &amp; Présentiel</span>

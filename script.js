@@ -454,6 +454,127 @@
   }
 
   /* ============================================================
+     10c. LANGUAGE SWITCHER
+  ============================================================ */
+
+  function initLangToggle() {
+    var toggle = document.getElementById('langToggle');
+    var label = toggle ? toggle.querySelector('.lang-label') : null;
+    if (!toggle || !label) return;
+
+    var translations = {
+      en: {
+        nav_about: 'About',
+        nav_journey: 'Journey',
+        nav_skills: 'Skills',
+        nav_projects: 'Projects',
+        nav_certs: 'Certifications',
+        hero_eyebrow: 'Portfolio 2026 \u00a0·\u00a0 Cybersecurity Specialist',
+        hero_desc: 'Passionate about offensive and defensive security, I build tools, break systems (ethically), and protect infrastructures. Currently seeking an apprenticeship.',
+        hero_badge: 'Available for apprenticeship \u2014 Sept. 2026',
+        hero_cta_projects: 'Discover my projects',
+        hero_cta_contact: 'Contact me',
+        hero_scroll: 'Scroll',
+        about_eyebrow: 'Who am I?',
+        about_title: 'About',
+        about_subtitle: 'Who\u2019s behind the username?',
+        stat_ctf: 'CTFs solved',
+        stat_certs: 'Certifications',
+        stat_projects: 'Projects',
+        stat_hours: 'Lab hours',
+        journey_eyebrow: 'My story',
+        journey_title: 'My Journey',
+        skills_eyebrow: 'Expertise',
+        skills_title: 'Skills',
+        projects_eyebrow: 'Achievements',
+        projects_title: 'Projects',
+        projects_subtitle: 'A selection of my cybersecurity achievements',
+        filter_all: 'All',
+        filter_offensive: 'Offensive',
+        filter_defensive: 'Defensive',
+        filter_tools: 'Tools',
+        filter_labs: 'Labs',
+        certs_eyebrow: 'Official validations',
+        certs_title: 'Certifications',
+        ctf_eyebrow: 'Competitions',
+        ctf_writeups_title: 'Latest Writeups',
+        blog_eyebrow: 'Knowledge sharing',
+        blog_title: 'Articles & Writeups',
+        contact_eyebrow: 'Get in touch',
+        contact_cta_title: 'Let\u2019s work together',
+        contact_cta_text: 'Available for a cybersecurity apprenticeship starting September 2026. I\u2019m open to any collaboration, internship, or project opportunity.',
+      },
+      fr: {
+        nav_about: '\u00c0 propos',
+        nav_journey: 'Parcours',
+        nav_skills: 'Comp\u00e9tences',
+        nav_projects: 'Projets',
+        nav_certs: 'Certifications',
+        hero_eyebrow: 'Portfolio 2026 \u00a0\u00b7\u00a0 Cybersecurity Specialist',
+        hero_desc: 'Passionn\u00e9 par la s\u00e9curit\u00e9 offensive et d\u00e9fensive, je construis des outils, je casse des syst\u00e8mes (\u00e9thiquement), et je prot\u00e8ge les infrastructures. Actuellement en recherche d\u2019alternance.',
+        hero_badge: 'Disponible pour alternance \u2014 Sept. 2026',
+        hero_cta_projects: 'D\u00e9couvrir mes projets',
+        hero_cta_contact: 'Me contacter',
+        hero_scroll: 'Scroll',
+        about_eyebrow: 'Qui suis-je ?',
+        about_title: '\u00c0 propos',
+        about_subtitle: 'Qui se cache derri\u00e8re le pseudo\u00a0?',
+        stat_ctf: 'CTF r\u00e9solus',
+        stat_certs: 'Certifications',
+        stat_projects: 'Projets',
+        stat_hours: 'Heures de lab',
+        journey_eyebrow: 'Mon histoire',
+        journey_title: 'Mon Parcours',
+        skills_eyebrow: 'Expertise',
+        skills_title: 'Comp\u00e9tences',
+        projects_eyebrow: 'R\u00e9alisations',
+        projects_title: 'Projets',
+        projects_subtitle: 'Une s\u00e9lection de mes r\u00e9alisations en cybers\u00e9curit\u00e9',
+        filter_all: 'Tous',
+        filter_offensive: 'Offensif',
+        filter_defensive: 'D\u00e9fensif',
+        filter_tools: 'Outils',
+        filter_labs: 'Labs',
+        certs_eyebrow: 'Validations officielles',
+        certs_title: 'Certifications',
+        ctf_eyebrow: 'Comp\u00e9titions',
+        ctf_writeups_title: 'Derniers Writeups',
+        blog_eyebrow: 'Partage de connaissances',
+        blog_title: 'Articles & Writeups',
+        contact_eyebrow: 'Entrons en contact',
+        contact_cta_title: 'Travaillons ensemble',
+        contact_cta_text: 'Disponible pour une alternance en cybers\u00e9curit\u00e9 \u00e0 partir de septembre 2026. Je suis ouvert \u00e0 toute opportunit\u00e9 de collaboration, de stage ou de projet.',
+      }
+    };
+
+    var currentLang = localStorage.getItem('epicnoob22-lang') || 'fr';
+    applyLang(currentLang);
+
+    function applyLang(lang) {
+      currentLang = lang;
+      label.textContent = lang.toUpperCase();
+      toggle.setAttribute('aria-label', lang === 'fr' ? 'Switch to English' : 'Passer en fran\u00e7ais');
+      document.documentElement.setAttribute('lang', lang);
+      localStorage.setItem('epicnoob22-lang', lang);
+
+      var dict = translations[lang];
+      if (!dict) return;
+
+      var elements = document.querySelectorAll('[data-i18n]');
+      elements.forEach(function (el) {
+        var key = el.getAttribute('data-i18n');
+        if (dict[key] !== undefined) {
+          el.textContent = dict[key];
+        }
+      });
+    }
+
+    toggle.addEventListener('click', function () {
+      applyLang(currentLang === 'fr' ? 'en' : 'fr');
+    });
+  }
+
+  /* ============================================================
      11. CONTACT FORM
   ============================================================ */
 
@@ -1228,6 +1349,7 @@
     initMagneticButtons();
     initBackToTop();
     initThemeToggle();
+    initLangToggle();
     initContactForm();
     initTerminal();
     initTypingAnimation();
