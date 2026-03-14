@@ -2021,6 +2021,145 @@
   }
 
   /* ============================================================
+     10g. PAGE VISIBILITY TITLE
+  ============================================================ */
+
+  function initPageVisibility() {
+    var originalTitle = document.title;
+    var awayMessages = [
+      '\u{1F440} Reviens, hacker !',
+      '\u{1F512} La s\u00E9cu t\'attend !',
+      '\u{1F480} Don\'t leave me...',
+      '\u{1F6A8} Breach detected!',
+    ];
+
+    document.addEventListener('visibilitychange', function () {
+      if (document.hidden) {
+        document.title = awayMessages[Math.floor(Math.random() * awayMessages.length)];
+      } else {
+        document.title = originalTitle;
+      }
+    });
+  }
+
+  /* ============================================================
+     10h. TEXT SCRAMBLE EFFECT
+  ============================================================ */
+
+  function initTextScramble() {
+    var titles = document.querySelectorAll('.section-title');
+    if (!titles.length) return;
+
+    var chars = '!<>-_\\/[]{}—=+*^?#_ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+
+    titles.forEach(function (title) {
+      var originalText = title.textContent;
+      var isAnimating = false;
+
+      title.addEventListener('mouseenter', function () {
+        if (isAnimating) return;
+        isAnimating = true;
+        title.classList.add('scrambling');
+
+        var iterations = 0;
+        var maxIterations = originalText.length * 3;
+
+        var interval = setInterval(function () {
+          title.textContent = originalText.split('').map(function (char, index) {
+            if (index < iterations / 3) return originalText[index];
+            return chars[Math.floor(Math.random() * chars.length)];
+          }).join('');
+
+          iterations++;
+
+          if (iterations >= maxIterations) {
+            clearInterval(interval);
+            title.textContent = originalText;
+            title.classList.remove('scrambling');
+            isAnimating = false;
+          }
+        }, 30);
+      });
+    });
+  }
+
+  /* ============================================================
+     10i. TIME-BASED GREETING
+  ============================================================ */
+
+  function initTimeGreeting() {
+    var el = document.getElementById('heroGreeting');
+    if (!el) return;
+
+    var hour = new Date().getHours();
+    var greeting;
+
+    if (hour >= 5 && hour < 12) {
+      greeting = '\u2600\uFE0F Bonjour ! Good morning!';
+    } else if (hour >= 12 && hour < 18) {
+      greeting = '\u{1F324}\uFE0F Bon apr\u00E8s-midi ! Good afternoon!';
+    } else if (hour >= 18 && hour < 22) {
+      greeting = '\u{1F306} Bonsoir ! Good evening!';
+    } else {
+      greeting = '\u{1F319} Bonne nuit ! Night owl hacking session?';
+    }
+
+    el.textContent = greeting;
+  }
+
+  /* ============================================================
+     10j. SCROLL SPY DOTS
+  ============================================================ */
+
+  function initScrollSpy() {
+    var nav = document.getElementById('scrollSpy');
+    if (!nav) return;
+
+    var dots = nav.querySelectorAll('.spy-dot');
+    var sections = document.querySelectorAll('section[id]');
+
+    // Show/hide based on scroll position
+    function updateVisibility() {
+      if (window.pageYOffset > 200) {
+        nav.classList.add('visible');
+      } else {
+        nav.classList.remove('visible');
+      }
+    }
+
+    window.addEventListener('scroll', throttle(updateVisibility, 200), { passive: true });
+    updateVisibility();
+
+    // Active dot tracking
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          dots.forEach(function (dot) {
+            var spy = dot.getAttribute('data-spy');
+            if (spy === entry.target.id) {
+              dot.classList.add('active');
+            } else {
+              dot.classList.remove('active');
+            }
+          });
+        }
+      });
+    }, { rootMargin: '-40% 0px -40% 0px', threshold: 0 });
+
+    sections.forEach(function (s) { observer.observe(s); });
+
+    // Click to navigate
+    dots.forEach(function (dot) {
+      dot.addEventListener('click', function () {
+        var target = document.getElementById(dot.getAttribute('data-spy'));
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+  }
+
+  /* ============================================================
      16. INIT
   ============================================================ */
 
@@ -2045,6 +2184,10 @@
     initTypingAnimation();
     initParticleNetwork();
     initTiltEffect();
+    initPageVisibility();
+    initTimeGreeting();
+    initTextScramble();
+    initScrollSpy();
   }
 
   if (document.readyState === 'loading') {
