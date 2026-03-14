@@ -2026,16 +2026,26 @@
 
   function initPageVisibility() {
     var originalTitle = document.title;
-    var awayMessages = [
-      '\u{1F440} Reviens, hacker !',
-      '\u{1F512} La s\u00E9cu t\'attend !',
-      '\u{1F480} Don\'t leave me...',
-      '\u{1F6A8} Breach detected!',
-    ];
+    var awayMessagesI18n = {
+      fr: [
+        '\u{1F440} Reviens, hacker !',
+        '\u{1F512} La s\u00E9cu t\'attend !',
+        '\u{1F480} Ne me quitte pas...',
+        '\u{1F6A8} Br\u00E8che d\u00E9tect\u00E9e !',
+      ],
+      en: [
+        '\u{1F440} Come back, hacker!',
+        '\u{1F512} Security awaits you!',
+        '\u{1F480} Don\'t leave me...',
+        '\u{1F6A8} Breach detected!',
+      ]
+    };
 
     document.addEventListener('visibilitychange', function () {
       if (document.hidden) {
-        document.title = awayMessages[Math.floor(Math.random() * awayMessages.length)];
+        var lang = localStorage.getItem('epicnoob22-lang') || 'fr';
+        var messages = awayMessagesI18n[lang] || awayMessagesI18n.fr;
+        document.title = messages[Math.floor(Math.random() * messages.length)];
       } else {
         document.title = originalTitle;
       }
@@ -2092,16 +2102,29 @@
     if (!el) return;
 
     var hour = new Date().getHours();
+    var lang = localStorage.getItem('epicnoob22-lang') || 'fr';
     var greeting;
 
-    if (hour >= 5 && hour < 12) {
-      greeting = '\u2600\uFE0F Bonjour ! Good morning!';
-    } else if (hour >= 12 && hour < 18) {
-      greeting = '\u{1F324}\uFE0F Bon apr\u00E8s-midi ! Good afternoon!';
-    } else if (hour >= 18 && hour < 22) {
-      greeting = '\u{1F306} Bonsoir ! Good evening!';
+    if (lang === 'en') {
+      if (hour >= 5 && hour < 12) {
+        greeting = '\u2600\uFE0F Good morning, welcome!';
+      } else if (hour >= 12 && hour < 18) {
+        greeting = '\u{1F324}\uFE0F Good afternoon, welcome!';
+      } else if (hour >= 18 && hour < 22) {
+        greeting = '\u{1F306} Good evening, welcome!';
+      } else {
+        greeting = '\u{1F319} Night owl hacking session?';
+      }
     } else {
-      greeting = '\u{1F319} Bonne nuit ! Night owl hacking session?';
+      if (hour >= 5 && hour < 12) {
+        greeting = '\u2600\uFE0F Bonjour, bienvenue !';
+      } else if (hour >= 12 && hour < 18) {
+        greeting = '\u{1F324}\uFE0F Bon apr\u00E8s-midi, bienvenue !';
+      } else if (hour >= 18 && hour < 22) {
+        greeting = '\u{1F306} Bonsoir, bienvenue !';
+      } else {
+        greeting = '\u{1F319} Session hacking nocturne ?';
+      }
     }
 
     el.textContent = greeting;
