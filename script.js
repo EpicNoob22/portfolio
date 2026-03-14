@@ -575,6 +575,109 @@
   }
 
   /* ============================================================
+     10d. KEYBOARD SHORTCUTS
+  ============================================================ */
+
+  function initKeyboardShortcuts() {
+    var modal = document.getElementById('shortcutsModal');
+    var closeBtn = document.getElementById('shortcutsClose');
+    if (!modal) return;
+
+    var sectionKeys = {
+      '1': '#home',
+      '2': '#about',
+      '3': '#journey',
+      '4': '#skills',
+      '5': '#projects',
+      '6': '#certifications',
+      '7': '#ctf',
+      '8': '#blog',
+      '9': '#contact'
+    };
+
+    function openShortcuts() {
+      modal.classList.add('open');
+      modal.setAttribute('aria-hidden', 'false');
+    }
+
+    function closeShortcuts() {
+      modal.classList.remove('open');
+      modal.setAttribute('aria-hidden', 'true');
+    }
+
+    if (closeBtn) closeBtn.addEventListener('click', closeShortcuts);
+    modal.addEventListener('click', function (e) {
+      if (e.target === modal) closeShortcuts();
+    });
+
+    document.addEventListener('keydown', function (e) {
+      var tag = document.activeElement ? document.activeElement.tagName.toLowerCase() : '';
+      var isInput = (tag === 'input' || tag === 'textarea' || tag === 'select');
+      var terminalModal = document.getElementById('terminalModal');
+      var isTerminalOpen = terminalModal && terminalModal.classList.contains('open');
+
+      // Esc closes shortcuts
+      if (e.key === 'Escape' && modal.classList.contains('open')) {
+        e.preventDefault();
+        closeShortcuts();
+        return;
+      }
+
+      // Don't handle shortcuts when typing in inputs or terminal
+      if (isInput || isTerminalOpen) return;
+
+      // ? = toggle shortcuts panel
+      if (e.key === '?' || (e.shiftKey && e.key === '/')) {
+        e.preventDefault();
+        if (modal.classList.contains('open')) {
+          closeShortcuts();
+        } else {
+          openShortcuts();
+        }
+        return;
+      }
+
+      // Ignore if any modifier key is pressed (except for Ctrl+`)
+      if (e.ctrlKey || e.altKey || e.metaKey) return;
+
+      // T = toggle theme
+      if (e.key === 't' || e.key === 'T') {
+        e.preventDefault();
+        var themeToggle = document.getElementById('themeToggle');
+        if (themeToggle) themeToggle.click();
+        return;
+      }
+
+      // L = toggle language
+      if (e.key === 'l' || e.key === 'L') {
+        e.preventDefault();
+        var langToggle = document.getElementById('langToggle');
+        if (langToggle) langToggle.click();
+        return;
+      }
+
+      // ArrowUp = scroll to top (when nothing focused)
+      if (e.key === 'ArrowUp' && !isInput) {
+        // Only if shortcuts panel is not open
+        if (!modal.classList.contains('open')) {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+        return;
+      }
+
+      // Number keys for section navigation
+      if (sectionKeys[e.key]) {
+        e.preventDefault();
+        var target = document.querySelector(sectionKeys[e.key]);
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+        return;
+      }
+    });
+  }
+
+  /* ============================================================
      11. CONTACT FORM
   ============================================================ */
 
@@ -1350,6 +1453,7 @@
     initBackToTop();
     initThemeToggle();
     initLangToggle();
+    initKeyboardShortcuts();
     initContactForm();
     initTerminal();
     initTypingAnimation();
