@@ -469,7 +469,7 @@
         nav_skills: 'Skills',
         nav_projects: 'Projects',
         nav_certs: 'Certifications',
-        hero_eyebrow: 'Portfolio 2026 \u00a0·\u00a0 Cybersecurity Specialist',
+        hero_eyebrow: 'Portfolio 2026 \u00a0\u00b7\u00a0 Cybersecurity Specialist',
         hero_desc: 'Passionate about offensive and defensive security, I build tools, break systems (ethically), and protect infrastructures. Currently seeking an apprenticeship.',
         hero_badge: 'Available for apprenticeship \u2014 Sept. 2026',
         hero_cta_projects: 'Discover my projects',
