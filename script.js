@@ -515,7 +515,7 @@
 
       if (!valid) return;
 
-      // Simulate success (static site — no backend)
+      // Submit form via FormSubmit.co
       var submitBtn = form.querySelector('button[type="submit"]');
       var originalText = submitBtn ? submitBtn.querySelector('span').textContent : 'Envoyer';
       if (submitBtn) {
@@ -523,14 +523,38 @@
         submitBtn.querySelector('span').textContent = 'Envoi en cours…';
       }
 
-      setTimeout(function () {
-        showToast('✅ Message envoyé ! Je vous répondrai très vite.', 'success');
-        form.reset();
+      var formData = {
+        name: nameInput.value.trim(),
+        email: emailInput.value.trim(),
+        subject: subjectInput.value,
+        message: messageInput.value.trim(),
+        _subject: 'Portfolio — ' + (subjectInput.value || 'Nouveau message'),
+        _template: 'table'
+      };
+
+      fetch('https://formsubmit.co/ajax/epicnoob22@proton.me', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify(formData)
+      })
+      .then(function (response) { return response.json(); })
+      .then(function (data) {
+        if (data.success) {
+          showToast('✅ Message envoyé ! Je vous répondrai très vite.', 'success');
+          form.reset();
+        } else {
+          showToast('❌ Erreur lors de l\'envoi. Veuillez réessayer.', 'error');
+        }
+      })
+      .catch(function () {
+        showToast('❌ Erreur réseau. Vérifiez votre connexion et réessayez.', 'error');
+      })
+      .finally(function () {
         if (submitBtn) {
           submitBtn.disabled = false;
           submitBtn.querySelector('span').textContent = originalText;
         }
-      }, 1200);
+      });
     });
   }
 
