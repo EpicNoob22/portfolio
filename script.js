@@ -1048,8 +1048,8 @@
 
     var ctx = canvas.getContext('2d');
     var particles = [];
-    var maxParticles = 60;
-    var connectionDistance = 150;
+    var maxParticles = 60;       // balance between visual density and performance
+    var connectionDistance = 150; // max px between particles to draw a connection line
     var mouseX = -1000;
     var mouseY = -1000;
 
@@ -1150,8 +1150,6 @@
       // Add glare element
       var glare = document.createElement('div');
       glare.className = 'glass-glare';
-      card.style.position = 'relative';
-      card.style.overflow = 'hidden';
       card.appendChild(glare);
 
       card.addEventListener('mouseenter', function () {
