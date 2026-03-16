@@ -425,6 +425,260 @@
   }
 
   /* ============================================================
+     10b. THEME TOGGLE
+  ============================================================ */
+
+  function initThemeToggle() {
+    var toggle = document.getElementById('themeToggle');
+    var icon = document.getElementById('themeIcon');
+    if (!toggle || !icon) return;
+
+    var savedTheme = localStorage.getItem('epicnoob22-theme') || 'dark';
+    applyTheme(savedTheme);
+
+    function applyTheme(theme) {
+      if (theme === 'light') {
+        document.documentElement.setAttribute('data-theme', 'light');
+        icon.className = 'fas fa-sun';
+      } else {
+        document.documentElement.removeAttribute('data-theme');
+        icon.className = 'fas fa-moon';
+      }
+      localStorage.setItem('epicnoob22-theme', theme);
+    }
+
+    toggle.addEventListener('click', function () {
+      var current = document.documentElement.getAttribute('data-theme');
+      applyTheme(current === 'light' ? 'dark' : 'light');
+    });
+  }
+
+  /* ============================================================
+     10c. LANGUAGE SWITCHER
+  ============================================================ */
+
+  function initLangToggle() {
+    var toggle = document.getElementById('langToggle');
+    var label = toggle ? toggle.querySelector('.lang-label') : null;
+    if (!toggle || !label) return;
+
+    var translations = {
+      en: {
+        nav_about: 'About',
+        nav_journey: 'Journey',
+        nav_skills: 'Skills',
+        nav_projects: 'Projects',
+        nav_certs: 'Certifications',
+        hero_eyebrow: 'Portfolio 2026 \u00a0\u00b7\u00a0 Cybersecurity Specialist',
+        hero_desc: 'Passionate about offensive and defensive security, I build tools, break systems (ethically), and protect infrastructures. Currently seeking an apprenticeship.',
+        hero_badge: 'Available for apprenticeship \u2014 Sept. 2026',
+        hero_cta_projects: 'Discover my projects',
+        hero_cta_contact: 'Contact me',
+        hero_scroll: 'Scroll',
+        about_eyebrow: 'Who am I?',
+        about_title: 'About',
+        about_subtitle: 'Who\u2019s behind the username?',
+        stat_ctf: 'CTFs solved',
+        stat_certs: 'Certifications',
+        stat_projects: 'Projects',
+        stat_hours: 'Lab hours',
+        journey_eyebrow: 'My story',
+        journey_title: 'My Journey',
+        skills_eyebrow: 'Expertise',
+        skills_title: 'Skills',
+        projects_eyebrow: 'Achievements',
+        projects_title: 'Projects',
+        projects_subtitle: 'A selection of my cybersecurity achievements',
+        filter_all: 'All',
+        filter_offensive: 'Offensive',
+        filter_defensive: 'Defensive',
+        filter_tools: 'Tools',
+        filter_labs: 'Labs',
+        certs_eyebrow: 'Official validations',
+        certs_title: 'Certifications',
+        ctf_eyebrow: 'Competitions',
+        ctf_writeups_title: 'Latest Writeups',
+        blog_eyebrow: 'Knowledge sharing',
+        blog_title: 'Articles & Writeups',
+        contact_eyebrow: 'Get in touch',
+        contact_cta_title: 'Let\u2019s work together',
+        contact_cta_text: 'Available for a cybersecurity apprenticeship starting September 2026. I\u2019m open to any collaboration, internship, or project opportunity.',
+      },
+      fr: {
+        nav_about: '\u00c0 propos',
+        nav_journey: 'Parcours',
+        nav_skills: 'Comp\u00e9tences',
+        nav_projects: 'Projets',
+        nav_certs: 'Certifications',
+        hero_eyebrow: 'Portfolio 2026 \u00a0\u00b7\u00a0 Cybersecurity Specialist',
+        hero_desc: 'Passionn\u00e9 par la s\u00e9curit\u00e9 offensive et d\u00e9fensive, je construis des outils, je casse des syst\u00e8mes (\u00e9thiquement), et je prot\u00e8ge les infrastructures. Actuellement en recherche d\u2019alternance.',
+        hero_badge: 'Disponible pour alternance \u2014 Sept. 2026',
+        hero_cta_projects: 'D\u00e9couvrir mes projets',
+        hero_cta_contact: 'Me contacter',
+        hero_scroll: 'Scroll',
+        about_eyebrow: 'Qui suis-je ?',
+        about_title: '\u00c0 propos',
+        about_subtitle: 'Qui se cache derri\u00e8re le pseudo\u00a0?',
+        stat_ctf: 'CTF r\u00e9solus',
+        stat_certs: 'Certifications',
+        stat_projects: 'Projets',
+        stat_hours: 'Heures de lab',
+        journey_eyebrow: 'Mon histoire',
+        journey_title: 'Mon Parcours',
+        skills_eyebrow: 'Expertise',
+        skills_title: 'Comp\u00e9tences',
+        projects_eyebrow: 'R\u00e9alisations',
+        projects_title: 'Projets',
+        projects_subtitle: 'Une s\u00e9lection de mes r\u00e9alisations en cybers\u00e9curit\u00e9',
+        filter_all: 'Tous',
+        filter_offensive: 'Offensif',
+        filter_defensive: 'D\u00e9fensif',
+        filter_tools: 'Outils',
+        filter_labs: 'Labs',
+        certs_eyebrow: 'Validations officielles',
+        certs_title: 'Certifications',
+        ctf_eyebrow: 'Comp\u00e9titions',
+        ctf_writeups_title: 'Derniers Writeups',
+        blog_eyebrow: 'Partage de connaissances',
+        blog_title: 'Articles & Writeups',
+        contact_eyebrow: 'Entrons en contact',
+        contact_cta_title: 'Travaillons ensemble',
+        contact_cta_text: 'Disponible pour une alternance en cybers\u00e9curit\u00e9 \u00e0 partir de septembre 2026. Je suis ouvert \u00e0 toute opportunit\u00e9 de collaboration, de stage ou de projet.',
+      }
+    };
+
+    var currentLang = localStorage.getItem('epicnoob22-lang') || 'fr';
+    applyLang(currentLang);
+
+    function applyLang(lang) {
+      currentLang = lang;
+      label.textContent = lang.toUpperCase();
+      toggle.setAttribute('aria-label', lang === 'fr' ? 'Switch to English' : 'Passer en fran\u00e7ais');
+      document.documentElement.setAttribute('lang', lang);
+      localStorage.setItem('epicnoob22-lang', lang);
+
+      var dict = translations[lang];
+      if (!dict) return;
+
+      var elements = document.querySelectorAll('[data-i18n]');
+      elements.forEach(function (el) {
+        var key = el.getAttribute('data-i18n');
+        if (dict[key] !== undefined) {
+          el.textContent = dict[key];
+        }
+      });
+    }
+
+    toggle.addEventListener('click', function () {
+      applyLang(currentLang === 'fr' ? 'en' : 'fr');
+    });
+  }
+
+  /* ============================================================
+     10d. KEYBOARD SHORTCUTS
+  ============================================================ */
+
+  function initKeyboardShortcuts() {
+    var modal = document.getElementById('shortcutsModal');
+    var closeBtn = document.getElementById('shortcutsClose');
+    if (!modal) return;
+
+    var sectionKeys = {
+      '1': '#home',
+      '2': '#about',
+      '3': '#journey',
+      '4': '#skills',
+      '5': '#projects',
+      '6': '#certifications',
+      '7': '#ctf',
+      '8': '#blog',
+      '9': '#contact'
+    };
+
+    function openShortcuts() {
+      modal.classList.add('open');
+      modal.setAttribute('aria-hidden', 'false');
+    }
+
+    function closeShortcuts() {
+      modal.classList.remove('open');
+      modal.setAttribute('aria-hidden', 'true');
+    }
+
+    if (closeBtn) closeBtn.addEventListener('click', closeShortcuts);
+    modal.addEventListener('click', function (e) {
+      if (e.target === modal) closeShortcuts();
+    });
+
+    document.addEventListener('keydown', function (e) {
+      var tag = document.activeElement ? document.activeElement.tagName.toLowerCase() : '';
+      var isInput = (tag === 'input' || tag === 'textarea' || tag === 'select');
+      var terminalModal = document.getElementById('terminalModal');
+      var isTerminalOpen = terminalModal && terminalModal.classList.contains('open');
+
+      // Esc closes shortcuts
+      if (e.key === 'Escape' && modal.classList.contains('open')) {
+        e.preventDefault();
+        closeShortcuts();
+        return;
+      }
+
+      // Don't handle shortcuts when typing in inputs or terminal
+      if (isInput || isTerminalOpen) return;
+
+      // ? = toggle shortcuts panel
+      if (e.key === '?' || (e.shiftKey && e.key === '/')) {
+        e.preventDefault();
+        if (modal.classList.contains('open')) {
+          closeShortcuts();
+        } else {
+          openShortcuts();
+        }
+        return;
+      }
+
+      // Ignore if any modifier key is pressed (except for Ctrl+`)
+      if (e.ctrlKey || e.altKey || e.metaKey) return;
+
+      // T = toggle theme
+      if (e.key === 't' || e.key === 'T') {
+        e.preventDefault();
+        var themeToggle = document.getElementById('themeToggle');
+        if (themeToggle) themeToggle.click();
+        return;
+      }
+
+      // L = toggle language
+      if (e.key === 'l' || e.key === 'L') {
+        e.preventDefault();
+        var langToggle = document.getElementById('langToggle');
+        if (langToggle) langToggle.click();
+        return;
+      }
+
+      // ArrowUp = scroll to top (when nothing focused)
+      if (e.key === 'ArrowUp' && !isInput) {
+        // Only if shortcuts panel is not open
+        if (!modal.classList.contains('open')) {
+          e.preventDefault();
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+        return;
+      }
+
+      // Number keys for section navigation
+      if (sectionKeys[e.key]) {
+        e.preventDefault();
+        var target = document.querySelector(sectionKeys[e.key]);
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+        return;
+      }
+    });
+  }
+
+  /* ============================================================
      11. CONTACT FORM
   ============================================================ */
 
@@ -439,6 +693,213 @@
     setTimeout(function () {
       toast.classList.remove('show');
     }, 3500);
+  }
+
+  /* ============================================================
+     10e. PROJECT DETAIL MODALS
+  ============================================================ */
+
+  function initProjectModals() {
+    var modal = document.getElementById('projectModal');
+    var closeBtn = document.getElementById('projectModalClose');
+    var overlay = modal ? modal.querySelector('.project-modal-overlay') : null;
+    if (!modal) return;
+
+    var projectData = {
+      'homelab-soc': {
+        emoji: '🏠',
+        title: 'HomeLab SOC',
+        category: 'Défensif',
+        desc: 'Construction d\'un Security Operations Center complet en environnement domestique. ELK Stack pour l\'agrégation des logs, Wazuh comme EDR, Suricata pour la détection d\'intrusions réseau. Dashboards Kibana personnalisés avec alerting automatisé via Discord et Telegram. Monitoring 24/7 avec règles de corrélation personnalisées.',
+        tags: ['ELK Stack', 'Wazuh', 'Suricata', 'Docker', 'Grafana', 'Kibana', 'Sigma Rules', 'Discord API'],
+        features: [
+          'Agrégation centralisée des logs via Elasticsearch',
+          'Détection d\'intrusions réseau avec Suricata',
+          'EDR endpoint avec Wazuh agents',
+          'Dashboards Kibana personnalisés pour SOC',
+          'Alerting temps réel via Discord & Telegram',
+          'Règles de corrélation Sigma personnalisées'
+        ],
+        github: 'https://github.com/EpicNoob22'
+      },
+      'vulnscanner': {
+        emoji: '🔍',
+        title: 'VulnScanner Pro',
+        category: 'Offensif',
+        desc: 'Scanner de vulnérabilités web automatisé développé en Python. Détection d\'injections SQL, XSS, SSRF et directory traversal. Génération de rapports PDF professionnels avec scoring CVSS, PoC et recommandations de remédiation. Architecture modulaire avec plugins extensibles.',
+        tags: ['Python', 'OWASP', 'Automation', 'ReportLab', 'Requests', 'BeautifulSoup', 'CVSS'],
+        features: [
+          'Détection automatisée SQLi, XSS, SSRF, LFI',
+          'Scoring CVSS v3.1 automatique',
+          'Génération de rapports PDF professionnels',
+          'Architecture modulaire avec plugins',
+          'Mode silencieux pour intégration CI/CD',
+          'Export JSON/CSV/PDF des résultats'
+        ],
+        github: 'https://github.com/EpicNoob22'
+      },
+      'ad-lab': {
+        emoji: '🔐',
+        title: 'Active Directory Lab',
+        category: 'Labs',
+        desc: 'Environnement AD vulnérable sur Proxmox : DC Windows Server 2022, 3 clients Windows, 1 serveur Linux. Scénarios Kerberoasting, Pass-the-Hash, Golden Ticket, DCSync. Documentation offensive et défensive complète avec guides pas-à-pas.',
+        tags: ['Active Directory', 'BloodHound', 'Mimikatz', 'Proxmox', 'Windows Server', 'Kerberos', 'LDAP'],
+        features: [
+          'Domain Controller Windows Server 2022',
+          '3 postes clients + 1 serveur Linux joints au domaine',
+          'Scénarios Kerberoasting & AS-REP Roasting',
+          'Pass-the-Hash, Pass-the-Ticket, Golden Ticket',
+          'DCSync et attaques de délégation',
+          'Documentation offensive & défensive complète'
+        ],
+        github: 'https://github.com/EpicNoob22'
+      },
+      'malware': {
+        emoji: '🦠',
+        title: 'Malware Analysis Sandbox',
+        category: 'Défensif',
+        desc: 'Sandbox isolée pour analyse dynamique et statique de malwares. Pipeline automatisé : soumission → analyse comportementale → extraction IOCs → rapport. Reverse engineering avec Ghidra, YARA rules custom.',
+        tags: ['Ghidra', 'REMnux', 'YARA', 'Volatility 3', 'PE Analysis', 'Cuckoo', 'VirusTotal API'],
+        features: [
+          'Pipeline d\'analyse automatisé end-to-end',
+          'Analyse statique avec Ghidra et radare2',
+          'Analyse dynamique en sandbox isolée',
+          'Extraction automatique des IOCs',
+          'YARA rules custom pour détection',
+          'Intégration VirusTotal API'
+        ],
+        github: 'https://github.com/EpicNoob22'
+      },
+      'phishguard': {
+        emoji: '🎣',
+        title: 'PhishGuard',
+        category: 'Outils',
+        desc: 'Plateforme de sensibilisation au phishing avec GoPhish customisé. Templates réalistes, dashboard analytique, module de formation automatisé pour les utilisateurs piégés. Rapports mensuels auto-générés.',
+        tags: ['GoPhish', 'Python Flask', 'PostgreSQL', 'Docker', 'Chart.js', 'SMTP', 'Jinja2'],
+        features: [
+          'Campagnes de phishing simulées réalistes',
+          'Dashboard analytique temps réel',
+          'Module de formation automatisé post-piège',
+          'Templates personnalisables par entreprise',
+          'Rapports mensuels PDF auto-générés',
+          'Scoring de sensibilisation par département'
+        ],
+        github: 'https://github.com/EpicNoob22'
+      },
+      'autorecon': {
+        emoji: '🤖',
+        title: 'AutoRecon Bot',
+        category: 'Offensif',
+        desc: 'Bot de reconnaissance automatisée pour pentesting. Orchestration de Subfinder, Nmap, WhatWeb et TheHarvester. Rapports Markdown structurés, mode silencieux, configuration YAML.',
+        tags: ['Bash', 'Python', 'Nmap', 'OSINT', 'Subfinder', 'WhatWeb', 'TheHarvester'],
+        features: [
+          'Orchestration de 10+ outils de reconnaissance',
+          'Scan de ports intelligent avec classification',
+          'Enumération DNS et subdomain discovery',
+          'OSINT automatisé avec TheHarvester',
+          'Rapports Markdown structurés',
+          'Configuration YAML flexible'
+        ],
+        github: 'https://github.com/EpicNoob22'
+      },
+      'honeypot': {
+        emoji: '🌐',
+        title: 'Honeypot Network',
+        category: 'Défensif',
+        desc: 'Réseau de honeypots sur 3 VPS : Cowrie (SSH), Dionaea (SMB), Conpot (SCADA). Logs centralisés ELK Stack, dashboard Kibana avec géoloc attaquants et mapping MITRE ATT&CK.',
+        tags: ['Cowrie', 'Dionaea', 'Conpot', 'ELK Stack', 'MITRE ATT&CK', 'GeoIP', 'Kibana'],
+        features: [
+          'Honeypots SSH (Cowrie), SMB (Dionaea), SCADA (Conpot)',
+          'Déployé sur 3 VPS dans différentes régions',
+          'Centralisation des logs via ELK Stack',
+          'Géolocalisation des attaquants',
+          'Mapping MITRE ATT&CK automatisé',
+          'Dashboard Kibana de threat intelligence'
+        ],
+        github: 'https://github.com/EpicNoob22'
+      },
+      'cryptovault': {
+        emoji: '🔑',
+        title: 'CryptoVault',
+        category: 'Outils',
+        desc: 'Gestionnaire de mots de passe CLI chiffré AES-256-GCM avec PBKDF2. Vault SQLite chiffré, génération de mots de passe forts, audit de sécurité, intégration Have I Been Pwned.',
+        tags: ['Python', 'AES-256-GCM', 'SQLite', 'HIBP API', 'PBKDF2', 'Click', 'Rich'],
+        features: [
+          'Chiffrement AES-256-GCM avec dérivation PBKDF2',
+          'Vault SQLite entièrement chiffré',
+          'Générateur de mots de passe configurable',
+          'Audit de sécurité des mots de passe',
+          'Vérification Have I Been Pwned',
+          'Interface CLI élégante avec Rich'
+        ],
+        github: 'https://github.com/EpicNoob22'
+      }
+    };
+
+    function openProjectModal(projectId) {
+      var data = projectData[projectId];
+      if (!data) return;
+
+      document.getElementById('modalEmoji').textContent = data.emoji;
+      document.getElementById('modalTitle').textContent = data.title;
+      document.getElementById('modalCategory').textContent = data.category;
+      document.getElementById('modalDesc').textContent = data.desc;
+
+      var tagsContainer = document.getElementById('modalTags');
+      tagsContainer.innerHTML = '';
+      data.tags.forEach(function (tag) {
+        var span = document.createElement('span');
+        span.className = 'tag';
+        span.textContent = tag;
+        tagsContainer.appendChild(span);
+      });
+
+      var featuresContainer = document.getElementById('modalFeatures');
+      featuresContainer.innerHTML = '';
+      data.features.forEach(function (feature) {
+        var li = document.createElement('li');
+        li.textContent = feature;
+        featuresContainer.appendChild(li);
+      });
+
+      var actionsContainer = document.getElementById('modalActions');
+      actionsContainer.innerHTML = '';
+      if (data.github) {
+        var a = document.createElement('a');
+        a.href = data.github;
+        a.className = 'btn btn-primary';
+        a.target = '_blank';
+        a.rel = 'noopener noreferrer';
+        a.innerHTML = '<i class="fab fa-github"></i> Voir sur GitHub';
+        actionsContainer.appendChild(a);
+      }
+
+      modal.classList.add('open');
+      modal.setAttribute('aria-hidden', 'false');
+    }
+
+    function closeProjectModal() {
+      modal.classList.remove('open');
+      modal.setAttribute('aria-hidden', 'true');
+    }
+
+    var projectCards = document.querySelectorAll('.project-card[data-project]');
+    projectCards.forEach(function (card) {
+      card.style.cursor = 'pointer';
+      card.addEventListener('click', function (e) {
+        if (e.target.closest('a')) return;
+        openProjectModal(card.getAttribute('data-project'));
+      });
+    });
+
+    if (closeBtn) closeBtn.addEventListener('click', closeProjectModal);
+    if (overlay) overlay.addEventListener('click', closeProjectModal);
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && modal.classList.contains('open')) {
+        closeProjectModal();
+      }
+    });
   }
 
   function validateEmail(email) {
@@ -561,6 +1022,96 @@
   }
 
   /* ============================================================
+     10f. KONAMI CODE EASTER EGG
+  ============================================================ */
+
+  function initKonamiCode() {
+    var sequence = ['ArrowUp','ArrowUp','ArrowDown','ArrowDown','ArrowLeft','ArrowRight','ArrowLeft','ArrowRight','b','a'];
+    var position = 0;
+    var canvas = document.getElementById('matrixCanvas');
+    if (!canvas) return;
+    var ctx = canvas.getContext('2d');
+    var animationId = null;
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === sequence[position] || e.key.toLowerCase() === sequence[position]) {
+        position++;
+        if (position === sequence.length) {
+          position = 0;
+          startMatrixRain();
+        }
+      } else {
+        position = 0;
+      }
+    });
+
+    function startMatrixRain() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      canvas.classList.add('active');
+
+      var fontSize = 14;
+      var columns = Math.floor(canvas.width / fontSize);
+      var drops = [];
+      for (var i = 0; i < columns; i++) {
+        drops[i] = Math.floor(Math.random() * -canvas.height / fontSize);
+      }
+
+      var chars = 'アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヰヱヲン0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*(){}[];:<>?~';
+      var charArray = chars.split('');
+
+      function draw() {
+        ctx.fillStyle = 'rgba(6, 6, 14, 0.06)';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        for (var i = 0; i < drops.length; i++) {
+          var char = charArray[Math.floor(Math.random() * charArray.length)];
+
+          // Lead character is white/bright
+          if (drops[i] > 0) {
+            ctx.fillStyle = '#ffffff';
+            ctx.font = 'bold ' + fontSize + 'px "JetBrains Mono", monospace';
+            ctx.fillText(char, i * fontSize, drops[i] * fontSize);
+
+            // Trail characters are green
+            ctx.fillStyle = 'rgba(34, 211, 238, 0.8)';
+            ctx.font = fontSize + 'px "JetBrains Mono", monospace';
+            var trailChar = charArray[Math.floor(Math.random() * charArray.length)];
+            if (drops[i] > 1) {
+              ctx.fillText(trailChar, i * fontSize, (drops[i] - 1) * fontSize);
+            }
+          }
+
+          drops[i]++;
+
+          if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+            drops[i] = 0;
+          }
+        }
+
+        animationId = requestAnimationFrame(draw);
+      }
+
+      // Show toast
+      var toast = document.getElementById('toast');
+      if (toast) {
+        toast.textContent = '🎮 Konami Code activated! Matrix rain unlocked!';
+        toast.className = 'toast success show';
+        setTimeout(function () { toast.classList.remove('show'); }, 3500);
+      }
+
+      draw();
+
+      // Stop after 8 seconds
+      setTimeout(function () {
+        if (animationId) cancelAnimationFrame(animationId);
+        canvas.classList.remove('active');
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+      }, 8000);
+    }
+  }
+
+  /* ============================================================
      12. TERMINAL
   ============================================================ */
 
@@ -645,6 +1196,27 @@
           { text: '  secret       \u2192 \ud83e\udd2b', cls: '' },
           { text: '  clear        \u2192 Effacer le terminal', cls: '' },
           { text: '  exit         \u2192 Fermer le terminal', cls: '' },
+          { text: '', cls: '' },
+          { text: '  \u2500\u2500\u2500 Commandes Bonus \u2500\u2500\u2500', cls: 'cyan' },
+          { text: '  neofetch     \u2192 Infos syst\u00e8me', cls: '' },
+          { text: '  matrix       \u2192 Simulation Matrix', cls: '' },
+          { text: '  ping         \u2192 Ping simul\u00e9', cls: '' },
+          { text: '  nmap [ip]    \u2192 Scan de ports simul\u00e9', cls: '' },
+          { text: '  cowsay [msg] \u2192 Vache qui parle', cls: '' },
+          { text: '  uptime       \u2192 Temps d\u0027activit\u00e9', cls: '' },
+          { text: '  sudo [cmd]   \u2192 Tenter sudo', cls: '' },
+          { text: '  cat [file]   \u2192 Afficher un fichier', cls: '' },
+          { text: '  ls [dir]     \u2192 Lister les fichiers', cls: '' },
+          { text: '  rm [file]    \u2192 Supprimer un fichier', cls: '' },
+          { text: '  weather      \u2192 M\u00e9t\u00e9o simul\u00e9e', cls: '' },
+          { text: '  hack         \u2192 \ud83d\ude0f', cls: '' },
+          { text: '  id           \u2192 Identit\u00e9 utilisateur', cls: '' },
+          { text: '  hostname     \u2192 Nom de la machine', cls: '' },
+          { text: '  uname        \u2192 Infos noyau', cls: '' },
+          { text: '  ifconfig     \u2192 Interfaces r\u00e9seau', cls: '' },
+          { text: '  pwd          \u2192 R\u00e9pertoire courant', cls: '' },
+          { text: '  cd [dir]     \u2192 Changer de r\u00e9pertoire', cls: '' },
+          { text: '  whoisprivate \u2192 Whois lookup', cls: '' },
         ];
       },
       about: function () {
@@ -856,6 +1428,271 @@
           { text: ' \u2588\u2588\u2551 \u255a\u2588\u2588\u2588\u2588\u2551\u255a\u2588\u2588\u2588\u2588\u2588\u2588\u2554\u255d\u255a\u2588\u2588\u2588\u2588\u2588\u2588\u2554\u255d\u2588\u2588\u2588\u2588\u2588\u2588\u2554\u255d\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2557\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2557', cls: 'cyan' },
           { text: ' \u255a\u2550\u255d  \u255a\u2550\u2550\u2550\u255d \u255a\u2550\u2550\u2550\u2550\u2550\u255d  \u255a\u2550\u2550\u2550\u2550\u2550\u255d \u255a\u2550\u2550\u2550\u2550\u2550\u255d \u255a\u2550\u2550\u2550\u2550\u2550\u2550\u255d\u255a\u2550\u2550\u2550\u2550\u2550\u2550\u255d', cls: 'cyan' },
         ];
+      },
+      neofetch: function () {
+        return [
+          { text: '        .--.        epicnoob22@portfolio', cls: 'accent' },
+          { text: '       |o_o |       \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500', cls: 'accent' },
+          { text: '       |:_/ |       OS: Kali GNU/Linux Rolling', cls: '' },
+          { text: '      //   \\ \\      Host: HomeLab SOC', cls: '' },
+          { text: '     (|     | )     Kernel: 6.6.15-amd64', cls: '' },
+          { text: '    /\'\\_   _/`\\     Shell: zsh 5.9', cls: '' },
+          { text: '    \\___)=(___/     Terminal: epicnoob22-term v2.0', cls: '' },
+          { text: '', cls: '' },
+          { text: '  Uptime    : Since 2020 (6 years)', cls: 'cyan' },
+          { text: '  Packages  : 15+ projects, 4 certs, 50+ CTF', cls: '' },
+          { text: '  Resolution: 1337x1337 (hacker mode)', cls: '' },
+          { text: '  DE        : Cybersecurity', cls: '' },
+          { text: '  WM        : Red Team / Blue Team', cls: '' },
+          { text: '  Theme     : Premium Dark [glassmorphism]', cls: '' },
+          { text: '  CPU       : Caffeinated Brain @ 3.4GHz', cls: '' },
+          { text: '  Memory    : 1500+ hours of lab / \u221e', cls: '' },
+          { text: '', cls: '' },
+          { text: '  \u2588\u2588 \u2588\u2588 \u2588\u2588 \u2588\u2588 \u2588\u2588 \u2588\u2588 \u2588\u2588 \u2588\u2588', cls: 'accent' },
+        ];
+      },
+      matrix: function () {
+        var lines = [];
+        for (var i = 0; i < 12; i++) {
+          var row = '  ';
+          for (var j = 0; j < 40; j++) {
+            var chars = '\u30a7\u30a2\u30ab\u30b5\u30bf\u30ca\u30cf\u30de\u30e4\u30e9\u30ef01234567890ABCDEF!@#$%';
+            row += chars.charAt(Math.floor(Math.random() * chars.length));
+          }
+          lines.push({ text: row, cls: i % 3 === 0 ? 'success' : 'cyan' });
+        }
+        lines.push({ text: '', cls: '' });
+        lines.push({ text: '  [SIMULATION] The Matrix has you...', cls: 'accent' });
+        lines.push({ text: '  Tip: Try the Konami code (\u2191\u2191\u2193\u2193\u2190\u2192\u2190\u2192BA) for the real thing!', cls: '' });
+        return lines;
+      },
+      ping: function () {
+        var targets = ['10.10.10.1', '192.168.1.1', 'hackthebox.com', 'tryhackme.com'];
+        var target = targets[Math.floor(Math.random() * targets.length)];
+        var lines = [
+          { text: '  PING ' + target + ' (' + target + ') 56(84) bytes of data.', cls: '' }
+        ];
+        for (var i = 0; i < 4; i++) {
+          var time = (Math.random() * 50 + 5).toFixed(1);
+          lines.push({ text: '  64 bytes from ' + target + ': icmp_seq=' + (i + 1) + ' ttl=64 time=' + time + ' ms', cls: 'cyan' });
+        }
+        lines.push({ text: '', cls: '' });
+        lines.push({ text: '  --- ' + target + ' ping statistics ---', cls: '' });
+        lines.push({ text: '  4 packets transmitted, 4 received, 0% packet loss', cls: 'success' });
+        return lines;
+      },
+      cowsay: function (args) {
+        var message = args.length ? args.join(' ') : 'Moo! I mean... hack the planet!';
+        var border = '  ' + new Array(message.length + 4).join('-');
+        return [
+          { text: border, cls: '' },
+          { text: '  | ' + message + ' |', cls: 'cyan' },
+          { text: border, cls: '' },
+          { text: '         \\   ^__^', cls: '' },
+          { text: '          \\  (oo)\\_______', cls: '' },
+          { text: '             (__)\\       )\\/\\', cls: '' },
+          { text: '                 ||----w |', cls: '' },
+          { text: '                 ||     ||', cls: '' },
+        ];
+      },
+      uptime: function () {
+        var start = new Date(2020, 0, 1);
+        var now = new Date();
+        var diff = now - start;
+        var days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        var hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        return [
+          { text: '  System uptime: ' + days + ' days, ' + hours + ' hours', cls: 'cyan' },
+          { text: '  Hacking since: January 2020', cls: '' },
+          { text: '  Status: Still learning, still hacking \ud83d\udd25', cls: 'success' },
+        ];
+      },
+      sudo: function (args) {
+        if (args.length === 0) {
+          return [{ text: '  usage: sudo <command>', cls: 'error' }];
+        }
+        var cmd = args.join(' ').toLowerCase();
+        if (cmd === 'rm -rf /' || cmd === 'rm -rf /*') {
+          return [
+            { text: '  [sudo] password for epicnoob22: ********', cls: '' },
+            { text: '  rm: cannot remove \'/\': Permission denied', cls: 'error' },
+            { text: '  Nice try! \ud83d\ude0f This is a portfolio, not a real system.', cls: 'accent' },
+          ];
+        }
+        if (cmd.includes('hack') || cmd.includes('exploit')) {
+          return [
+            { text: '  [sudo] password for epicnoob22: ********', cls: '' },
+            { text: '  Permission granted. Remember: only ethical hacking! \ud83d\udee1\ufe0f', cls: 'success' },
+          ];
+        }
+        return [
+          { text: '  [sudo] password for epicnoob22: ********', cls: '' },
+          { text: '  epicnoob22 is not in the sudoers file. This incident will be reported. \ud83d\udc40', cls: 'error' },
+        ];
+      },
+      cat: function (args) {
+        var file = args[0] ? args[0].toLowerCase() : '';
+        if (file === '/etc/passwd' || file === 'etc/passwd') {
+          return [
+            { text: '  root:x:0:0:root:/root:/bin/bash', cls: '' },
+            { text: '  epicnoob22:x:1337:1337:Ethical Hacker:/home/epicnoob22:/bin/zsh', cls: 'accent' },
+            { text: '  nmap:x:1000:1000:Network Scanner:/opt/nmap:/usr/sbin/nologin', cls: '' },
+            { text: '  burpsuite:x:1001:1001:Web Proxy:/opt/burp:/usr/sbin/nologin', cls: '' },
+            { text: '  wireshark:x:1002:1002:Packet Analyzer:/opt/wireshark:/usr/sbin/nologin', cls: '' },
+          ];
+        }
+        if (file === 'flag.txt' || file === '/flag.txt') {
+          return [
+            { text: '  CTF{t3rm1n4l_m4st3r_2026}', cls: 'success' },
+            { text: '  Congratulations! You found another flag! \ud83c\udfc6', cls: 'accent' },
+          ];
+        }
+        if (!file) {
+          return [{ text: '  usage: cat <filename>', cls: 'error' }];
+        }
+        return [{ text: '  cat: ' + file + ': No such file or directory', cls: 'error' }];
+      },
+      ls: function (args) {
+        var dir = args[0] ? args[0].toLowerCase() : '.';
+        if (dir === '.' || dir === '~' || dir === '/home/epicnoob22') {
+          return [
+            { text: '  drwxr-xr-x  projects/', cls: 'accent' },
+            { text: '  drwxr-xr-x  certifications/', cls: 'accent' },
+            { text: '  drwxr-xr-x  ctf/', cls: 'accent' },
+            { text: '  drwxr-xr-x  tools/', cls: 'accent' },
+            { text: '  drwxr-xr-x  .ssh/', cls: '' },
+            { text: '  -rw-r--r--  portfolio.html', cls: '' },
+            { text: '  -rw-r--r--  flag.txt', cls: 'success' },
+            { text: '  -rw-r--r--  .bashrc', cls: '' },
+            { text: '  -rw-------  .bash_history', cls: '' },
+          ];
+        }
+        if (dir === 'projects' || dir === 'projects/') {
+          return [
+            { text: '  drwxr-xr-x  homelab-soc/', cls: 'accent' },
+            { text: '  drwxr-xr-x  vulnscanner-pro/', cls: 'accent' },
+            { text: '  drwxr-xr-x  ad-lab/', cls: 'accent' },
+            { text: '  drwxr-xr-x  malware-sandbox/', cls: 'accent' },
+            { text: '  drwxr-xr-x  phishguard/', cls: 'accent' },
+            { text: '  drwxr-xr-x  autorecon-bot/', cls: 'accent' },
+            { text: '  drwxr-xr-x  honeypot-network/', cls: 'accent' },
+            { text: '  drwxr-xr-x  cryptovault/', cls: 'accent' },
+          ];
+        }
+        return [{ text: '  ls: cannot access \'' + dir + '\': No such file or directory', cls: 'error' }];
+      },
+      weather: function () {
+        var conditions = ['\u2600\ufe0f Clear sky', '\ud83c\udf24\ufe0f Partly cloudy', '\ud83c\udf27\ufe0f Light rain', '\u26c8\ufe0f Thunderstorm', '\ud83c\udf2b\ufe0f Foggy', '\u2744\ufe0f Snowing'];
+        var temps = [18, 22, 15, 28, 12, 5, 25, 20];
+        var condition = conditions[Math.floor(Math.random() * conditions.length)];
+        var temp = temps[Math.floor(Math.random() * temps.length)];
+        return [
+          { text: '  Weather Report \u2014 France \ud83c\uddeb\ud83c\uddf7', cls: 'accent' },
+          { text: '', cls: '' },
+          { text: '  Condition : ' + condition, cls: '' },
+          { text: '  Temp      : ' + temp + '\u00b0C', cls: 'cyan' },
+          { text: '  Humidity  : ' + (Math.floor(Math.random() * 60) + 30) + '%', cls: '' },
+          { text: '  Wind      : ' + (Math.floor(Math.random() * 30) + 5) + ' km/h', cls: '' },
+          { text: '', cls: '' },
+          { text: '  (Simulated data \u2014 not a real API call)', cls: '' },
+        ];
+      },
+      whoisprivate: function () {
+        return [
+          { text: '  WHOIS Lookup \u2014 epicnoob22.dev', cls: 'accent' },
+          { text: '', cls: '' },
+          { text: '  Domain     : epicnoob22.dev', cls: '' },
+          { text: '  Registrar  : GitHub Pages', cls: '' },
+          { text: '  Created    : 2020-01-01', cls: '' },
+          { text: '  Updated    : 2026-03-14', cls: '' },
+          { text: '  Status     : ACTIVE', cls: 'success' },
+          { text: '  Nameserver : ns1.github.io', cls: '' },
+          { text: '', cls: '' },
+          { text: '  Owner      : EpicNoob22', cls: 'cyan' },
+          { text: '  Location   : France', cls: '' },
+          { text: '  Purpose    : Cybersecurity Portfolio', cls: '' },
+        ];
+      },
+      nmap: function (args) {
+        var target = args[0] || '10.10.10.1';
+        return [
+          { text: '  Starting Nmap 7.94 ( https://nmap.org )', cls: '' },
+          { text: '  Nmap scan report for ' + target, cls: 'accent' },
+          { text: '  Host is up (0.023s latency).', cls: 'success' },
+          { text: '', cls: '' },
+          { text: '  PORT     STATE  SERVICE     VERSION', cls: '' },
+          { text: '  22/tcp   open   ssh         OpenSSH 8.9p1', cls: 'cyan' },
+          { text: '  80/tcp   open   http        nginx 1.24.0', cls: 'cyan' },
+          { text: '  443/tcp  open   https       nginx 1.24.0', cls: 'cyan' },
+          { text: '  3389/tcp closed ms-wbt-server', cls: '' },
+          { text: '  8080/tcp open   http-proxy  Squid 5.7', cls: 'cyan' },
+          { text: '', cls: '' },
+          { text: '  Service detection performed. 5 services scanned.', cls: '' },
+          { text: '  Nmap done: 1 IP address (1 host up) scanned in 12.34s', cls: 'success' },
+          { text: '', cls: '' },
+          { text: '  (Simulated scan \u2014 for educational purposes only)', cls: '' },
+        ];
+      },
+      hack: function () {
+        return [
+          { text: '  [ACCESS DENIED]', cls: 'error' },
+          { text: '', cls: '' },
+          { text: '  Nice try! But remember:', cls: '' },
+          { text: '  "With great power comes great responsibility"', cls: 'cyan' },
+          { text: '', cls: '' },
+          { text: '  \u2696\ufe0f  Always hack ethically.', cls: 'success' },
+          { text: '  \ud83d\udcdd  Always get written authorization.', cls: 'success' },
+          { text: '  \ud83d\udee1\ufe0f  Always report vulnerabilities responsibly.', cls: 'success' },
+        ];
+      },
+      rm: function (args) {
+        var target = args.join(' ');
+        if (target.includes('-rf') && target.includes('/')) {
+          return [
+            { text: '  \ud83d\udeab PERMISSION DENIED', cls: 'error' },
+            { text: '  rm: it is dangerous to operate recursively on \'/\'', cls: 'error' },
+            { text: '', cls: '' },
+            { text: '  Did you really just try to rm -rf / ? \ud83d\ude02', cls: 'accent' },
+            { text: '  This portfolio survives everything!', cls: 'success' },
+          ];
+        }
+        return [
+          { text: '  rm: cannot remove \'' + (args[args.length - 1] || '') + '\': Read-only file system', cls: 'error' },
+        ];
+      },
+      id: function () {
+        return [
+          { text: '  uid=1337(epicnoob22) gid=1337(hackers) groups=1337(hackers),27(sudo),100(users)', cls: 'cyan' },
+        ];
+      },
+      hostname: function () {
+        return [
+          { text: '  epicnoob22-portfolio', cls: 'cyan' },
+        ];
+      },
+      uname: function () {
+        return [
+          { text: '  Linux epicnoob22-portfolio 6.6.15-amd64 #1 SMP PREEMPT_DYNAMIC x86_64 GNU/Linux', cls: 'cyan' },
+        ];
+      },
+      ifconfig: function () {
+        return [
+          { text: '  eth0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>', cls: '' },
+          { text: '        inet 192.168.1.137  netmask 255.255.255.0  broadcast 192.168.1.255', cls: 'cyan' },
+          { text: '        inet6 fe80::1337:dead:beef:cafe  prefixlen 64  scopeid 0x20<link>', cls: '' },
+          { text: '        ether 00:13:37:de:ad:22  txqueuelen 1000  (Ethernet)', cls: '' },
+          { text: '', cls: '' },
+          { text: '  tun0: flags=4305<UP,POINTOPOINT,RUNNING,NOARP,MULTICAST>', cls: '' },
+          { text: '        inet 10.10.14.22  netmask 255.255.254.0', cls: 'success' },
+          { text: '        (HackTheBox VPN connection)', cls: '' },
+        ];
+      },
+      pwd: function () {
+        return [{ text: '  /home/epicnoob22', cls: 'cyan' }];
+      },
+      cd: function (args) {
+        var dir = args[0] || '~';
+        return [{ text: '  Changed directory to ' + (dir === '~' ? '/home/epicnoob22' : dir), cls: '' }];
       },
     };
 
@@ -1184,6 +2021,168 @@
   }
 
   /* ============================================================
+     10g. PAGE VISIBILITY TITLE
+  ============================================================ */
+
+  function initPageVisibility() {
+    var originalTitle = document.title;
+    var awayMessagesI18n = {
+      fr: [
+        '\u{1F440} Reviens, hacker !',
+        '\u{1F512} La s\u00E9cu t\'attend !',
+        '\u{1F480} Ne me quitte pas...',
+        '\u{1F6A8} Br\u00E8che d\u00E9tect\u00E9e !',
+      ],
+      en: [
+        '\u{1F440} Come back, hacker!',
+        '\u{1F512} Security awaits you!',
+        '\u{1F480} Don\'t leave me...',
+        '\u{1F6A8} Breach detected!',
+      ]
+    };
+
+    document.addEventListener('visibilitychange', function () {
+      if (document.hidden) {
+        var lang = localStorage.getItem('epicnoob22-lang') || 'fr';
+        var messages = awayMessagesI18n[lang] || awayMessagesI18n.fr;
+        document.title = messages[Math.floor(Math.random() * messages.length)];
+      } else {
+        document.title = originalTitle;
+      }
+    });
+  }
+
+  /* ============================================================
+     10h. TEXT SCRAMBLE EFFECT
+  ============================================================ */
+
+  function initTextScramble() {
+    var titles = document.querySelectorAll('.section-title');
+    if (!titles.length) return;
+
+    var chars = '!<>-_\\/[]{}—=+*^?#_ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+
+    titles.forEach(function (title) {
+      var originalText = title.textContent;
+      var isAnimating = false;
+
+      title.addEventListener('mouseenter', function () {
+        if (isAnimating) return;
+        isAnimating = true;
+        title.classList.add('scrambling');
+
+        var iterations = 0;
+        var maxIterations = originalText.length * 3;
+
+        var interval = setInterval(function () {
+          title.textContent = originalText.split('').map(function (char, index) {
+            if (index < iterations / 3) return originalText[index];
+            return chars[Math.floor(Math.random() * chars.length)];
+          }).join('');
+
+          iterations++;
+
+          if (iterations >= maxIterations) {
+            clearInterval(interval);
+            title.textContent = originalText;
+            title.classList.remove('scrambling');
+            isAnimating = false;
+          }
+        }, 30);
+      });
+    });
+  }
+
+  /* ============================================================
+     10i. TIME-BASED GREETING
+  ============================================================ */
+
+  function initTimeGreeting() {
+    var el = document.getElementById('heroGreeting');
+    if (!el) return;
+
+    var hour = new Date().getHours();
+    var lang = localStorage.getItem('epicnoob22-lang') || 'fr';
+    var greeting;
+
+    if (lang === 'en') {
+      if (hour >= 5 && hour < 12) {
+        greeting = '\u2600\uFE0F Good morning, welcome!';
+      } else if (hour >= 12 && hour < 18) {
+        greeting = '\u{1F324}\uFE0F Good afternoon, welcome!';
+      } else if (hour >= 18 && hour < 22) {
+        greeting = '\u{1F306} Good evening, welcome!';
+      } else {
+        greeting = '\u{1F319} Night owl hacking session?';
+      }
+    } else {
+      if (hour >= 5 && hour < 12) {
+        greeting = '\u2600\uFE0F Bonjour, bienvenue !';
+      } else if (hour >= 12 && hour < 18) {
+        greeting = '\u{1F324}\uFE0F Bon apr\u00E8s-midi, bienvenue !';
+      } else if (hour >= 18 && hour < 22) {
+        greeting = '\u{1F306} Bonsoir, bienvenue !';
+      } else {
+        greeting = '\u{1F319} Session hacking nocturne ?';
+      }
+    }
+
+    el.textContent = greeting;
+  }
+
+  /* ============================================================
+     10j. SCROLL SPY DOTS
+  ============================================================ */
+
+  function initScrollSpy() {
+    var nav = document.getElementById('scrollSpy');
+    if (!nav) return;
+
+    var dots = nav.querySelectorAll('.spy-dot');
+    var sections = document.querySelectorAll('section[id]');
+
+    // Show/hide based on scroll position
+    function updateVisibility() {
+      if (window.pageYOffset > 200) {
+        nav.classList.add('visible');
+      } else {
+        nav.classList.remove('visible');
+      }
+    }
+
+    window.addEventListener('scroll', throttle(updateVisibility, 200), { passive: true });
+    updateVisibility();
+
+    // Active dot tracking
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          dots.forEach(function (dot) {
+            var spy = dot.getAttribute('data-spy');
+            if (spy === entry.target.id) {
+              dot.classList.add('active');
+            } else {
+              dot.classList.remove('active');
+            }
+          });
+        }
+      });
+    }, { rootMargin: '-40% 0px -40% 0px', threshold: 0 });
+
+    sections.forEach(function (s) { observer.observe(s); });
+
+    // Click to navigate
+    dots.forEach(function (dot) {
+      dot.addEventListener('click', function () {
+        var target = document.getElementById(dot.getAttribute('data-spy'));
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+  }
+
+  /* ============================================================
      16. INIT
   ============================================================ */
 
@@ -1198,11 +2197,20 @@
     initProjectsFilter();
     initMagneticButtons();
     initBackToTop();
+    initThemeToggle();
+    initLangToggle();
+    initKeyboardShortcuts();
+    initProjectModals();
+    initKonamiCode();
     initContactForm();
     initTerminal();
     initTypingAnimation();
     initParticleNetwork();
     initTiltEffect();
+    initPageVisibility();
+    initTimeGreeting();
+    initTextScramble();
+    initScrollSpy();
   }
 
   if (document.readyState === 'loading') {
