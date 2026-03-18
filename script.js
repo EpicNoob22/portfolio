@@ -1303,8 +1303,9 @@
           { text: '  \ud83d\udfe9  HackTheBox   : Hacker \u2014 Top 10% \u2014 25+ machines', cls: '' },
           { text: '  \ud83d\udfe6  TryHackMe    : 0x8 [Hacker] \u2014 Top 5% \u2014 80+ rooms', cls: 'cyan' },
           { text: '  \ud83d\udfe5  Root-Me      : Avanc\u00e9 \u2014 150+ challenges', cls: '' },
+          { text: '  \ud83c\udf93  HackDeVinci  : CTF Inter-\u00c9coles \u2014 Top 20 \u2014 20+ challs', cls: '' },
           { text: '', cls: '' },
-          { text: '  Total : 50+ CTF r\u00e9solus sur 3 plateformes', cls: 'success' },
+          { text: '  Total : 55+ CTF r\u00e9solus sur 4 plateformes', cls: 'success' },
         ];
       },
       contact: function () {
@@ -1440,7 +1441,7 @@
           { text: '    \\___)=(___/     Terminal: epicnoob22-term v2.0', cls: '' },
           { text: '', cls: '' },
           { text: '  Uptime    : Since 2020 (6 years)', cls: 'cyan' },
-          { text: '  Packages  : 15+ projects, 4 certs, 50+ CTF', cls: '' },
+          { text: '  Packages  : 15+ projects, 4 certs, 55+ CTF', cls: '' },
           { text: '  Resolution: 1337x1337 (hacker mode)', cls: '' },
           { text: '  DE        : Cybersecurity', cls: '' },
           { text: '  WM        : Red Team / Blue Team', cls: '' },

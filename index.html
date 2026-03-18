@@ -144,8 +144,8 @@
               <div class="about-photo-border" aria-hidden="true"></div>
             </div>
             <div class="about-stats">
-              <div class="stat-card glass" data-count="50" data-suffix="+">
-                <span class="stat-number accent-primary">50+</span>
+              <div class="stat-card glass" data-count="55" data-suffix="+">
+                <span class="stat-number accent-primary">55+</span>
                 <span class="stat-label" data-i18n="stat_ctf">CTF résolus</span>
               </div>
               <div class="stat-card glass" data-count="4" data-suffix="">
@@ -233,7 +233,7 @@
             <div class="timeline-card glass">
               <div class="timeline-icon" aria-hidden="true">🏆</div>
               <h3 class="timeline-title">Certifications &amp; reconnaissance</h3>
-              <p class="timeline-desc">CompTIA Security+ (812/900) et eJPT obtenus. Top 5% TryHackMe. Plus de 50 CTF résolus sur 3 plateformes.</p>
+              <p class="timeline-desc">CompTIA Security+ (812/900) et eJPT obtenus. Top 5% TryHackMe. Plus de 55 CTF résolus sur 4 plateformes.</p>
             </div>
           </article>
 
@@ -724,11 +724,46 @@
               <span style="color: var(--accent-purple); font-size: 0.85rem; font-weight: 600">65%</span>
             </div>
           </article>
+          <article class="ctf-platform glass reveal-up" role="listitem" style="--delay: 0.3s">
+            <div class="ctf-platform-header">
+              <div class="ctf-platform-icon" aria-hidden="true"><i class="fas fa-graduation-cap" style="color: var(--accent-pink)"></i></div>
+              <div>
+                <h3 class="ctf-platform-name">HackDeVinci</h3>
+                <p class="ctf-platform-rank" style="color: var(--accent-pink)">CTF Inter-Écoles — Top 20</p>
+              </div>
+            </div>
+            <p class="ctf-platform-stat">20+ challenges résolus</p>
+            <div class="ctf-progress-wrap">
+              <div class="ctf-progress">
+                <div class="ctf-progress-bar" style="--target: 60%; --bar-color: var(--accent-pink)"></div>
+              </div>
+              <span style="color: var(--accent-pink); font-size: 0.85rem; font-weight: 600">60%</span>
+            </div>
+            <a href="https://board.hackdevinci.com/" target="_blank" rel="noopener noreferrer" class="ctf-platform-link" aria-label="Voir le scoreboard HackDeVinci">Scoreboard <i class="fas fa-external-link-alt" aria-hidden="true"></i></a>
+          </article>
         </div>
 
         <h3 class="ctf-writeups-title reveal-up" data-i18n="ctf_writeups_title">Derniers Writeups</h3>
         <div class="ctf-writeups" role="list">
           <article class="writeup-card glass reveal-up" role="listitem" style="--delay: 0s">
+            <span class="writeup-difficulty" style="--diff-color: var(--accent-green)" aria-label="Difficulté facile">Easy</span>
+            <h4 class="writeup-title">HackDeVinci — Web #1</h4>
+            <p class="writeup-desc">Bypass d'authentification, injection SQL aveugle</p>
+            <time class="writeup-date" datetime="2026-03">Mars 2026 · HackDeVinci</time>
+          </article>
+          <article class="writeup-card glass reveal-up" role="listitem" style="--delay: 0.05s">
+            <span class="writeup-difficulty" style="--diff-color: var(--accent-yellow)" aria-label="Difficulté moyenne">Medium</span>
+            <h4 class="writeup-title">HackDeVinci — Forensics #2</h4>
+            <p class="writeup-desc">Stéganographie JPEG, extraction de métadonnées cachées</p>
+            <time class="writeup-date" datetime="2026-03">Mars 2026 · HackDeVinci</time>
+          </article>
+          <article class="writeup-card glass reveal-up" role="listitem" style="--delay: 0.1s">
+            <span class="writeup-difficulty" style="--diff-color: var(--accent-pink)" aria-label="Difficulté difficile">Hard</span>
+            <h4 class="writeup-title">HackDeVinci — Crypto #3</h4>
+            <p class="writeup-desc">RSA faible exposant, attaque de Wiener, factorisation</p>
+            <time class="writeup-date" datetime="2026-03">Mars 2026 · HackDeVinci</time>
+          </article>
+          <article class="writeup-card glass reveal-up" role="listitem" style="--delay: 0.15s">
             <span class="writeup-difficulty" style="--diff-color: var(--accent-green)" aria-label="Difficulté facile">Easy</span>
             <h4 class="writeup-title">HTB Lame</h4>
             <p class="writeup-desc">Samba CVE-2007-2447, nmap SUID privesc</p>
